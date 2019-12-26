@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div class="home">
     <div class="other-people">
       <div class="image-border image-border1"></div>
       <div class="image-border image-border2"></div>
@@ -107,7 +107,6 @@
             lineStyle:{
               color:'#309EF1'
             },
-
           }]
         },
         width: document.body.clientWidth + 'px',
@@ -136,44 +135,46 @@
 
 <style>
 
+  .home{
+    background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
+  }
   .image-border {
     position: absolute;
-    width: 20px;
-    height: 20px;
+    width: 5%;
+    height: 10%;
   }
 
   .image-border1 {
     top: 0;
     left: 0;
-    border-left: 5px solid #FFFFFF;
-    border-top: 5px solid #FFFFFF;
+    border-left: 4px solid #36E4FF;
+    border-top: 4px solid #36E4FF;
   }
 
   .image-border2 {
     top: 0;
-    right: -2px;
-    border-right: 5px solid #FFFFFF;
-    border-top: 5px solid #FFFFFF;
+    right: 0;
+    border-right: 4px solid #36E4FF;
+    border-top: 4px solid #36E4FF;
   }
 
   .image-border3 {
     bottom: 0;
     left: 0;
-    border-bottom: 5px solid #FFFFFF;
-    border-left: 5px solid #FFFFFF;
+    border-bottom: 4px solid #36E4FF;
+    border-left: 4px solid #36E4FF;
   }
 
   .image-border4 {
     bottom: 0;
-    right: -2px;
-    border-right: 5px solid #FFFFFF;
-    border-bottom: 5px solid #FFFFFF;
+    right: 0;
+    border-right: 4px solid #36E4FF;
+    border-bottom: 4px solid #36E4FF;
   }
   .other-people {
-    border: 1px solid #9ef5ff;;
-    margin-top: 4% ;
+    /*border: 1px solid #9ef5ff;;*/
     width: 85%;
-    height: 35%;
+    height: 65%;
     margin-left: 6%;
     margin-right:5%;
     padding: 5px;
@@ -185,12 +186,48 @@
   }
 
   .num{
-    margin: 30px 30px ;
-
+    /*margin: 1px 30px ;*/
+    border: 1px solid #9ef5ff;;
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+   /*background-color: #17294F;*/
+   /* opacity:0.4;*/
+   /* background: rgba(0, 0, 0,0.7);*/
     /*padding: 10px;*/
     /*height: 10%;*/
     /*border: 1px solid #9ef5ff;*/
     /*position: relative;*/
+  }
+  .num .content{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin-top: 8%;
+    margin-bottom: 8%;
+
+  }
+  .num .content .capacity {
+    color: rgb(54, 230, 254);
+    font-size: .6em;
+    transform:scale(.9,1.6);
+
+  }
+  .num .content .number {
+    color: rgb(6, 244, 195);
+    font-size: .6em;
+    transform:scale(.9,1.6);
+  }
+  .num .content .generation {
+    color: rgb(210, 255, 112);
+    font-size: .6em;
+    transform:scale(.9,1.6);
+  }
+  .num .content p{
+    font-size: .2rem;
+    color: #fff;
+  }
+  .num .content >div {
+    width: 100%
   }
   .sub{
 
@@ -225,34 +262,7 @@
   .sub p.model2{
     font-size: .3rem;
   }
-  .num .content{
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin-top: .2rem;
-  }
-  .num .content .capacity {
-    color: rgb(54, 230, 254);
-    font-size: .6em;
-    transform:scale(.9,1.6);
-  }
-  .num .content .number {
-    color: rgb(6, 244, 195);
-    font-size: .6em;
-    transform:scale(.9,1.6);
-  }
-  .num .content .generation {
-    color: rgb(210, 255, 112);
-    font-size: .6em;
-    transform:scale(.9,1.6);
-  }
-  .num .content p{
-    font-size: .2rem;
-    color: #fff;
-  }
-  .num .content >div {
-    width: 100%
-  }
+
   .chartDiv{
     width: 100%;
     height: 100%;
@@ -260,7 +270,7 @@
   }
   #statistics{
     margin-left: 5%;
-    font-size: .4em;
-    color: rgb(33,152,192);
+    font-size: .3em;
+    color: rgb(55,228,255);
   }
 </style>

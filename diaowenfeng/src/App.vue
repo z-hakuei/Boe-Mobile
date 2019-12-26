@@ -10,11 +10,14 @@
 
 <!--    <router-view/>-->
 
-    <van-tabbar v-model="active">
-      <van-icon class="iconfont icon-shouye"><p>首页</p></van-icon>
-      <van-icon class="iconfont icon-biandianzhan"><p>电站</p></van-icon>
-      <van-icon class="iconfont icon-ditu"><p>地图</p></van-icon>
-      <van-icon class="iconfont icon-gaojing"><p>告警</p></van-icon>
+    <van-tabbar v-model="active" class="vant-tab">
+      <van-icon
+        @click=handelClick(index)
+        :class="['iconfont', bar.icon, Index === index ? 'active' : '']"
+        v-for="(bar, index) in barList"
+      :key="index">
+        <p>{{bar.name}}</p>
+      </van-icon>
     </van-tabbar>
   </div>
 </template>
@@ -28,9 +31,33 @@ export default {
   },
   data(){
     return {
-      active: 0,
+      Index: 0,
+      barList: [
+        {
+          icon: 'icon-shouye',
+          name: '首页'
+        },
+        {
+          icon: 'icon-biandianzhan',
+          name: '电站'
+        },
+        {
+          icon: 'icon-ditu',
+          name: '地图'
+        },
+        {
+          icon: 'icon-gaojing',
+          name: '告警'
+        }
+      ],
+      active: 1,
       icon: {
       }
+    }
+  },
+  methods: {
+    handelClick (i) {
+      this.Index = i
     }
   }
 }
@@ -42,12 +69,13 @@ export default {
   max-width: 640px;
   margin: 0 auto;
   overflow-x: hidden;
-  background-image: radial-gradient(rgb(7, 39, 100), rgb(7, 39, 100));
+  background-image: radial-gradient(rgb(9, 27, 63), rgb(10, 29, 71));
 }
 .header{
-    background-color: #072764;
-    font-size: .3rem;
+    background-color: #0B1A3B;
+    font-size: .4rem;
     margin-top: 2%;
+    height: 6%;
 }
 body,html,#app{
   height: 100%;
@@ -58,5 +86,22 @@ body,html,#app{
 }
 i {
   font-size: 25px;
+}
+  .vant-tab
+  {
+    background-color: #04122F;
+    height: 8%;
+  }
+.vant-tab i{
+  color: #FFFFFF;
+  margin-top: .1rem;
+  font-size: 25px;
+}
+.vant-tab i p{
+  margin-top: .1rem;
+
+}
+.vant-tab i.active{
+  color: #10d5cc
 }
 </style>
