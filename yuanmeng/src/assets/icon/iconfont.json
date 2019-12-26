@@ -1,0 +1,121 @@
+{
+  "id": "1569924",
+  "name": "my_admin",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "645039",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "1106236",
+      "name": "电量",
+      "font_class": "dianliang",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "1117970",
+      "name": "暂停",
+      "font_class": "zanting",
+      "unicode": "e79f",
+      "unicode_decimal": 59295
+    },
+    {
+      "icon_id": "3356546",
+      "name": "首页",
+      "font_class": "shouye1",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "3416520",
+      "name": "机器人",
+      "font_class": "jiqiren",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "3601105",
+      "name": "变电站",
+      "font_class": "biandianzhan",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "3747414",
+      "name": "充电",
+      "font_class": "chongdian",
+      "unicode": "e6ad",
+      "unicode_decimal": 59053
+    },
+    {
+      "icon_id": "4933369",
+      "name": "启动",
+      "font_class": "qidong",
+      "unicode": "e746",
+      "unicode_decimal": 59206
+    },
+    {
+      "icon_id": "5093333",
+      "name": "告警",
+      "font_class": "gaojing1",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "5269234",
+      "name": "返回",
+      "font_class": "fanhui",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "5645821",
+      "name": "设备",
+      "font_class": "icon-shebei",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "9626842",
+      "name": "地图",
+      "font_class": "ditu",
+      "unicode": "e868",
+      "unicode_decimal": 59496
+    },
+    {
+      "icon_id": "9685486",
+      "name": "返 回",
+      "font_class": "fanhui-copy",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "9946748",
+      "name": "持续时长",
+      "font_class": "chixushichang",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "10977627",
+      "name": "清扫",
+      "font_class": "qingsao",
+      "unicode": "e84c",
+      "unicode_decimal": 59468
+    },
+    {
+      "icon_id": "11752380",
+      "name": "告警信息",
+      "font_class": "gaojingxinxi",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    }
+  ]
+}
