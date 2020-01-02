@@ -1,6 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+// import App from '../App'
+
+import AlarmUntreated from '@/components/AlarmUntreated'
+import AlarmList from '@/components/AlarmList'
+import AlarmTreated from '@/components/AlarmTreated'
 
 Vue.use(Router)
 
@@ -8,8 +12,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'AlarmList',
+      component: AlarmList
+    },
+    {
+      path: '/AlarmUntreated',
+      name: 'AlarmUntreated',
+      component: AlarmUntreated
+    },
+    {
+      path: 'AlarmTreated',
+      name: 'AlarmTreated',
+      component: AlarmTreated
     }
   ]
 })
