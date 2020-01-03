@@ -21,12 +21,11 @@
 
 .icon-dianliang:before {
   content: "\e60a";
-  font-size: 30px;
 }
 
 .icon-zanting:before {
   content: "\e79f";
-  font-size: 20px;
+
 }
 
 .icon-shouye:before {
@@ -35,7 +34,7 @@
 
 .icon-jiqiren:before {
   content: "\e63d";
-  font-size: 30px;
+
 }
 
 .icon-biandianzhan:before {
@@ -44,12 +43,12 @@
 
 .icon-chongdian:before {
   content: "\e6ad";
-  font-size: 30px;
+
 }
 
 .icon-qidong:before {
   content: "\e746";
-  font-size: 20px;
+
 }
 
 .icon-gaojing:before {
@@ -58,12 +57,12 @@
 
 .icon-fanhui:before {
   content: "\e62a";
-  font-size: 20px;
+
 }
 
 .icon-shebei:before {
   content: "\e600";
-  font-size: 30px;
+
 }
 
 .icon-ditu:before {
@@ -76,16 +75,16 @@
 
 .icon-chixushichang:before {
   content: "\e603";
-  font-size: 30px;
+
 }
 
 .icon-qingsao:before {
   content: "\e84c";
-  font-size: 30px;
+
 }
 
 .icon-gaojingxinxi:before {
   content: "\e641";
-  font-size: 30px;
+
 }
 
