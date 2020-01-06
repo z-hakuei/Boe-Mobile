@@ -54,7 +54,7 @@
       <div class="facilityInstallStatisticsBox">
         <div class="titleBox">
             <span>月发电量</span>
-            
+            <vue-datepicker-local v-model="time" format="YYYY-MM" @confirm="confirm()" show-buttons />
             
         </div>
         <div id="MonthlyPowerGenerationChart" class="fullChartBox"></div>
@@ -154,7 +154,8 @@
   import {request} from "../../network/request";//引入封装的axios
   import Cryptojs from 'crypto-js';//全局引用不好使，因此局部引用
   import echarts from 'echarts';
-  import  storage from '@/model/storage.js'
+  import  storage from '@/model/storage.js'//存储token
+  import VueDatepickerLocal from 'vue-datepicker-local'//日期选择器
   // 按需引入点聚合
   // import { BmlMarkerClusterer } from 'vue-baidu-map'
   // 引入marker
@@ -179,7 +180,8 @@
       // BmlMarkerClusterer,
       BmMarker,
       qs,
-      storage
+      storage,
+      VueDatepickerLocal
     },
 
     data() {
@@ -202,7 +204,8 @@
         PowerStationCapacity:'',//电站容量
         Rebots:'',//机器人数量
         EnvironmentalMonitoring:'',//环境检测系统
-        rebotdata:[]//机器人数据
+        rebotdata:[],//机器人数据
+        time: new Date()
       }
     },
 
@@ -229,6 +232,10 @@
     destroy() {},
 
     methods: {
+      confirm(){
+        
+        console.log(this.time.getFullYear());
+      },
       mainIndex() {
         // 设备安装统计
         this.makeChartsFacilityInstallStatistics(), 
