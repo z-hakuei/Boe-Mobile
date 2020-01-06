@@ -115,7 +115,6 @@
         return 'http://brmsh5.boeet.com.cn:82'+item.img;
       },
       getData(){
-        console.log('456')
         let formData = new FormData()
         formData.append('index','0');
         formData.append('num','2');
@@ -154,7 +153,7 @@
     width:100%;
     height:100%;
 		font-size: 10px;
-		background: #051534;
+		background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
     .homeBody {
 			/* public start */
 			.serach{

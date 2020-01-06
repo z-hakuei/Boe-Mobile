@@ -10,34 +10,40 @@
     </mt-header>
     <div class="homeBody">
 
-      <div class="installCapacityStatistics">
-        <div class="installStatistics">
-          <div class="number"><span style="margin-right:53%;">{{CumulativePowerGeneration}}</span></div>
-          <div class="explainTitleText"><span style="margin-right:50%;">累计发电量（万KWh）</span></div>
-        </div>
-        <div class="singleStatistics">
-          <div class="yearInstallStatistics">
-            <div class="singleStatisticsNumber"><span style="margin-right:33%;">{{CurrentPowerGeneration}}</span></div>
-            <div class="explainTitleText"><span>当年发电量（万KWh）</span></div>
+      <div class="other-people">
+        <div class="num">
+          <div class="installCapacityStatistics">
+            <div class="installStatistics">
+              <div class="number"><span style="margin-right:53%;">{{CumulativePowerGeneration}}</span></div>
+              <div class="explainTitleText"><span style="margin-right:50%;">累计发电量（万KWh）</span></div>
+            </div>
+            <div class="singleStatistics">
+              <div class="yearInstallStatistics">
+                <div class="singleStatisticsNumber"><span style="margin-right:33%;">{{CurrentPowerGeneration}}</span></div>
+                <div class="explainTitleText"><span>当年发电量（万KWh）</span></div>
+              </div>
+              <div class="totalProfit">
+                <div class="singleStatisticsNumber"><span>{{DayPowerGeneration}}</span></div>
+                <div class="explainTitleText"><span>当日发电量（万KWh）</span></div>
+              </div>
+            </div>
           </div>
-          <div class="totalProfit">
-            <div class="singleStatisticsNumber"><span>{{DayPowerGeneration}}</span></div>
-            <div class="explainTitleText"><span>当日发电量（万KWh）</span></div>
+        
+
+          <div class="facilityStatistics">
+            <div class="facilityTypeStatistics">
+              <div class="statisticsNumber"><span>{{PowerStationCapacity}}</span></div>
+              <div class="explainTitleText"><span>电站容量</span></div>
+            </div>
+            <div class="facilityTypeStatistics">
+              <div class="statisticsNumber"><span>{{Rebots}}台</span></div>
+              <div class="explainTitleText"><span>清洗机器人</span></div>
+            </div>
+            <div class="facilityTypeStatistics">
+              <div class="statisticsNumber"><span>{{EnvironmentalMonitoring}}台</span></div>
+              <div class="explainTitleText"><span>环境检测系统</span></div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="facilityStatistics">
-        <div class="facilityTypeStatistics">
-          <div class="statisticsNumber"><span>{{PowerStationCapacity}}</span></div>
-          <div class="explainTitleText"><span>电站容量</span></div>
-        </div>
-        <div class="facilityTypeStatistics">
-          <div class="statisticsNumber"><span>{{Rebots}}台</span></div>
-          <div class="explainTitleText"><span>清洗机器人</span></div>
-        </div>
-        <div class="facilityTypeStatistics">
-          <div class="statisticsNumber"><span>{{EnvironmentalMonitoring}}台</span></div>
-          <div class="explainTitleText"><span>环境检测系统</span></div>
         </div>
       </div>
 
@@ -946,7 +952,25 @@
     
     font-size: 14px;
     .homeBody {
-      background-color: #051534;
+      background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
+      .other-people {
+        width: 92%;
+        height: 65%;
+        margin-left: 3%;
+        padding: 5px;
+        position: relative;
+      }
+
+      .num{
+        border: 1px solid #9ef5ff;;
+        width: 100%;
+        background: rgba(255,255,255,0.07);
+        margin-bottom: 15px;
+        border-radius: 2px;
+        box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, .05);
+        -webkit-box-shadow: #d4d2d2 0px 0px 10px;
+        -moz-box-shadow: #d4d2d2 0px 0px 10px;
+      }
       .explainTitleText {
         color: #566cac;
       }
