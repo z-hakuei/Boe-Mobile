@@ -1,7 +1,7 @@
 /*
  * @Author: ldk
  * @Date: 2019-12-14 22:25:09
- * @LastEditTime : 2019-12-26 20:39:03
+ * @LastEditTime : 2020-01-07 19:33:00
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \compress\src\main.js
@@ -15,13 +15,16 @@ import './assets/iconfont/iconfont.css'
 import BaiduMap from 'vue-baidu-map'
 import axios from 'axios'
 import MD5 from 'js-md5'
+import Message from 'vue-m-message'//全局注册消息提示组件
+import LoadMore from 'vue-loadmore-simple'//全局注册懒加载组件
 
 Vue.prototype.$axios =axios
 Vue.use(BaiduMap, {
   ak: 'Wqi84dc8Q1blFrKcmAQWMC8MDXBrjhA1'
 })
 Vue.use(MintUI)
-
+Vue.use(Message)
+Vue.use(LoadMore)
 Vue.prototype.$MD5 = MD5;
 Vue.config.productionTip = false
 
