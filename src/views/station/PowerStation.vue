@@ -80,7 +80,7 @@
       this.mainIndex()
     },
     beforeDestroy() {},
-    destroy() {
+    destroyed() {
       window.removeEventListener('scroll', this.scrollFn); // 销毁监听
     },
     computed : {
@@ -101,7 +101,6 @@
       },
       handleroute(pv_id){
         this.$router.push({ path: '/powerstationdetail',query:{pvid:pv_id} })
-        //
       },
       handleShowMsg(message,type) {
         this.$message({
@@ -156,18 +155,19 @@
 
       //监听函数
       scrollFn(){
+
   　　　　if(this.getScrollTop() + this.getWindowHeight() == this.getScrollHeight()){
-  　　　　　　this.handleShowMsg('没有更多数据了','info');
+  　　　　　　this.handleShowMsg('没有更多数据','info');
   　　　　}
   　　},
       submit(){//搜索按钮提交数据
-        let Message = '2'+this.value+'0';
+        let Message = this.pageSize+this.value+this.pageIndex;
         let key = 'H@ppy1@3';
         let hash = Cryptojs.HmacSHA256(Message, key).toString();
         let sign = this.$MD5(hash).toUpperCase();
         let formData = new FormData()
-        formData.append('index','0');
-        formData.append('num','2');
+        formData.append('index',this.pageIndex);
+        formData.append('num',this.pageSize);
         formData.append('sign',sign);
         formData.append('name',this.value);
         request({
@@ -181,10 +181,9 @@
           data: formData
         }).then(res => {
           let pvarray=[];
-          console.log(res.data);
           let data = res.data.data.list;
           this.stationdata = data;
-          console.log(data);
+          this.totalCount = data.length+1;
           for(let i =0;i<data.length;i++) {
             pvarray.push(data[i].name);
           }

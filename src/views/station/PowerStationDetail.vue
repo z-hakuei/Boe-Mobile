@@ -150,25 +150,27 @@
             :totalCount="totalCount" 
             :openRefresh="true"
             @refresh="refresh"
-            @loadmore="loadmore">
-            <div class="powerstationlist" v-for="(item,index) in rebotdata">
-              <span class="powerstation">
-                <!-- <router-link class="itemBox" :to="{ path: 'rebotdetail',query:{rebotid:item.r_id} }"> -->
-                  <span><!-- <i class="mintui mintui-jiqiren" style="font-size:73px;"></i>-->
-                    <span><img @click="handleroute(item.r_id)" style="width:80px;margin:10px;margin-left:-38px;margin-top:20px;" :src="getImgURL(item)"/></span>
-                  </span>
-                <!-- </router-link> -->
-              </span>
-              <span class="stationdetail" style="line-height:20px;">
-                <div>清扫次数:{{item.count}}次</div>
-                <div>设备状态:{{item.status}}</div>
-                <div v-if="item.warn == 1">告警状态:<span style="color:red;">危险</span></div>
-                <div v-else-if="item.warn == 0">告警状态:<span style="color:green;">正常</span></div>
-                <div style="color:#00FF7F" v-if="item.online == 1">设备在线</div>
-                <div style="color:Red" v-else-if="item.online == 0">设备离线</div>
-              </span>
-              <span @click="handleroute(item.r_id)" style="color:#00FFFF;padding-top:17%;display:fiex;position:absolute;padding-left:300px;">{{item.name}}</span>
-            </div>
+            @loadmore="loadmore" style="position: relative;">
+              <li class="powerstationlist" v-for="(item,index) in rebotdata">
+                <span class="powerstation">
+                    <span>
+                      <span><img @click="handleroute(item.r_id)" style="width:80px;margin:10px;margin-left:-38px;margin-top:20px;" :src="getImgURL(item)"/></span>
+                    </span>
+                </span>
+                <span class="stationdetail" style="line-height:20px;">
+                  <div>清扫次数:{{item.count}}次</div>
+                  <div>设备状态:{{item.status}}</div>
+                  <div v-if="item.warn == 1">告警状态:<span style="color:red;">危险</span></div>
+                  <div v-else-if="item.warn == 0">告警状态:<span style="color:green;">正常</span></div>
+                  <div style="color:#00FF7F" v-if="item.online == 1">设备在线</div>
+                  <div style="color:Red" v-else-if="item.online == 0">设备离线</div>
+                </span>
+                <span @click="handleroute(item.r_id)" style="color:#00FFFF;padding-top:17%;display:fiex;position:absolute;padding-left:300px;">{{item.name}}</span>
+              </li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
           </load-more>
         </div>
       </div>
@@ -233,8 +235,8 @@
         EnvironmentalMonitoring:'',//环境检测系统
         rebotdata:[],//机器人数据
         time: new Date(),
-        pageIndex: 1,
-        pageSize: 7,
+        pageIndex: 0,
+        pageSize: 6,
         totalCount: 0
       }
     },
@@ -242,7 +244,7 @@
     beforeCreate() {},
 
     created() {
-      
+      this.getRebot()
     },
     beforeRouteEnter (to, from, next){
       next(vm => {
@@ -253,25 +255,73 @@
     beforeMount() {},
 
     mounted() {
+      window.addEventListener('scroll', this.scrollFn); 
       this.mainIndex(),//渲染表格
-      this.getIndexData(),//获得首页的数据
-      this.getRebot()//获得机器人数据
+      this.getIndexData()//获得首页的数据
     },
     beforeDestroy() {},
 
-    destroy() {},
+    destroyed() {
+      window.removeEventListener('scroll', this.scrollFn); // 销毁监听
+    },
 
     methods: {
 
       loadmore(pageIndex){
-          //上滑加载更多，pageIndex为下一页页码,
-          this.pageIndex = pageIndex
-          this.getRebot();
-          console.log('加载更多中...')
+        //上滑加载更多，pageIndex为下一页页码,
+        this.handleLoading();
+        this.pageIndex = pageIndex
+        this.getRebot();
       },
-      refresh(){
-          console.log('您下拉刷新了')
+      refresh(){//刷新
       },
+      //文档高度
+      getScrollTop(){
+    　　var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+    　　　　if(document.body){
+    　　　　　　bodyScrollTop = document.body.scrollTop;
+    　　　　}
+    　　　　if(document.documentElement){
+    　　　　　　documentScrollTop = document.documentElement.scrollTop;
+    　　　　}
+    　　　　scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+    　　　　return scrollTop;
+　　  },
+
+      //可视窗口高度 
+  　　getWindowHeight(){
+  　　  var windowHeight = 0;
+  　　　　if(document.compatMode == "CSS1Compat"){
+  　　　　　　windowHeight = document.documentElement.clientHeight;
+  　　　　}
+  　　　　else{
+  　　　　　　windowHeight = document.body.clientHeight;
+  　　　　}
+  　　　　return windowHeight;
+  　　},
+
+      //滚动条高度
+  　　getScrollHeight(){
+  　　　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+  　　　　if(document.body){
+  　　　　　　bodyScrollHeight = document.body.scrollHeight;
+  　　　　}　　
+  　　　　if(document.documentElement){
+  　　　　　　documentScrollHeight = document.documentElement.scrollHeight;
+  　　　　}
+  　　　　scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+  　　　　return scrollHeight;
+  　　},
+
+      //监听函数
+      scrollFn(){
+  　　　　if(this.getScrollTop() + this.getWindowHeight() == this.getScrollHeight()){
+             console.log(this.getScrollTop());
+             console.log(this.getWindowHeight());
+             console.log(this.getScrollHeight());
+  　　　　　　this.handleShowMsg('没有更多数据','info');
+  　　　　}
+  　　},
       //时间选择按钮确定
       confirm(type){
 
@@ -988,8 +1038,9 @@
 
           let data = res.data.data.list;
           if(data.length != 0){
-            
-            this.rebotdata = data;
+
+            this.rebotdata = this.rebotdata.concat(data);
+            this.totalCount = data.length+1;
           }else{
             this.handleShowMsg('机器人数据为空','info');
           }
@@ -1018,9 +1069,12 @@
     width: 100%;
     height: 300px;
   }
-
-  //日期控件css
-  
+  li{
+    background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
+  }
+  ul{
+    background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
+  }
   .powerstationlist{
     display: flex;
     flex-direction: row;

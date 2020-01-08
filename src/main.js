@@ -1,7 +1,7 @@
 /*
  * @Author: ldk
  * @Date: 2019-12-14 22:25:09
- * @LastEditTime : 2020-01-07 19:33:00
+ * @LastEditTime : 2020-01-08 13:37:36
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \compress\src\main.js
@@ -12,6 +12,7 @@ import router from './router'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import './assets/iconfont/iconfont.css'
+import './assets/iconfont/iconfont0.css'
 import BaiduMap from 'vue-baidu-map'
 import axios from 'axios'
 import MD5 from 'js-md5'

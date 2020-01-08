@@ -1,6 +1,13 @@
 <template>
   <div class="home">
-    <div class="other-people">
+    <mt-header title="无人化智能运维平台">
+      <router-link to="/" slot="left">
+      <router-link :to="{ path:'home' }">
+        <i class="iconfont icon-gongneng" style="font-size:.4rem"></i>
+      </router-link>
+      </router-link>
+    </mt-header>
+    <div class="other">
       <div class="border border1"></div>
       <div class="border border2"></div>
       <div class="border border3"></div>
@@ -56,8 +63,9 @@
       <p id="statistics">设备安装统计</p>
     </div>
     <div class="chartDiv" :style="{ width: width}">
-      <div id="echarts" :style="{ width: '100%', height: height}"></div>
+      <div id="echarts" :style="{ width: '100%', height: '450px'}"></div>
     </div>
+
   </div>
 </template>
 
@@ -67,6 +75,7 @@
   import Cryptojs from 'crypto-js';//全局引用不好使，因此局部引用
   import echarts from 'echarts';
   import  storage from '@/model/storage.js'
+
   export default {
     name: 'Home',
     components: {
@@ -76,216 +85,229 @@
     },
     data () {
       return {
-        capacity: 800,
-        number: 6800,
-        generation: 1.56,
-        availability:90,
-        pnumber:1160,
-        onlinerate:100,
+        capacity: '',//累计安装容量
+        number: '',//当年累计安装数量
+        generation: ' ',//当日发电量
+        availability:'',//设备可用率
+        pnumber:'',//已安装电厂数量
+        onlinerate:' ',//设备在线率
         width:'100%',
-        height: '400%',
+        height: '30%',
         serise: null
       }
     },
     mounted () {
-      this.mainIndex()//渲染表格
+      this.getInit()
+
     },
     methods: {
-      mainIndex(){
-        this.getToken(),
-        this.makeEcharts()
+      async getInit () {
+        const token = await this.getTokenFun()
+        this.getEcharts(token)
       },
-      makeEcharts () {
-        let Message = '';
-        let key = 'H@ppy1@3';
-        let hash = Cryptojs.HmacSHA256(Message,key).toString();
-        let sign = this.$MD5(hash).toUpperCase();
-        let formData = qs.stringify({'sign':sign});
-        request({
-          url: '/interface/Home',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'token' : storage.get('token'),
-            'platform' : 'a'
-          },
-          data: formData
-        }).then(res => {
-          let data = res.data.data;
-          this.capacity = data.total_pv,
-          this.number = data.total_count,
-          this.generation = data.total_income,
-          this.availability = data.dev_ava,
-          this.pnumber = data.pv_count,
-          this.onlinerate = data.dev_online
-
-
-
-          const charts = echarts.init(document.getElementById('echarts'))
-          const option ={
-            xAxis: {
-              type: 'category',
-              boundaryGap: false,
-              data: data.x,
-              areaStyle: {
-                color: ["#0c51ff"],
-              },
-              axisLabel: {
-                show: true,
-                textStyle: {
-                  color: '#ffffff'
-                }
-              }
+      getTokenFun () {
+        let formData = qs.stringify({'account':'1','password' : 'C4CA4238A0B923820DCC509A6F75849B','sign':'93CFFFF669BBEDD0544EB72852E0F5CD'})
+        return new Promise((resolve, reject) => {
+          request({
+            url: '/interface/Login',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'platform' : 'a'
             },
-            yAxis: {
-              type: 'value',
-              boundaryGap: false,
-              axisLabel : {
-                textStyle: {
-                  color: '#ffffff'
-                }
-              },
-            },
-            series: [{
-              data: data.y,
-              type: 'line',
-              symbol:'none',
-              smooth: true,
-              areaStyle: {
-                color: ["#145099"]
-              },
-              lineStyle:{
-                color:'#309EF1'
-              },
-            }],
-            grid: {
-              right: '2%',
-              left: '2%',
-              containLabel: true
-            },
-          }
-          charts.setOption(option)
-        }).catch(err => {
-          console.log(err);
-        })
-        
-      },
-
-      //获取token
-      getToken(){
-
-        let formData = qs.stringify({'account':'1','password' : 'C4CA4238A0B923820DCC509A6F75849B','sign':'93CFFFF669BBEDD0544EB72852E0F5CD'});
-        request({
-          url: '/interface/Login',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'platform' : 'a'
-          },
-          data: formData
-        }).then(res => {
-          storage.set('token',res.data.data.token);
-        }).catch(err => {
-          console.log(err);
+            data: formData
+          }).then(res => {
+            resolve(res.data.data.token)
+            let data = res.data.data.token
+            storage.set('token', data)
+          }).catch(err => {
+            console.log(err);
+          })
         })
       },
+      getEcharts (token){
+        return new Promise((resolve, reject) => {
+          let Message = '';
+          let key = 'H@ppy1@3';
+          let hash = Cryptojs.HmacSHA256(Message,key).toString();
+          let sign = this.$MD5(hash).toUpperCase();
+          let formData = qs.stringify({'sign':sign});
+          request({
+            url: '/interface/Home',
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'token' : token,
+              'platform' : 'a'
+            },
+            data: formData
+          }).then(res => {
+            let data = res.data.data;
+            this.capacity = data.total_pv
+            this.number = data.total_count
+            this.generation = data.total_income
+            this.availability = data.dev_ava
+            this.pnumber = data.pv_count
+            this.onlinerate = data.dev_online
+            const charts = echarts.init(document.getElementById('echarts'))
+            const option ={
+              xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: data.x,
+                areaStyle: {
+                  color: ["#0c51ff"],
+                },
+                axisLabel: {
+                  show: true,
+                  textStyle: {
+                    color: '#ffffff'
+                  }
+                }
+              },
+              yAxis: {
+                type: 'value',
+                boundaryGap: false,
+                min: 0,
+                max: 1000,
+                interval: 100,
+                axisLabel : {
+                  textStyle: {
+                    color: '#ffffff'
+                  }
+                },
+              },
+              series: [{
+                data: data.y,
+                type: 'line',
+                symbol:'none',
+                smooth: true,
+                areaStyle: {
+                  color: ["#145099"]
+                },
+                lineStyle:{
+                  color:'#309EF1'
+                },
+              }],
+              grid: {
+                right: '8%',
+                left:'5%',
+                charts: '2%',
+                containLabel: true
+              },
+            }
+            charts.setOption(option)
+            window.onresize = () => {
+              charts.resize()
+            }
+          }).catch(err => {
+            console.log(err);
+          })
+        })
+      }
     }
   }
 </script>
 
 <style>
-
-  .home{
-    /*margin-top: 1rem;*/
+  body,html{
+    font-size: 3px;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
     background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
+  }
+  *{
+    margin:0;
+    padding:0;
+  }
+  .home{
+    height: 100%;
+    width: 100%;
+
+  }
+  .header{
+    background-color: #0B1A3B;
+    font-size: 5em;
+    height: 9%;
+    line-height: 6rem;
   }
   .border {
     position: absolute;
-    width: 4%;
-    height: 7%;
+    width: 4.6%;
+    height: 10%;
   }
-
   .border1 {
     top: 0;
     left: 0;
-    border-left: 4px solid #36E4FF;
-    border-top: 4px solid #36E4FF;
+    border-left: 2px solid #36E4FF;
+    border-top: 2px solid #36E4FF;
   }
-
   .border2 {
     top: 0;
     right: 0;
-    border-right: 4px solid #36E4FF;
-    border-top: 4px solid #36E4FF;
+    border-right: 2px solid #36E4FF;
+    border-top: 2px solid #36E4FF;
   }
 
   .border3 {
     bottom: 0;
     left: 0;
-    border-bottom: 4px solid #36E4FF;
-    border-left: 4px solid #36E4FF;
+    border-bottom: 2px solid #36E4FF;
+    border-left: 2px solid #36E4FF;
   }
 
   .border4 {
     bottom: 0;
     right: 0;
-    border-right: 4px solid #36E4FF;
-    border-bottom: 4px solid #36E4FF;
+    border-right: 2px solid #36E4FF;
+    border-bottom: 2px solid #36E4FF;
   }
-  .other-people {
-    /*border: 1px solid #9ef5ff;;*/
-    width: 92%;
-    height: 65%;
+  .other {
+    width: 94%;
+    height: 33%;
     margin-left: 3%;
-    /*margin-right:6%;*/
-    padding: 5px;
+    padding: 2px;
     position: relative;
+    top: 5px;
   }
   .van-tabbar--fixed i {
     flex: 1;
     text-align: center;
   }
-
   .num{
-    /*margin: 1px 30px ;*/
     border: 1px solid #9ef5ff;;
     width: 100%;
+    height: 100%;
     background: rgba(255,255,255,0.07);
-   /*background-color: #17294F;*/
-   /* opacity:0.4;*/
-   /* background: rgba(0, 0, 0,0.7);*/
-    /*padding: 10px;*/
-    /*height: 10%;*/
-    /*border: 1px solid #9ef5ff;*/
-    /*position: relative;*/
   }
   .num .content{
     display: flex;
     align-items: center;
     text-align: center;
-    margin-top: 7%;
-    margin-bottom: 7%;
-
+    margin-bottom: 5%;
   }
   .num .content .capacity {
     color: rgb(54, 230, 254);
-    font-size: .6em;
-    transform:scale(2.5,3.5);
+    font-size: 3em;
+    font-family: "HoloLens MDL2 Assets";
+    transform:scale(3.5,4);
   }
   .num .content .number {
     color: rgb(6, 244, 195);
-    font-size: .6em;
+    font-size: 2em;
+
     transform:scale(2.4,3);
   }
   .num .content .generation {
     color: rgb(210, 255, 112);
-    font-size: .6em;
+    font-size: 2em;
     transform:scale(2.4,3);
   }
 
   .num .content p{
-    font-size: .5rem;
-    margin-top: 30px;
+    font-size: 3em;
+    margin-top: 9%;
     color: #fff;
   }
   .num .content >div {
@@ -293,8 +315,7 @@
   }
   .sub{
     margin-top: 10% ;
-    margin-bottom: 10% ;
-
+    margin-bottom: 9% ;
     display: flex;
     align-items: center;
     color: #fff;
@@ -318,21 +339,21 @@
   }
   .sub p.model1{
     transform:scale(2.1,3);
-    font-size: .5rem;
+    font-size: 1.8em;
   }
   .sub p.model2{
-    font-size: .6rem;
+    font-size:5em;
     margin-top: 12%;
   }
 
   .chartDiv{
     width: 100%;
     height: 100%;
-
   }
   #statistics{
-    margin-left: 5%;
-    font-size: .7em;
+    margin-left: 4%;
+    font-size: 20px;
     color: rgb(55,228,255);
   }
+
 </style>
