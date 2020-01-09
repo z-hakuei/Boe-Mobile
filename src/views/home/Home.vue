@@ -214,7 +214,6 @@
     font-size: 3px;
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
     background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
   }
   *{

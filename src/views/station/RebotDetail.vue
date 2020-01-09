@@ -135,21 +135,21 @@
 			getData(){
 
 				let RebotID = this.$route.query.rebotid;
-        let key = 'H@ppy1@3';
-        let hash = Cryptojs.HmacSHA256(RebotID.toString(),key).toString();
-        let sign = this.$MD5(hash).toUpperCase();
-				let formData = qs.stringify({'r_id':RebotID,'sign':sign});
-				
-        request({
-          url: '/interface/RobootInfo',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'token' : this.Token,
-            'platform' : 'a'
-          },
-          data: formData
-        }).then(res => {//数据回调函数
+				let key = 'H@ppy1@3';
+				let hash = Cryptojs.HmacSHA256(RebotID.toString(),key).toString();
+				let sign = this.$MD5(hash).toUpperCase();
+						let formData = qs.stringify({'r_id':RebotID,'sign':sign});
+						
+				request({
+				url: '/interface/RobootInfo',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'token' : this.Token,
+					'platform' : 'a'
+				},
+				data: formData
+				}).then(res => {//数据回调函数
 					
 					let data = res.data.data;
 					this.Name = data.name;//机器人名字
