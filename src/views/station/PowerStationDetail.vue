@@ -167,10 +167,6 @@
                 </span>
                 <span @click="handleroute(item.r_id)" style="color:#00FFFF;padding-top:17%;display:fiex;position:absolute;padding-left:300px;">{{item.name}}</span>
               </li>
-              <li></li>
-              <li></li>
-              <li></li>
-              <li></li>
           </load-more>
         </div>
       </div>
@@ -236,7 +232,7 @@
         rebotdata:[],//机器人数据
         time: new Date(),
         pageIndex: 0,
-        pageSize: 6,
+        pageSize: 3,
         totalCount: 0
       }
     },
@@ -316,9 +312,6 @@
       //监听函数
       scrollFn(){
   　　　　if(this.getScrollTop() + this.getWindowHeight() == this.getScrollHeight()){
-             console.log(this.getScrollTop());
-             console.log(this.getWindowHeight());
-             console.log(this.getScrollHeight());
   　　　　　　this.handleShowMsg('没有更多数据','info');
   　　　　}
   　　},
@@ -1040,7 +1033,7 @@
           if(data.length != 0){
 
             this.rebotdata = this.rebotdata.concat(data);
-            this.totalCount = data.length+1;
+            this.totalCount = this.totalCount+data.length;
           }else{
             this.handleShowMsg('机器人数据为空','info');
           }
@@ -1064,7 +1057,7 @@
 </script>
 
 <style scoped lang="scss">
-  /* lang="less" */
+
   .map {
     width: 100%;
     height: 300px;
@@ -1075,6 +1068,7 @@
   ul{
     background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
   }
+  
   .powerstationlist{
     display: flex;
     flex-direction: row;
@@ -1114,7 +1108,6 @@
     }
 	}
   #PowerStationDetail {
-    
     font-size: 14px;
     .homeBody {
       background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));

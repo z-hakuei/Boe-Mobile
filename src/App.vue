@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2019-12-21 11:40:36
- * @LastEditTime : 2020-01-04 15:03:12
+ * @LastEditTime : 2020-01-09 20:08:44
  * @LastEditors  : Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \power\src\App.vue

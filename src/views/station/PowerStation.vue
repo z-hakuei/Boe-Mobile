@@ -14,36 +14,32 @@
           cancel-text="取消"
           placeholder="搜索" class="serach">
       </mt-search>
-      <load-more 
-          :pageIndex="pageIndex" 
-          :pageSize="pageSize" 
-          :totalCount="totalCount" 
-          :openRefresh="true"
-          @refresh="refresh"
-          @loadmore="loadmore">
-          <ul>
-            <li class="powerstationlist" v-for="(item,key) in stationdata">
-              <span class="powerstation">
-                  <span @click="handleroute(item.pv_id)">
-                    <img class="stationimage" :src="getImgURL(item)"/>
-                  </span>
-                <span class="addresstitle">{{item.name}}</span>
-                <span class="detailtitle">总装机容量{{item.mw}}MW</span>
-              </span>
-              <span class="stationdetail">
-                <div>设备总量:{{item['dev_count']}}</div>
-                <div>在线设备总量:{{item['dev_online']}}</div>
-                <div>机器人数量:{{item['roboot_count']}}</div>
-                <div>环监数量:{{item['env_count']}}</div>
-                <div>摆渡车数量:{{item['shuttle_count']}}</div>
-              </span>
-            </li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-      </load-more>
+        <load-more 
+            :pageIndex="pageIndex" 
+            :pageSize="pageSize" 
+            :totalCount="totalCount" 
+            :openRefresh="true"
+            @refresh="refresh"
+            @loadmore="loadmore">
+            <ul>
+              <li class="powerstationlist" v-for="(item,key) in stationdata">
+                <span class="powerstation">
+                    <span @click="handleroute(item.pv_id)">
+                      <img class="stationimage" :src="getImgURL(item)"/>
+                    </span>
+                  <span class="addresstitle">{{item.name}}</span>
+                  <span class="detailtitle">总装机容量{{item.mw}}MW</span>
+                </span>
+                <span class="stationdetail">
+                  <div>设备总量:{{item['dev_count']}}</div>
+                  <div>在线设备总量:{{item['dev_online']}}</div>
+                  <div>机器人数量:{{item['roboot_count']}}</div>
+                  <div>环监数量:{{item['env_count']}}</div>
+                  <div>摆渡车数量:{{item['shuttle_count']}}</div>
+                </span>
+              </li>
+            </ul>
+        </load-more>
     </div>
     
   </div>
@@ -127,7 +123,6 @@
     　　　　scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
     　　　　return scrollTop;
 　　  },
-
       //可视窗口高度 
   　　getWindowHeight(){
   　　  var windowHeight = 0;
@@ -139,7 +134,6 @@
   　　　　}
   　　　　return windowHeight;
   　　},
-
       //滚动条高度
   　　getScrollHeight(){
   　　　　var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
@@ -152,12 +146,10 @@
   　　　　scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
   　　　　return scrollHeight;
   　　},
-
       //监听函数
       scrollFn(){
-
   　　　　if(this.getScrollTop() + this.getWindowHeight() == this.getScrollHeight()){
-  　　　　　　this.handleShowMsg('没有更多数据','info');
+  // 　　　　　　this.handleShowMsg('没有更多数据','info');
   　　　　}
   　　},
       submit(){//搜索按钮提交数据
@@ -196,7 +188,6 @@
         return 'http://brmsh5.boeet.com.cn:82'+item.img;
       },
       getData(name){
-
         if(name == null){
           name = '';
         }
@@ -221,9 +212,11 @@
         }).then(res => {
           let pvarray=[];
           let data = res.data.data.list;
+          if(data.length != 0){
+            this.stationdata = this.stationdata.concat(data);
+            this.totalCount = this.totalCount+data.length;
+          }
           
-          this.stationdata = this.stationdata.concat(data);
-          this.totalCount = data.length+1;
           for(let i =0;i<data.length;i++) {
             pvarray.push(data[i].name);
           }
