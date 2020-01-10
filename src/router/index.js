@@ -53,7 +53,7 @@ const routes = [
 	}
 	,
 	{
-		path: '/waring',
+		path: '/warning',
 		component: AlarmList
 	},
 	{

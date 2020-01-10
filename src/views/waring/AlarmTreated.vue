@@ -3,7 +3,7 @@
     <div id="header">
       <table class="header_table">
         <tr>
-          <td width="25%" style="text-align: left;"><a href="" style="color: white;"><i class="iconfont icon-fanhui-copy"></i>返回</a></td>
+          <td width="25%" style="text-align: left;"><a href="/warning" style="color: white;"><i class="iconfont icon-fanhui-copy">返回</i></a></td>
           <td width="50%" style="text-align: center;"><p style="font-size: 22px;">告警详情</p></td>
           <td>&nbsp;</td>
         </tr>
@@ -68,6 +68,7 @@ export default {
     justify-content: space-around;
     }
   #content table{
+    padding: 0px;
     border-collapse:separate;
     border-spacing:0px 10px;
     margin: auto;
@@ -75,6 +76,7 @@ export default {
     font-size: 12px;
   }
   #content table tr td{
+    padding: 0px;
     text-align: left;
     color: white;
   }

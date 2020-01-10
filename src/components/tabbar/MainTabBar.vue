@@ -23,9 +23,9 @@
 			<img slot="item-icon-active" src="../../assets/images/tabbar/map_active.svg" alt="">
 			<div slot="item-text">地图</div>
 		</tab-bar-item>
-		<tab-bar-item path="/waring" activecolor="#051534;">
-			<img slot="item-icon" src="../../assets/images/tabbar/waring.svg" alt="">
-			<img slot="item-icon-active" src="../../assets/images/tabbar/waring_active.svg" alt="">
+		<tab-bar-item path="/warning" activecolor="#051534;">
+			<img slot="item-icon" src="../../assets/images/tabbar/warning.svg" alt="">
+			<img slot="item-icon-active" src="../../assets/images/tabbar/warning_active.svg" alt="">
 			<div slot="item-text">告警</div>
 		</tab-bar-item>
 		</tab-bar>

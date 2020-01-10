@@ -3,7 +3,7 @@
     <div id="header">
       <table class="header_table">
         <tr>
-          <td width="25%" style="text-align: left;"><a href="" style="color: white;"><i class="iconfont icon-fanhui-copy"></i>返回</a></td>
+          <td width="25%" style="text-align: left;"><a href="/warning" style="color: white;"><i class="iconfont icon-fanhui-copy">返回</i></a></td>
           <td width="50%" style="text-align: center;"><p style="font-size: 22px;">告警详情</p></td>
           <td>&nbsp;</td>
         </tr>
@@ -27,7 +27,7 @@
           <td>这是01告警信息的详细情况，可点击标题查看</td>
         </tr>
         <tr>
-          <td>处理状态：<el-button style="border-color: #00FFFF; background-color: #606266; font-size: 12px;"><p style="color: #00FFFF;">未处理</p></el-button></td>
+          <td>处理状态：<button style="border-color: #00FFFF; background-color: #606266; font-size: 12px;"><p style="color: #00FFFF;">未处理</p></button></td>
         </tr>
         <tr>
           <td><a href="">处理操作</a></td>
@@ -88,6 +88,7 @@ export default {
     font-size: 12px;
   }
   #content table tr td{
+    padding: 0px;
     text-align: left;
     color: white;
   }
