@@ -1,14 +1,12 @@
 <template>
   <div id="alarmtreated">
-    <div id="header">
-      <table class="header_table">
-        <tr>
-          <td width="25%" style="text-align: left;"><a href="/warning" style="color: white;"><i class="iconfont icon-fanhui-copy">返回</i></a></td>
-          <td width="50%" style="text-align: center;"><p style="font-size: 22px;">告警详情</p></td>
-          <td>&nbsp;</td>
-        </tr>
-      </table>
-    </div>
+    <mt-header title="告警详情">
+      <router-link to="/" slot="left">
+      <router-link :to="{ path:'warning' }">
+        <mt-button icon="back">返回</mt-button>
+      </router-link>
+      </router-link>
+    </mt-header>
     <div id="content">
       <table width="100%">
         <tr>

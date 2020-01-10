@@ -8,13 +8,13 @@
       </router-link>
     </mt-header>
 	
-	<div id="content">
+	<div id="content" style="font-size:15px;">
 		<div>{{Name}}</div>
 		<div v-if="Online == 1"><span style="color:#00FD77;">设备在线</span></div>
 		<div v-else="Online == 0"><span style="color:red;">设备离线</span></div>
     </div>
 	
-	<div id="comb">
+	<div id="comb" style="margin-left:15px;">
 		<ul>
 			<li>
 				<div style='position:relative;width:100px;margin:0 auto;'>

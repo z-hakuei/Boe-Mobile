@@ -1,14 +1,12 @@
 <template>
   <div id="alarmlist">
-    <div id="header">
-      <table width="95%" height="100%" style="margin: auto; border-bottom: 1px solid hsla(0,0%,100%,0.5);">
-        <tr>
-          <td width="25%" style="text-align: left;"><a href="/home" style="color: white;"><i class="iconfont icon-fanhui-copy">返回</i></a></td>
-          <td width="50%" style="text-align: center;"><p style="font-size: 22px;">告警列表</p></td>
-          <td width="25%" style="text-align: right; color: white;"><i class="iconfont icon-sousuo"></i></td>
-        </tr>
-      </table>
-    </div>
+    <mt-header title="告警列表">
+      <router-link to="/" slot="left">
+      <router-link :to="{ path:'home' }">
+        <mt-button icon="back">返回</mt-button>
+      </router-link>
+      </router-link>
+    </mt-header>
     <div id="content">
       <load-more
               :pageIndex="pageIndex"
@@ -245,7 +243,7 @@
   }
 </script>
 
- <style>
+ <style scoped lang="scss">
    p{
      margin: 0;
      color: white;
@@ -271,6 +269,7 @@
      text-align: left;
      color: white;
    }
+
  #alarmlist {
    background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
    text-align: center;
@@ -287,6 +286,7 @@
    width: 95%;
    margin: auto;
    height: 100%;
+   background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
  }
  #footer{
    background-color: #04122F;
