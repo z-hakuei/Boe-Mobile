@@ -315,7 +315,7 @@
   // 　　　　　　this.handleShowMsg('没有更多数据','info');
   　　　　}
   　　},
-      //时间选择按钮确定
+      //时间选择按钮
       confirm(type){
 
         let y = this.time.getFullYear();
