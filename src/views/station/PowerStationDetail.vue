@@ -312,7 +312,7 @@
       //监听函数
       scrollFn(){
   　　　　if(this.getScrollTop() + this.getWindowHeight() == this.getScrollHeight()){
-  　　　　　　this.handleShowMsg('没有更多数据','info');
+  // 　　　　　　this.handleShowMsg('没有更多数据','info');
   　　　　}
   　　},
       //时间选择按钮确定

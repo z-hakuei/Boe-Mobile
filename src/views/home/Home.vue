@@ -223,7 +223,7 @@
   .home{
     height: 100%;
     width: 100%;
-
+    overflow-x: hidden;
   }
   .header{
     background-color: #0B1A3B;
