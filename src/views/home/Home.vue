@@ -225,6 +225,9 @@
     width: 100%;
     overflow-x: hidden;
   }
+  .home .mint-header{
+    background-color: transparent !important;
+  }
   .header{
     background-color: #0B1A3B;
     font-size: 5em;

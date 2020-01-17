@@ -8,25 +8,25 @@
  -->
 <template>
 	<tab-bar>
-		<tab-bar-item path="/home" activecolor="#051534">
+		<tab-bar-item path="/home" activecolor="#2be3e1">
 			<img slot="item-icon" src="../../assets/images/tabbar/index.svg" alt="">
 			<img slot="item-icon-active" src="../../assets/images/tabbar/index_active.svg" alt="">
-			<div slot="item-text">首页</div>
+			<div slot="item-text" style="color: #fff">首页</div>
 		</tab-bar-item>
-		<tab-bar-item path="/powerstation" activecolor="#051534">
+		<tab-bar-item path="/powerstation" activecolor="#2be3e1">
 			<img slot="item-icon" src="../../assets/images/tabbar/station.svg" alt="">
 			<img slot="item-icon-active" src="../../assets/images/tabbar/station_active.svg" alt="">
-			<div slot="item-text">电站</div>
+			<div slot="item-text" style="color: #fff">电站</div>
 		</tab-bar-item>
-		<tab-bar-item path="/map" activecolor="#051534">
+		<tab-bar-item path="/map" activecolor="#2be3e1">
 			<img slot="item-icon" src="../../assets/images/tabbar/map.svg" alt="">
 			<img slot="item-icon-active" src="../../assets/images/tabbar/map_active.svg" alt="">
-			<div slot="item-text">地图</div>
+			<div slot="item-text" style="color: #fff">地图</div>
 		</tab-bar-item>
-		<tab-bar-item path="/warning" activecolor="#051534;">
+		<tab-bar-item path="/warning" activecolor="#2be3e1;">
 			<img slot="item-icon" src="../../assets/images/tabbar/warning.svg" alt="">
 			<img slot="item-icon-active" src="../../assets/images/tabbar/warning_active.svg" alt="">
-			<div slot="item-text">告警</div>
+			<div slot="item-text" style="color: #fff">告警</div>
 		</tab-bar-item>
 		</tab-bar>
 </template>
