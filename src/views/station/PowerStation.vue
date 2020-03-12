@@ -14,32 +14,33 @@
           cancel-text="取消"
           placeholder="搜索" class="serach">
       </mt-search>
-        <load-more 
-            :pageIndex="pageIndex" 
-            :pageSize="pageSize" 
-            :totalCount="totalCount" 
-            :openRefresh="true"
-            @refresh="refresh"
-            @loadmore="loadmore">
-            <ul>
-              <li class="powerstationlist" v-for="(item,key) in stationdata">
-                <span class="powerstation">
-                    <span @click="handleroute(item.pv_id)">
-                      <img class="stationimage" :src="getImgURL(item)"/>
-                    </span>
-                  <span class="addresstitle">{{item.name}}</span>
-                  <span class="detailtitle">总装机容量{{item.mw}}MW</span>
+      <load-more
+        :pageIndex="pageIndex"
+        :pageSize="pageSize"
+        :totalCount="totalCount"
+        :openRefresh="true"
+        @refresh="refresh"
+        @loadmore="loadmore"
+      >
+        <ul>
+          <li class="powerstationlist" v-for="(item,key) in stationdata">
+            <span class="powerstation">
+                <span @click="handleroute(item.pv_id)">
+                  <img class="stationimage" :src="getImgURL(item)"/>
                 </span>
-                <span class="stationdetail">
-                  <div>设备总量:{{item['dev_count']}}</div>
-                  <div>在线设备总量:{{item['dev_online']}}</div>
-                  <div>机器人数量:{{item['roboot_count']}}</div>
-                  <div>环监数量:{{item['env_count']}}</div>
-                  <div>摆渡车数量:{{item['shuttle_count']}}</div>
-                </span>
-              </li>
-            </ul>
-        </load-more>
+              <span class="addresstitle">{{item.name}}</span>
+              <span class="detailtitle">总装机容量{{item.mw}}MW</span>
+            </span>
+            <span class="stationdetail">
+              <div>设备总量:{{item['dev_count']}}</div>
+              <div>在线设备总量:{{item['dev_online']}}</div>
+              <div>机器人数量:{{item['roboot_count']}}</div>
+              <div>环监数量:{{item['env_count']}}</div>
+              <div>摆渡车数量:{{item['shuttle_count']}}</div>
+            </span>
+          </li>
+        </ul>
+      </load-more>
     </div>
     
   </div>
@@ -89,11 +90,13 @@
       },
       loadmore(pageIndex){
         //上滑加载更多，pageIndex为下一页页码,
+        console.log('赏花')
         this.handleLoading();
         this.pageIndex = pageIndex
         this.getData();
       },
       refresh(){//刷新
+        console.log('刷新')
       },
       handleroute(pv_id){
         this.$router.push({ path: '/powerstationdetail',query:{pvid:pv_id} })
@@ -237,48 +240,56 @@
     width:100%;
     height:100%;
 		font-size: 10px;
+    .mint-header {
+      background-color: transparent !important;
+    }
     .homeBody {
 			/* public start */
       background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
 			.serach{
         height: 100%;
+        .mint-searchbar {
+          background: #1a2e54;
+        }
 			}
 			.powerstationlist{
 				display: flex;
 				flex-direction: row;
-				padding:0% 1%;
-				border-top: 1px solid #0849b3;
-				border-bottom: 1px solid #0849b3;
+        margin: 0 10px;
+        padding: 10px 8px;
+				border-bottom: 1px solid #505050;
 				.powerstation{
 					display: flex;
-					padding: 2% 0%;
 					flex-direction: column;
-					width:22%;
-					border-right: 1px solid #0849b3;
-					.itemBox{
-          >span{
-            display: block;
+					width: 140px;
+					.itemBox {
+            > span {
+              display: block;
+            }
+            &.active {
+              color: #00BCD4;
+            }
           }
-          &.active{
-            color: #00BCD4;
-          }
-        }
 					.stationimage{
-						width:35%;
-						margin:10px 10px;
+						width: 100%;
+            border: 1px solid skyblue;
 					}
 					.detailtitle{
-						padding-left: 6%;
+						text-align: center;
 						color: #566cac;
 					}
 					.addresstitle{
-						padding-left: 6%;
+						text-align: center;
+            padding: 6px 0;
 						color: #fff;
 					}
 				}
 				.stationdetail{
-					padding: 2% 2%;
-					color: #fff;
+          margin-left: 20px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+					color: #e6ecf0;
 				}
 			}
     }

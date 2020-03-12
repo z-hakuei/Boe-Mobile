@@ -21,15 +21,15 @@
               <div class="yearInstallStatistics">
                 <div class="singleStatisticsNumber"><span style="margin-right:33%;">{{CurrentPowerGeneration}}</span></div>
                 <div class="explainTitleText"><span>当年发电量（万KWh）</span></div>
+                <div class="progressBox"><mt-progress :value="20" :bar-height="2"></mt-progress></div>
               </div>
               <div class="totalProfit">
                 <div class="singleStatisticsNumber"><span>{{DayPowerGeneration}}</span></div>
                 <div class="explainTitleText"><span>当日发电量（万KWh）</span></div>
+                <div class="progressBox"><mt-progress class="dayGeneratePower" :value="20" :bar-height="2"></mt-progress></div>
               </div>
             </div>
           </div>
-        
-
           <div class="facilityStatistics">
             <div class="facilityTypeStatistics">
               <div class="statisticsNumber"><span>{{PowerStationCapacity}}</span></div>
@@ -53,15 +53,21 @@
       </div>
       <div class="facilityInstallStatisticsBox">
         <div class="titleBox">
-            <span>月发电量</span>
-            <vue-datepicker-local 
-            v-model="time" 
-            format="YYYY-MM" 
-            @confirm="confirm(1)" 
-            style="width: 40px;"
-            inputClass="datecss"
-            show-buttons />
-            
+          <span>月发电量</span>
+<!--          <vue-datepicker-local-->
+<!--            v-model="time"-->
+<!--            format="YYYY-MM"-->
+<!--            @confirm="confirm(1)"-->
+<!--            style="width: 40px; background: red;"-->
+<!--            inputClass="datecss"-->
+<!--            show-buttons-->
+<!--          />-->
+          <span @click="$refs.picker.open()">{{ monthPower }}</span>
+          <mt-datetime-picker
+            ref="picker"
+            type="date"
+            @confirm="selectMonth"
+          />
         </div>
         <div id="MonthlyPowerGenerationChart" class="fullChartBox"></div>
       </div>
@@ -93,15 +99,15 @@
         <div class="facilityStatistics">
           <div class="facilityTypeStatistics">
             <div class="statisticsNumber"><span>月累计发电量</span></div>
-            <div class="explainTitleText"><span>{{MonthGenerationData}}（万kwh）</span></div>
+            <div class="explainTitleText"><span>{{MonthGenerationData}}</span><span class="unitText">（万kwh）</span></div>
           </div>
           <div class="facilityTypeStatistics">
             <div class="statisticsNumber"><span>月提升电量</span></div>
-            <div class="explainTitleText"><span>{{MonthLiftData}}（万kwh）</span></div>
+            <div class="explainTitleText"><span>{{MonthLiftData}}</span><span class="unitText">（万kwh）</span></div>
           </div>
           <div class="facilityTypeStatistics">
             <div class="statisticsNumber"><span>月平均提升比</span></div>
-            <div class="explainTitleText"><span>{{MonthAverageLift}}（%）</span></div>
+            <div class="explainTitleText"><span>{{MonthAverageLift}}</span><span class="unitText">（%）</span></div>
           </div>
           </div>
         </div>
@@ -141,7 +147,14 @@
       </div>
       <div class="facilityInstallStatisticsBox">
         <div class="titleBox">
-          机器人
+          <select class="selectFacility">
+            <option value="1">机器人1</option>
+            <option value="2">机器人2</option>
+            <option value="3">机器人3</option>
+            <option value="4">机器人4</option>
+            <option value="5">机器人5</option>
+          </select>
+          <span class="iconfont" style="font-size: 16px;">&#xe64c;</span>
         </div>
         <div id="DayInstallChart" class="fullChartBox">
           <load-more 
@@ -158,14 +171,14 @@
                     </span>
                 </span>
                 <span class="stationdetail" style="line-height:20px;">
-                  <div>清扫次数:{{item.count}}次</div>
-                  <div>设备状态:{{item.status}}</div>
-                  <div v-if="item.warn == 1">告警状态:<span style="color:red;">危险</span></div>
-                  <div v-else-if="item.warn == 0">告警状态:<span style="color:green;">正常</span></div>
+                  <div>清扫次数：{{item.count}}次</div>
+                  <div>设备状态：{{item.status}}</div>
+                  <div v-if="item.warn == 1">告警状态：<span style="color:red;">危险</span></div>
+                  <div v-else-if="item.warn == 0">告警状态：<span style="color:green;">正常</span></div>
                   <div style="color:#00FF7F" v-if="item.online == 1">设备在线</div>
                   <div style="color:Red" v-else-if="item.online == 0">设备离线</div>
                 </span>
-                <span @click="handleroute(item.r_id)" style="color:#00FFFF;padding-top:17%;display:fiex;position:absolute;padding-left:300px;">{{item.name}}</span>
+                <span class="facilityNameBtn" @click="handleroute(item.r_id)">{{item.name}}</span>
               </li>
           </load-more>
         </div>
@@ -233,7 +246,8 @@
         time: new Date(),
         pageIndex: 0,
         pageSize: 3,
-        totalCount: 0
+        totalCount: 0,
+        monthPower: null,
       }
     },
 
@@ -262,6 +276,11 @@
     },
 
     methods: {
+      // 选择月
+      selectMonth(value){
+        console.log(Date.parse(value))
+        this.monthPower = Date.parse(value)
+      },
 
       loadmore(pageIndex){
         //上滑加载更多，pageIndex为下一页页码,
@@ -395,11 +414,12 @@
           const option = {
             color: ['green','red'],//表格全局颜色
             legend:{
-                textStyle:{
-                  fontSize: 18,//字体大小
-                  color:['#566cac','#566cac']//字体颜色
-                },
-                data:['发电量','功率']//表格图例
+              right: 0,
+              textStyle:{
+                fontSize: 18,//字体大小
+                color:['#566cac','#566cac']//字体颜色
+              },
+              data:['发电量','功率']//表格图例
             },
             tooltip: {
               trigger: 'axis'//点击图标中的点显示的信息
@@ -559,19 +579,19 @@
             const charts = echarts.init(document.getElementById('MonthlyPowerGenerationChart'))
             // console.log(xdata);
             const option = {
-              color: 'rgba(90,109,255,0.6)',
+              color: 'rgba(60, 180, 134, 0.6)',
               xAxis: {
                 type: 'category',
                 boundaryGap: true,//false y轴第一个数据以0为中心
                 axisLine: {
                   lineStyle: {
-                    color: 'deepskyblue'
+                    color: '#fff'
                   }
                 },
                 splitLine: {
                   show: false,
                   lineStyle: {
-                    color: 'deepskyblue'
+                    color: '#fff'
                   }
                 },
                 data: data.x
@@ -585,7 +605,7 @@
                 barWidth : 10,//柱状图的宽度
                 axisLine: {
                   lineStyle: {
-                    color: 'deepskyblue'
+                    color: '#fff'
                   }
                 },
                 splitLine: {
@@ -649,6 +669,7 @@
                   trigger: 'axis'
               },
               legend: {
+                right: 0,
                 textStyle:{//图例文字的样式
                     color:'#566cac',
                     fontSize:16
@@ -795,6 +816,7 @@
                 trigger: 'axis'//点击图标中的点显示的信息
               },
               legend: {
+                right: 0,
                 textStyle:{//图例文字的样式
                     color:'#fff',//图例文字颜色
                     fontSize:16//图例文字大小
@@ -1056,6 +1078,27 @@
   }
 </script>
 
+<style lang="scss">
+  .dayGeneratePower {
+    .mt-progress-progress {
+      background: #f8672e;
+    }
+  }
+  .datepicker {
+    .datecss {
+      background: #06245e;
+    }
+  }
+  .picker {
+    position: absolute;
+    left: 60px;
+    top: -70px;
+    .picker-item {
+      color: #fff;
+    }
+  }
+</style>
+
 <style scoped lang="scss">
 
   .map {
@@ -1075,6 +1118,7 @@
     padding:0% 1%;
     border-top: 1px solid #778899;
     border-bottom: 1px solid #778899;
+    position: relative;
     .powerstation{
       display: flex;
       padding: 2% 10%;
@@ -1106,9 +1150,21 @@
       padding: 2% 2%;
       color: #fff;
     }
+    .facilityNameBtn {
+      color:#00FFFF;
+      position: absolute;
+      right: 10px;
+      bottom: 8px;
+      background: #21365f;
+      padding: 10px 20px;
+      border-radius: 20px;
+    }
 	}
   #PowerStationDetail {
     font-size: 14px;
+    .mint-header {
+      background: #1a2e54;
+    }
     .homeBody {
       background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
       .other-people {
@@ -1135,12 +1191,30 @@
         -moz-box-shadow: #d4d2d2 0px 0px 10px;
       }
       .explainTitleText {
-        color: #566cac;
+        color: #fff;
+        font-size: 20px;
+        .unitText {
+          font-size: 12px;
+        }
+      }
+      .progressBox {
+        display: inline-block;
+        width: 60%;
       }
       .titleBox {
         padding: 10px;
         color: #fff;
         box-shadow: 0 0 10px 4px #7188ff inset;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+        .selectFacility {
+          background: transparent;
+          color: #9f8686;
+          border: none;
+        }
       }
       .fullChartBox {
         width: 100%;
@@ -1153,8 +1227,8 @@
         .installStatistics {
           padding: 20px 0;
           >.number {
-            -webkit-text-stroke:1px #fff;
-            color: #023fa0;
+            /*-webkit-text-stroke:1px #fff;*/
+            color: #3ce3fd;
             font-size: 30px;
             font-weight: bold;
             // text-shadow:0px 0px 8px #fff, 0px 0px 42px #fff, 0px 0px 72px #fff,0px 0px 150px #fff;
@@ -1181,11 +1255,12 @@
         >.facilityTypeStatistics {
           text-align: center;
           width: 33%;
+          border-right: 1px solid #1d3d7c;
           >.statisticsNumber {
-            -webkit-text-stroke:1px #fff;
+            /*-webkit-text-stroke:1px #fff;*/
             color: #fff;
             font-size: 18px;
-            font-weight: bold;
+            /*font-weight: bold;*/
             // text-shadow:0px 0px 8px #fff, 0px 0px 42px #fff, 0px 0px 72px #fff,0px 0px 150px #fff;
           }
         }
