@@ -1,8 +1,8 @@
 /*
  * @Author: ldk
  * @Date: 2019-12-14 22:25:09
- * @LastEditTime : 2020-01-09 19:27:10
- * @LastEditors  : Please set LastEditors
+ * @LastEditTime: 2020-03-17 23:01:08
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \compress\src\main.js
  */
@@ -19,6 +19,9 @@ import MD5 from 'js-md5'
 import Message from 'vue-m-message'//全局注册消息提示组件
 import LoadMore from 'vue-loadmore-simple'//全局注册懒加载组件
 // import { List } from 'vant';
+import { DropdownMenu, DropdownItem } from 'vant';
+
+
 
 Vue.prototype.$axios =axios
 Vue.use(BaiduMap, {
@@ -28,7 +31,8 @@ Vue.use(MintUI)
 Vue.use(Message)
 Vue.use(LoadMore)
 // Vue.use(List);//引入列表加载
-
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
 Vue.prototype.$MD5 = MD5;
 Vue.config.productionTip = false
 

@@ -14,25 +14,25 @@
         <div class="num">
           <div class="installCapacityStatistics">
             <div class="installStatistics">
-              <div class="number"><span style="margin-right:53%;">{{CumulativePowerGeneration}}</span></div>
+              <div class="number"><span style="margin-right:70%;">{{CumulativePowerGeneration}}</span></div>
               <div class="explainTitleText"><span style="margin-right:50%;">累计发电量（万KWh）</span></div>
             </div>
             <div class="singleStatistics">
               <div class="yearInstallStatistics">
-                <div class="singleStatisticsNumber"><span style="margin-right:33%;">{{CurrentPowerGeneration}}</span></div>
+                <div class="singleStatisticsNumber"><span style="margin-right:55%;">{{CurrentPowerGeneration}}</span></div>
                 <div class="explainTitleText"><span>当年发电量（万KWh）</span></div>
+                <div class="progressBox"><mt-progress :value="20" :bar-height="2" class="yearGeneratePower" style="margin-left: -32%;margin-right: 50%;"></mt-progress></div>
               </div>
               <div class="totalProfit">
-                <div class="singleStatisticsNumber"><span>{{DayPowerGeneration}}</span></div>
+                <div class="singleStatisticsNumber"><span style="margin-right:75%;">{{DayPowerGeneration}}</span></div>
                 <div class="explainTitleText"><span>当日发电量（万KWh）</span></div>
+                <div class="progressBox"><mt-progress style="margin-left: -31%;margin-right: 49%;" class="dayGeneratePower" :value="20" :bar-height="2"></mt-progress></div>
               </div>
             </div>
           </div>
-        
-
           <div class="facilityStatistics">
             <div class="facilityTypeStatistics">
-              <div class="statisticsNumber"><span>{{PowerStationCapacity}}</span></div>
+              <div class="statisticsNumber"><span>{{PowerStationCapacity}}MW</span></div>
               <div class="explainTitleText"><span>电站容量</span></div>
             </div>
             <div class="facilityTypeStatistics">
@@ -52,56 +52,52 @@
         <div id="facilityInstallStatisticsChart" class="fullChartBox"></div>
       </div>
       <div class="facilityInstallStatisticsBox">
-        <div class="titleBox">
-            <span>月发电量</span>
-            <vue-datepicker-local 
-            v-model="time" 
-            format="YYYY-MM" 
-            @confirm="confirm(1)" 
-            style="width: 40px;"
-            inputClass="datecss"
-            show-buttons />
-            
+        <div @click="$refs.monthPowerPicker.open()" class="titleBox">
+          <span>月发电量</span>
+          <span style="text-decoration: underline;">{{ monthPowerMonth }}</span>
         </div>
+        <mt-datetime-picker
+          ref="monthPowerPicker"
+          type="date"
+          @confirm="monthPowerSelectMonth"
+        />
         <div id="MonthlyPowerGenerationChart" class="fullChartBox"></div>
       </div>
       <div class="facilityInstallStatisticsBox">
-        <div class="titleBox">
-            <span>已/未安装方阵日运行趋势</span>
-            <vue-datepicker-local 
-            v-model="time" 
-            format="YYYY-MM" 
-            @confirm="confirm(2)" 
-            style="width: 40px;"
-            inputClass="datecss"
-            show-buttons />
+        <div class="titleBox" @click="$refs.installRunRatioPicker.open()">
+          <span>已/未安装方阵日运行趋势</span>
+          <span style="text-decoration: underline;">{{ installRunRatioMonth }}</span>
         </div>
+        <mt-datetime-picker
+          ref="installRunRatioPicker"
+          type="date"
+          @confirm="installRunRatioSelectMonth"
+        />
         <div id="DayInstallChart" class="fullChartBox"></div>
       </div>
       <div class="facilityInstallStatisticsBox">
-        <div class="titleBox">
-            <span>已/未安装方阵月发电量对比</span>
-            <vue-datepicker-local 
-            v-model="time" 
-            format="YYYY-MM" 
-            @confirm="confirm(3)" 
-            style="width: 40px;"
-            inputClass="datecss"
-            show-buttons />
+        <div class="titleBox" @click="$refs.installPowerRatioPicker.open()">
+          <span>已/未安装方阵月发电量对比</span>
+          <span style="text-decoration: underline;">{{ installPowerRatioMonth }}</span>
         </div>
+        <mt-datetime-picker
+          ref="installPowerRatioPicker"
+          type="date"
+          @confirm="installPowerRatioSelectMonth"
+        />
         <div id="MonthInstallChart" class="fullChartBox"></div>
         <div class="facilityStatistics">
           <div class="facilityTypeStatistics">
             <div class="statisticsNumber"><span>月累计发电量</span></div>
-            <div class="explainTitleText"><span>{{MonthGenerationData}}（万kwh）</span></div>
+            <div class="explainTitleText"><span>{{MonthGenerationData}}</span><span class="unitText">（万kwh）</span></div>
           </div>
           <div class="facilityTypeStatistics">
             <div class="statisticsNumber"><span>月提升电量</span></div>
-            <div class="explainTitleText"><span>{{MonthLiftData}}（万kwh）</span></div>
+            <div class="explainTitleText"><span>{{MonthLiftData}}</span><span class="unitText">（万kwh）</span></div>
           </div>
           <div class="facilityTypeStatistics">
             <div class="statisticsNumber"><span>月平均提升比</span></div>
-            <div class="explainTitleText"><span>{{MonthAverageLift}}（%）</span></div>
+            <div class="explainTitleText"><span>{{MonthAverageLift}}</span><span class="unitText">（%）</span></div>
           </div>
           </div>
         </div>
@@ -140,8 +136,15 @@
         </baidu-map>
       </div>
       <div class="facilityInstallStatisticsBox">
-        <div class="titleBox">
-          机器人
+        <div class="titleBox" id="reboots">
+          <!-- <select class="selectFacility" id="reboots"> -->
+<!--            <option v-for="item in facilityList" :value="item.id">{{ item.value }}</option>-->
+            
+          <!-- </select> -->
+          <van-dropdown-menu class="selectFacility" style="height:25px;width:100px;">
+            <van-dropdown-item v-model="value" :options="option" @change="indexSelect()" />
+          </van-dropdown-menu>
+          <span class="iconfont" style="font-size: 16px;" @click="get_roboot_by_name()">&#xe64c;</span>
         </div>
         <div id="DayInstallChart" class="fullChartBox">
           <load-more 
@@ -158,14 +161,14 @@
                     </span>
                 </span>
                 <span class="stationdetail" style="line-height:20px;">
-                  <div>清扫次数:{{item.count}}次</div>
-                  <div>设备状态:{{item.status}}</div>
-                  <div v-if="item.warn == 1">告警状态:<span style="color:red;">危险</span></div>
-                  <div v-else-if="item.warn == 0">告警状态:<span style="color:green;">正常</span></div>
+                  <div>清扫次数：{{item.count}}次</div>
+                  <div>设备状态：{{item.status}}</div>
+                  <div v-if="item.warn == 1">告警状态：<span style="color:red;">危险</span></div>
+                  <div v-else-if="item.warn == 0">告警状态：<span style="color:green;">正常</span></div>
                   <div style="color:#00FF7F" v-if="item.online == 1">设备在线</div>
                   <div style="color:Red" v-else-if="item.online == 0">设备离线</div>
                 </span>
-                <span @click="handleroute(item.r_id)" style="color:#00FFFF;padding-top:17%;display:fiex;position:absolute;padding-left:300px;">{{item.name}}</span>
+                <span class="facilityNameBtn" @click="handleroute(item.r_id)">{{item.name}}</span>
               </li>
           </load-more>
         </div>
@@ -233,7 +236,22 @@
         time: new Date(),
         pageIndex: 0,
         pageSize: 3,
-        totalCount: 0
+        totalCount: 0,
+        monthPowerMonth: `${(new Date()).getFullYear()}-${(new Date()).getMonth() + 1}`,
+        installRunRatioMonth: `${(new Date()).getFullYear()}-${(new Date()).getMonth() + 1}`,
+        installPowerRatioMonth: `${(new Date()).getFullYear()}-${(new Date()).getMonth() + 1}`,
+        value: 1,
+        option: [
+          { text: '1号机器人', value: 1 },
+          { text: '2号机器人', value: 2 },
+          { text: '3号机器人', value: 3 },
+          { text: '4号机器人', value: 4 },
+          { text: '5号机器人', value: 5 },
+          { text: '6号机器人', value: 6 },
+          { text: '7号机器人', value: 7 },
+          { text: '8号机器人', value: 8 },
+        ],
+        robootname:''
       }
     },
 
@@ -262,6 +280,63 @@
     },
 
     methods: {
+
+      //机器人搜索
+      get_roboot_by_name(){
+        this.getRebot(this.robootname)
+      },
+      indexSelect(){
+        this.option.forEach(element => {
+          if(this.value == element.value){
+            // this.getRebot(element.text);
+            this.robootname = element.text;
+          }
+        });
+      },
+      // 月发电量选择月
+      monthPowerSelectMonth(value){
+        let now = new Date(value)
+
+        let year = now.getFullYear()  //取得4位数的年份
+        let month = now.getMonth() + 1  //取得日期中的月份，其中0表示1月，11表示12月
+        let date = now.getDate()      //返回日期月份中的天数（1到31）
+        let hour = now.getHours()     //返回日期中的小时数（0到23）
+        let minute = now.getMinutes() //返回日期中的分钟数（0到59）
+        let second = now.getSeconds() //返回日期中的秒数（0到59）
+        this.monthPowerMonth = `${year}-${month}`
+        // 请求接口
+        this.makeChartsMonthlyPowerGenerationStatistics(this.monthPowerMonth)
+      },
+
+      // 安装运行趋势选择月
+      installRunRatioSelectMonth(value){
+        let now = new Date(value)
+
+        let year = now.getFullYear()  //取得4位数的年份
+        let month = now.getMonth() + 1  //取得日期中的月份，其中0表示1月，11表示12月
+        let date = now.getDate()      //返回日期月份中的天数（1到31）
+        let hour = now.getHours()     //返回日期中的小时数（0到23）
+        let minute = now.getMinutes() //返回日期中的分钟数（0到59）
+        let second = now.getSeconds() //返回日期中的秒数（0到59）
+        this.installRunRatioMonth = `${year}-${month}`
+        // 请求接口
+        this.makeChartDayInstallStatistics(this.installRunRatioMonth)
+      },
+
+      // 安装发电量对比选择月
+      installPowerRatioSelectMonth(value){
+        let now = new Date(value)
+
+        let year = now.getFullYear()  //取得4位数的年份
+        let month = now.getMonth() + 1  //取得日期中的月份，其中0表示1月，11表示12月
+        let date = now.getDate()      //返回日期月份中的天数（1到31）
+        let hour = now.getHours()     //返回日期中的小时数（0到23）
+        let minute = now.getMinutes() //返回日期中的分钟数（0到59）
+        let second = now.getSeconds() //返回日期中的秒数（0到59）
+        this.installPowerRatioMonth = `${year}-${month}`
+        // 请求接口
+        this.markeMonthInstallChart(this.installPowerRatioMonth)
+      },
 
       loadmore(pageIndex){
         //上滑加载更多，pageIndex为下一页页码,
@@ -315,25 +390,6 @@
   // 　　　　　　this.handleShowMsg('没有更多数据','info');
   　　　　}
   　　},
-      //时间选择按钮
-      confirm(type){
-
-        let y = this.time.getFullYear();
-        let m = this.time.getMonth() + 1;
-        m = m < 10 ? '0' + m : m;
-        let date = y + '-' + m;
-        if(type == 1){
-          this.handleLoading();
-          this.makeChartsMonthlyPowerGenerationStatistics(date);
-        }else if(type == 2){
-          this.handleLoading();
-          this.makeChartDayInstallStatistics(date);
-        }else if(type == 3){
-          this.handleLoading();
-          this.markeMonthInstallChart(date);
-        }
-        
-      },
       handleShowMsg(message,type) {
         this.$message({
           message: message,
@@ -348,6 +404,7 @@
         }, 500)
       },
       mainIndex() {
+        //页面自动加载
         // 设备安装统计
         this.makeChartsFacilityInstallStatistics(), 
         //月发电量统计
@@ -359,7 +416,8 @@
         //获取首页数据CumulativePowerGeneration
       },
 
-      //
+    
+      //设备安装统计（电站详情首页数据）
       makeChartsFacilityInstallStatistics () {
 
         this.handleLoading();
@@ -395,11 +453,12 @@
           const option = {
             color: ['green','red'],//表格全局颜色
             legend:{
-                textStyle:{
-                  fontSize: 18,//字体大小
-                  color:['#566cac','#566cac']//字体颜色
-                },
-                data:['发电量','功率']//表格图例
+              right: 0,
+              textStyle:{
+                fontSize: 18,//字体大小
+                color:['#566cac','#566cac']//字体颜色
+              },
+              data:['发电量','功率']//表格图例
             },
             tooltip: {
               trigger: 'axis'//点击图标中的点显示的信息
@@ -559,19 +618,19 @@
             const charts = echarts.init(document.getElementById('MonthlyPowerGenerationChart'))
             // console.log(xdata);
             const option = {
-              color: 'rgba(90,109,255,0.6)',
+              color: 'rgba(60, 180, 134, 0.6)',
               xAxis: {
                 type: 'category',
                 boundaryGap: true,//false y轴第一个数据以0为中心
                 axisLine: {
                   lineStyle: {
-                    color: 'deepskyblue'
+                    color: '#fff'
                   }
                 },
                 splitLine: {
                   show: false,
                   lineStyle: {
-                    color: 'deepskyblue'
+                    color: '#fff'
                   }
                 },
                 data: data.x
@@ -585,7 +644,7 @@
                 barWidth : 10,//柱状图的宽度
                 axisLine: {
                   lineStyle: {
-                    color: 'deepskyblue'
+                    color: '#fff'
                   }
                 },
                 splitLine: {
@@ -649,6 +708,7 @@
                   trigger: 'axis'
               },
               legend: {
+                right: 0,
                 textStyle:{//图例文字的样式
                     color:'#566cac',
                     fontSize:16
@@ -795,6 +855,7 @@
                 trigger: 'axis'//点击图标中的点显示的信息
               },
               legend: {
+                right: 0,
                 textStyle:{//图例文字的样式
                     color:'#fff',//图例文字颜色
                     fontSize:16//图例文字大小
@@ -1035,7 +1096,7 @@
             this.rebotdata = this.rebotdata.concat(data);
             this.totalCount = this.totalCount+data.length;
           }else{
-            // this.handleShowMsg('没有更多了...','info');
+            this.handleShowMsg('没有更多数据了','info');
           }
           
         }).catch(err => {
@@ -1056,6 +1117,24 @@
   }
 </script>
 
+<style lang="scss">
+  .dayGeneratePower {
+      .mt-progress-progress {
+        background: #f8672e;
+      }
+  }
+  .yearGeneratePower{
+    .mt-progress-progress {
+        width: 57% !important;
+      }
+  }
+  .datepicker {
+    .datecss {
+      background: #06245e;
+    }
+  }
+</style>
+
 <style scoped lang="scss">
 
   .map {
@@ -1075,6 +1154,7 @@
     padding:0% 1%;
     border-top: 1px solid #778899;
     border-bottom: 1px solid #778899;
+    position: relative;
     .powerstation{
       display: flex;
       padding: 2% 10%;
@@ -1106,9 +1186,21 @@
       padding: 2% 2%;
       color: #fff;
     }
+    .facilityNameBtn {
+      color:#00FFFF;
+      position: absolute;
+      right: 10px;
+      bottom: 8px;
+      background: #21365f;
+      padding: 10px 20px;
+      border-radius: 20px;
+    }
 	}
   #PowerStationDetail {
     font-size: 14px;
+    .mint-header {
+      background: #1a2e54;
+    }
     .homeBody {
       background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
       .other-people {
@@ -1131,16 +1223,34 @@
         margin-bottom: 15px;
         border-radius: 2px;
         box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, .05);
-        -webkit-box-shadow: #d4d2d2 0px 0px 10px;
+        //-webkit-box-shadow: #d4d2d2 0px 0px 10px;
         -moz-box-shadow: #d4d2d2 0px 0px 10px;
       }
       .explainTitleText {
-        color: #566cac;
+        color: #fff;
+        font-size: 15px;
+        .unitText {
+          font-size: 12px;
+        }
+      }
+      .progressBox {
+        display: inline-block;
+        width: 60%;
       }
       .titleBox {
         padding: 10px;
-        color: #fff;
-        box-shadow: 0 0 10px 4px #7188ff inset;
+        color: #10BAE0;
+        //box-shadow: 0 0 10px 4px #7188ff inset;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+        .selectFacility {
+          background: transparent;
+          color: #9f8686;
+          border: none;
+        }
       }
       .fullChartBox {
         width: 100%;
@@ -1153,9 +1263,9 @@
         .installStatistics {
           padding: 20px 0;
           >.number {
-            -webkit-text-stroke:1px #fff;
-            color: #023fa0;
-            font-size: 30px;
+            /*-webkit-text-stroke:1px #fff;*/
+            color: #3ce3fd;
+            font-size: 50px;
             font-weight: bold;
             // text-shadow:0px 0px 8px #fff, 0px 0px 42px #fff, 0px 0px 72px #fff,0px 0px 150px #fff;
           }
@@ -1181,11 +1291,12 @@
         >.facilityTypeStatistics {
           text-align: center;
           width: 33%;
+          border-right: 1px solid #1d3d7c;
           >.statisticsNumber {
-            -webkit-text-stroke:1px #fff;
+            /*-webkit-text-stroke:1px #fff;*/
             color: #fff;
             font-size: 18px;
-            font-weight: bold;
+            /*font-weight: bold;*/
             // text-shadow:0px 0px 8px #fff, 0px 0px 42px #fff, 0px 0px 72px #fff,0px 0px 150px #fff;
           }
         }
