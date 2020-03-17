@@ -242,6 +242,7 @@
         installPowerRatioMonth: `${(new Date()).getFullYear()}-${(new Date()).getMonth() + 1}`,
         value: 1,
         option: [
+          { text: '', value: 0 },
           { text: '1号机器人', value: 1 },
           { text: '2号机器人', value: 2 },
           { text: '3号机器人', value: 3 },
@@ -284,7 +285,42 @@
       //机器人搜索
       get_roboot_by_name(){
         this.pageIndex = 0;
-        this.getRebot(this.robootname)
+        this.rebotdata = [];
+        this.totalCount = 0;
+        name = this.robootname;
+        let Message = this.$route.query.pvid.toString()+this.pageSize+name+this.pageIndex;
+        let key = 'H@ppy1@3';
+        let hash = Cryptojs.HmacSHA256(Message.toString(), key).toString();
+        let sign = this.$MD5(hash).toUpperCase();
+        let formData = new FormData()
+        formData.append('index',this.pageIndex);
+        formData.append('name',name);
+        formData.append('num',this.pageSize);
+        formData.append('pv_id',this.$route.query.pvid);
+        formData.append('sign',sign);
+        request({
+          url: '/interface/PvRoboots',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'token' : this.Token,
+            'platform' : 'a'
+          },
+          data: formData
+        }).then(res => {
+
+          let data = res.data.data.list;
+          if(data.length != 0){
+
+            this.rebotdata = this.rebotdata.concat(data);
+            this.totalCount = this.totalCount+data.length;
+          }else{
+            this.handleShowMsg('没有更多数据了','info');
+          }
+          
+        }).catch(err => {
+          console.log(err);
+        })
       },
       indexSelect(){
         this.option.forEach(element => {
