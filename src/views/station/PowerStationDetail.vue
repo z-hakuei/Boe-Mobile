@@ -14,25 +14,25 @@
         <div class="num">
           <div class="installCapacityStatistics">
             <div class="installStatistics">
-              <div class="number"><span style="margin-right:70%;">{{CumulativePowerGeneration}}</span></div>
+              <div class="number"><span style="margin-right:53%;">{{CumulativePowerGeneration}}</span></div>
               <div class="explainTitleText"><span style="margin-right:50%;">累计发电量（万KWh）</span></div>
             </div>
             <div class="singleStatistics">
               <div class="yearInstallStatistics">
-                <div class="singleStatisticsNumber"><span style="margin-right:55%;">{{CurrentPowerGeneration}}</span></div>
+                <div class="singleStatisticsNumber"><span style="margin-right:33%;">{{CurrentPowerGeneration}}</span></div>
                 <div class="explainTitleText"><span>当年发电量（万KWh）</span></div>
-                <div class="progressBox"><mt-progress :value="20" :bar-height="2" class="yearGeneratePower" style="margin-left: -32%;margin-right: 50%;"></mt-progress></div>
               </div>
               <div class="totalProfit">
-                <div class="singleStatisticsNumber"><span style="margin-right:75%;">{{DayPowerGeneration}}</span></div>
+                <div class="singleStatisticsNumber"><span>{{DayPowerGeneration}}</span></div>
                 <div class="explainTitleText"><span>当日发电量（万KWh）</span></div>
-                <div class="progressBox"><mt-progress style="margin-left: -31%;margin-right: 49%;" class="dayGeneratePower" :value="20" :bar-height="2"></mt-progress></div>
               </div>
             </div>
           </div>
+        
+
           <div class="facilityStatistics">
             <div class="facilityTypeStatistics">
-              <div class="statisticsNumber"><span>{{PowerStationCapacity}}MW</span></div>
+              <div class="statisticsNumber"><span>{{PowerStationCapacity}}</span></div>
               <div class="explainTitleText"><span>电站容量</span></div>
             </div>
             <div class="facilityTypeStatistics">
@@ -283,6 +283,7 @@
 
       //机器人搜索
       get_roboot_by_name(){
+        this.pageIndex = 0;
         this.getRebot(this.robootname)
       },
       indexSelect(){

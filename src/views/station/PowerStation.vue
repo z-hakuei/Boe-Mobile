@@ -90,7 +90,6 @@
       },
       loadmore(pageIndex){
         //上滑加载更多，pageIndex为下一页页码,
-        console.log('赏花')
         this.handleLoading();
         this.pageIndex = pageIndex
         this.getData();
