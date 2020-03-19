@@ -887,9 +887,9 @@
         }).then(res => {
           if(res.data.data != null) {
             let data = res.data.data;
-            this.MonthGenerationData = data.month;
-            this.MonthLiftData = data.up;
-            this.MonthAverageLift = data.up_avg;
+            this.MonthGenerationData = data.month.toFixed(2);
+            this.MonthLiftData = data.up.toFixed(2);
+            this.MonthAverageLift = data.up_avg.toFixed(2);
             const charts = echarts.init(document.getElementById('MonthInstallChart'))
             const option = {
               color: ['red','green','yellow'],//图例图标颜色，有几个图标就写几个颜色
