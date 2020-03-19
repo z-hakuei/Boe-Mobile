@@ -240,9 +240,9 @@
         monthPowerMonth: `${(new Date()).getFullYear()}-${(new Date()).getMonth() + 1}`,
         installRunRatioMonth: `${(new Date()).getFullYear()}-${(new Date()).getMonth() + 1}`,
         installPowerRatioMonth: `${(new Date()).getFullYear()}-${(new Date()).getMonth() + 1}`,
-        value: 1,
+        value: 0,
         option: [
-          { text: '', value: 0 },
+          { text: '请选择', value: 0 },
           { text: '1号机器人', value: 1 },
           { text: '2号机器人', value: 2 },
           { text: '3号机器人', value: 3 },
@@ -287,7 +287,12 @@
         this.pageIndex = 0;
         this.rebotdata = [];
         this.totalCount = 0;
-        name = this.robootname;
+        if(this.robootname == '请选择'){
+          name = '';
+        }else{
+          name = this.robootname;
+        }
+        
         let Message = this.$route.query.pvid.toString()+this.pageSize+name+this.pageIndex;
         let key = 'H@ppy1@3';
         let hash = Cryptojs.HmacSHA256(Message.toString(), key).toString();
@@ -734,9 +739,9 @@
         }).then(res => {
           if(res.data.data != null) {
             let data = res.data.data;
-            this.MonthGenerationData = data.month;
-            this.MonthLiftData = data.up;
-            this.MonthAverageLift = data.up_avg;
+            this.MonthGenerationData = data.month.toFixed(2);
+            this.MonthLiftData = data.up.toFixed(2);
+            this.MonthAverageLift = data.up_avg.toFixed(2);
 
             const charts = echarts.init(document.getElementById('DayInstallChart'))
             const option = {
@@ -1155,6 +1160,9 @@
 </script>
 
 <style lang="scss">
+  .van-ellipsis{
+    color:#10BAE0;
+  }
   .dayGeneratePower {
       .mt-progress-progress {
         background: #f8672e;

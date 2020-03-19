@@ -7,13 +7,19 @@
       </router-link>
       </router-link>
     </mt-header>
-    <div class="homeBody" v-on:keyup.13="submit"><!--:value.sync="value" -->
-      <mt-search
-          v-model="value"
-          :result="filterResult"
-          cancel-text="取消"
-          placeholder="搜索" class="serach">
-      </mt-search>
+    <div class="homeBody" v-on:keyup.13="submit">
+      <van-search
+        v-model="value"
+        background="rgb(3, 32, 70)"
+        left-icon=""
+        show-action
+        placeholder="电站名称"
+        input-align="center"
+        @search="onSearch"
+        @cancel="onCancel"
+      >
+      <div slot="action" @click="onSearch(value)"><van-icon name="search" color="#1989fa" /></div>
+      </van-search>
       <load-more
         :pageIndex="pageIndex"
         :pageSize="pageSize"
@@ -59,7 +65,6 @@
     data() {
       return {
         value: '',//搜索框选中数据
-        defaultResult:[],//搜索框默认数据
         stationdata: [],//电站数据
         Token : storage.get('token'),
         pageIndex: 0,
@@ -86,6 +91,46 @@
       }
     },
     methods: {
+      onSearch(val) {
+        console.log(val);
+        this.pageIndex = 0;
+        this.stationdata = [];
+        this.totalCount = 0;
+        name = val;
+        let Message = this.pageSize+name+this.pageIndex;
+        let key = 'H@ppy1@3';
+        let hash = Cryptojs.HmacSHA256(Message.toString(), key).toString();
+        let sign = this.$MD5(hash).toUpperCase();
+        let formData = new FormData()
+        formData.append('index',this.pageIndex);
+        formData.append('num',this.pageSize);
+        formData.append('name',name);
+        formData.append('sign',sign);
+        request({
+          url: '/interface/Pv',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'token' : this.Token,
+            'platform' : 'a'
+          },
+          data: formData
+        }).then(res => {
+          let data = res.data.data.list;
+          if(data.length != 0){
+            this.stationdata = this.stationdata.concat(data);
+            this.totalCount = this.totalCount+data.length;
+          }
+        }).catch(err => {
+          console.log(err);
+        })
+      },
+      onCancel() {
+        // this.stationdata = [];
+        // this.totalCount = 0;
+        // this.pageIndex = 0;
+        // this.getData();
+      },
       mainIndex() {
       },
       loadmore(pageIndex){
@@ -95,7 +140,6 @@
         this.getData();
       },
       refresh(){//刷新
-        console.log('刷新')
       },
       handleroute(pv_id){
         this.$router.push({ path: '/powerstationdetail',query:{pvid:pv_id} })
@@ -154,38 +198,6 @@
   // 　　　　　　this.handleShowMsg('没有更多数据','info');
   　　　　}
   　　},
-      submit(){//搜索按钮提交数据
-        let Message = this.pageSize+this.value+this.pageIndex;
-        let key = 'H@ppy1@3';
-        let hash = Cryptojs.HmacSHA256(Message, key).toString();
-        let sign = this.$MD5(hash).toUpperCase();
-        let formData = new FormData()
-        formData.append('index',this.pageIndex);
-        formData.append('num',this.pageSize);
-        formData.append('sign',sign);
-        formData.append('name',this.value);
-        request({
-          url: '/interface/Pv',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'token' : this.Token,
-            'platform' : 'a'
-          },
-          data: formData
-        }).then(res => {
-          let pvarray=[];
-          let data = res.data.data.list;
-          this.stationdata = data;
-          this.totalCount = data.length+1;
-          for(let i =0;i<data.length;i++) {
-            pvarray.push(data[i].name);
-          }
-          this.defaultResult = pvarray;
-        }).catch(err => {
-          console.log(err);
-        })
-      },
       getImgURL(item){//拼接图像src
         return 'http://brmsh5.boeet.com.cn:82'+item.img;
       },
@@ -212,17 +224,13 @@
           },
           data: formData
         }).then(res => {
-          let pvarray=[];
           let data = res.data.data.list;
           if(data.length != 0){
             this.stationdata = this.stationdata.concat(data);
             this.totalCount = this.totalCount+data.length;
+          }else{
+            this.handleShowMsg('没有更多数据了','info');
           }
-          
-          for(let i =0;i<data.length;i++) {
-            pvarray.push(data[i].name);
-          }
-          this.defaultResult = pvarray;
         }).catch(err => {
           console.log(err);
         })
@@ -275,12 +283,12 @@
 					}
 					.detailtitle{
 						text-align: center;
-						color: #566cac;
+						color: #10BAE0;
 					}
 					.addresstitle{
 						text-align: center;
             padding: 6px 0;
-						color: #fff;
+						color: #10BAE0;
 					}
 				}
 				.stationdetail{
