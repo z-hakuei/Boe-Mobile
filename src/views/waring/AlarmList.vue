@@ -1,12 +1,17 @@
 <template>
   <div id="alarmlist">
-    <mt-header title="告警列表">
-      <router-link to="/" slot="left">
-      <router-link :to="{ path:'home' }">
-        <mt-button icon="back">返回</mt-button>
-      </router-link>
-      </router-link>
-    </mt-header>
+    <header>
+      <div class="header-title">
+        <router-link :to="{path: 'home'}">
+          <button icon="back" class="btn">>返回</button>
+        </router-link>
+        <p>告警列表</p>
+        <button class="btn" @click="showSearch = !showSearch"><i class="iconfont icon-sousuo"></i></button>
+      </div>
+      <div v-if="showSearch" id="header_input">
+        <input type="text" placeholder="请输入搜索内容" v-model="search" id="search-input">
+      </div>
+    </header>
     <div id="content">
       <load-more
               :pageIndex="pageIndex"
@@ -15,68 +20,68 @@
               :openRefresh="true"
               @refresh="refresh"
               @loadmore="loadmore">
-<!--      <table width="95%" style="font-size: 12px; margin: auto;">-->
-<!--        <tr v-for="warn in warnList">-->
-<!--          <td>-->
-            <table v-for="warn in warnList" width="100%" height="100%" style="margin: auto; border-bottom: 1px solid hsla(0,0%,100%,0.5);">
+
+            <table v-for="warn in warnList"  id="table-show">
               <tr>
-                <td style="text-align: left;" colspan="2">
-                  <router-link :to="{ path: '/AlarmTreated' }">
-                    这是{{warn.id}}告警信息：{{warn.name}}
+                <td class="headline" colspan="2">
+                  <router-link v-if="warn.dealResult == '已处理'" :to="{ path: '/AlarmTreated',query: {warn:warn}}">
+
+                  这是{{warn.id}}告警信息
+                  </router-link>
+                  <router-link v-else="warn.dealResult == '未处理'" :to="{ path: '/AlarmUntreated',query: {warn:warn}}">
+                  这是{{warn.id}}告警信息
                   </router-link>
                 </td>
               </tr>
               <tr>
-                <td style="text-align: left;">电站名称：山东高密</td>
-                <td style="text-align: right;">告警时间：{{warn.warn_time}}</td>
+                <td class="show-namewarn-time">
+                  <div>电站名称：山东高密</div>
+                  <div>告警时间：{{warn.warn_time}}</div>
+                </td>
               </tr>
               <tr>
-                <td style="text-align: left;" colspan="2">告警信息：{{warn.detail}}</td>
+                <td colspan="2">告警信息：{{warn.name}}</td>
               </tr>
               <tr>
-                <td  colspan="2" style="text-align: left;">
+                <td  colspan="2">
                   处理状态：
-                  <button style="border-color: #00FFFF; background: transparent; font-size: 12px;">
-                    <p style="color: #00FFFF;">已处理</p>
+                  <button id="btn-stat">
+                      {{warn.dealResult}}
                   </button>
                 </td>
               </tr>
             </table>
-<!--          </td>-->
-<!--        </tr>-->
-<!--      </table>-->
       </load-more>
     </div>
-    <div id="footer" class="boss">
-      <!-- <div><i class="iconfont icon-shouye"></i><div>首页</div></div>
-      <div><i class="iconfont icon-biandianzhan"></i><div>电站</div></div>
-      <div><i class="iconfont icon-ditu"></i><div>地图</div></div>
-      <div><i class="iconfont icon-gaojing"></i><div>告警</div></div> -->
-    </div>
+
   </div>
-    <!-- <img src="./assets/logo.png">
-    <router-view/> -->
 </template>
 
 <script>
+    import qs from 'qs';//引入发送post请求数据转换工具
   import {request} from "../../network/request";
   import Cryptojs from 'crypto-js';//全局引用不好使，因此局部引用
   import  storage from '@/model/storage.js'
   export default {
     name: 'AlarmList',
     components:{
+        qs,
       Cryptojs,
       storage
     },
     data() {
       return {
-        value: '',//搜索框选中数据
-        defaultResult:[],//搜索框默认数据
-        warnList: [],//告警数据
+        nList: [],
+        // warnList: [],   //接口返回的list
         Token : storage.get('token'),
         pageIndex: 0,
-        pageSize: 6,
-        totalCount: 0
+        pageSize: 5,
+
+        search: '', //初始化数据为空
+        tlist: [],
+
+        totalCount: 0,
+        showSearch: false
       }
     },
     beforeCreate() {},
@@ -93,152 +98,146 @@
       window.removeEventListener('scroll', this.scrollFn); // 销毁监听
     },
     computed : {
-      filterResult() {
-        return this.defaultResult.filter(value => new RegExp(this.value, 'i').test(value));
+      //搜索功能函数
+      //搜索功能	// 要求1：菜单列表显示搜索
+      warnList: function() {	//数据源定义一个函数
+        var search = this.search;	//定义search保存input输入的数据
+        if (search) {				//判断search里面的数据
+          return this.nList.filter(function(product) {//这里返回的nlist是通过get获取的数据
+            // console.log('************' + product);
+            return Object.keys(product).some(function(key){
+              return String(product[key]).toLowerCase().indexOf(search) > -1
+            })
+          })
+        }
+        // console.log(this.alist)
+        return this.nList;	//返回alist数据
       }
     },
     methods: {
-      mainIndex() {
-      },
-      loadmore(pageIndex){
-        //上滑加载更多，pageIndex为下一页页码,
-        this.handleLoading();
-        this.pageIndex = pageIndex
-        this.getData();
-      },
-      refresh(){//刷新
-      },
-      handleroute(id){
-        this.$router.push({ path: '/AlarmTreated',query:{id:id} })
-      },
-      handleShowMsg(message,type) {
-        this.$message({
-          message: message,
-          type: type,//'info', 'success', 'error', 'warning', 'loading'
-          showClose: true
-        })
-      },
-      handleLoading () {
-        let l = this.$message.loading('加载中...')
-        setTimeout(function () {
-          l.close()
-        }, 500)
-      },
-      //文档高度
-      getScrollTop(){
-        var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
-        if(document.body){
-          bodyScrollTop = document.body.scrollTop;
-        }
-        if(document.documentElement){
-          documentScrollTop = document.documentElement.scrollTop;
-        }
-        scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
-        return scrollTop;
-      },
-      //可视窗口高度
-      getWindowHeight(){
-        var windowHeight = 0;
-        if(document.compatMode == "CSS1Compat"){
-          windowHeight = document.documentElement.clientHeight;
-        }
-        else{
-          windowHeight = document.body.clientHeight;
-        }
-        return windowHeight;
-      },
-      //滚动条高度
-      getScrollHeight(){
-        var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
-        if(document.body){
-          bodyScrollHeight = document.body.scrollHeight;
-        }
-        if(document.documentElement){
-          documentScrollHeight = document.documentElement.scrollHeight;
-        }
-        scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
-        return scrollHeight;
-      },
-      //监听函数
-      scrollFn(){
-        if(this.getScrollTop() + this.getWindowHeight() == this.getScrollHeight()){
-          // 　　　　　　this.handleShowMsg('没有更多数据','info');
-        }
-      },
-      submit(){//搜索按钮提交数据
-        let Message = this.pageSize+this.value+this.pageIndex;
+      // lol(){//搜索显示隐藏
+      //   if(document.getElementById('search-input').style.display === 'none' ){
+
+      //     document.getElementById('search-input').style.display ='flex';
+      //     // this.$router.go(0);
+      //   }else{
+      //     document.getElementById('search-input').style.display = 'none';
+      //   }
+      // },
+        mainIndex() {
+        },
+        loadmore(pageIndex) {
+            //上滑加载更多，pageIndex为下一页页码,
+            this.handleLoading();
+            this.pageIndex = pageIndex;
+            this.getData();
+        },
+        refresh() {//刷新
+        },
+        handleroute(id) {
+            this.$router.push({path: '/AlarmTreated', query: {id: id}})
+        },
+        handleShowMsg(message, type) {
+            this.$message({
+                message: message,
+                type: type,//'info', 'success', 'error', 'warning', 'loading'
+                showClose: true
+            })
+        },
+        handleLoading() {
+            let l = this.$message.loading('加载中...')
+            setTimeout(function () {
+                l.close()
+            }, 500)
+        },
+        //文档高度
+        getScrollTop() {
+            var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
+            if (document.body) {
+                bodyScrollTop = document.body.scrollTop;
+            }
+            if (document.documentElement) {
+                documentScrollTop = document.documentElement.scrollTop;
+            }
+            scrollTop = (bodyScrollTop - documentScrollTop > 0) ? bodyScrollTop : documentScrollTop;
+            return scrollTop;
+        },
+
+        getWindowHeight() {//可视窗口高度
+            var windowHeight = 0;
+            if (document.compatMode == "CSS1Compat") {
+                windowHeight = document.documentElement.clientHeight;
+            } else {
+                windowHeight = document.body.clientHeight;
+            }
+            return windowHeight;
+        },
+
+        getScrollHeight() {//滚动条高度
+            var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
+            if (document.body) {
+                bodyScrollHeight = document.body.scrollHeight;
+            }
+            if (document.documentElement) {
+                documentScrollHeight = document.documentElement.scrollHeight;
+            }
+            scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
+            return scrollHeight;
+        },
+        //监听函数
+        scrollFn() {
+            if (this.getScrollTop() + this.getWindowHeight() === this.getScrollHeight()) {
+                // 　　　　　　this.handleShowMsg('没有更多数据','info');
+            }
+        },
+
+        getImgURL(item) {//拼接图像src
+            return 'http://brmsh5.boeet.com.cn:82' + item.img;
+        },
+      getData(){      //获取数据
+        let Message = this.pageSize + this.search + this.pageIndex;
         let key = 'H@ppy1@3';
         let hash = Cryptojs.HmacSHA256(Message, key).toString();
         let sign = this.$MD5(hash).toUpperCase();
-        let formData = new FormData()
-        formData.append('index',this.pageIndex);
-        formData.append('num',this.pageSize);
-        formData.append('sign',sign);
-        formData.append('name',this.value);
+        let formData = new FormData();
+        formData.append('index', this.pageIndex);
+        formData.append('num', this.pageSize);
+        formData.append('sign', sign);
+        formData.append('name', this.search);
         request({
           url: '/interface/Warns',
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'token' : this.Token,
-            'platform' : 'a'
+            'token': this.Token,
+            'platform': 'a'
           },
           data: formData
         }).then(res => {
-          let pvarray=[];
           let data = res.data.data.list;
-          this.warnList = data;
-          this.totalCount = data.length+1;
-          for(let i =0;i<data.length;i++) {
-            pvarray.push(data[i].name);
-          }
-          this.defaultResult = pvarray;
+          // this.alist = data;
+
+          let newList = [];
+          data.map(item=>(
+                  newList.push({
+                    id:item.id,
+                    name:item.name,
+                    detail:item.detail,
+                    r_id:item.r_id,
+                    dealResult: item.dealResult,
+                    reason: item.reason,
+                    warn_time:item.warn_time
+                  })
+          ));
+          this.totalCount = data.length + 1;
+          this.nList = this.nList.concat(newList);//将每次获取的数据拼接
+          console.log(this.nList);
+          // this.nList = newList;
+
         }).catch(err => {
           console.log(err);
         })
       },
-      getImgURL(item){//拼接图像src
-        return 'http://brmsh5.boeet.com.cn:82'+item.img;
-      },
-      getData(name){
-        if(name == null){
-          name = '';
-        }
-        let Message = this.pageSize+name+this.pageIndex;
-        let key = 'H@ppy1@3';
-        let hash = Cryptojs.HmacSHA256(Message.toString(), key).toString();
-        let sign = this.$MD5(hash).toUpperCase();
-        let formData = new FormData()
-        formData.append('index',this.pageIndex);
-        formData.append('num',this.pageSize);
-        formData.append('name',name);
-        formData.append('sign',sign);
-        request({
-          url: '/interface/Warns',
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'token' : this.Token,
-            'platform' : 'a'
-          },
-          data: formData
-        }).then(res => {
-          let pvarray=[];
-          let data = res.data.data.list;
-          if(data.length != 0){
-            this.warnList = this.warnList.concat(data);
-            this.totalCount = this.totalCount+data.length;
-          }
-
-          for(let i =0;i<data.length;i++) {
-            pvarray.push(data[i].name);
-          }
-          this.defaultResult = pvarray;
-        }).catch(err => {
-          console.log(err);
-        })
-      }
-
     }
   }
 </script>
@@ -252,51 +251,84 @@
      text-decoration: none;
      color: #00FFFF;
    }
-   .boss{
-     height: auto;
-     width: 100%;
-     display: flex;
-     justify-content: space-around;
-     }
-   #content table{
-     width: 100%;
-     height: 100%;
-     font-size: 12px;
+   #table-show{
+     font-size: 26px;
      padding: 20px;
+     width: 100%;
+     /*height: 100%;*/
+     margin: auto;
+     /*border-bottom: 1px solid hsla(0,0%,100%,0.5);*/
+     border-bottom: 1px solid #1B376F;
+     /*border: 1px solid red;*/
    }
-   #content table tr td{
-     padding: 3px;
+   #table-show tr td{
+     padding: 5px;
      text-align: left;
      color: white;
    }
-
+   .headline{
+     text-align: left;
+     font-size: 28px;
+   }
+   .show-namewarn-time{
+     display: flex;
+     justify-content: space-between;
+   }
+   #btn-stat{
+     border-color: #00FFFF;
+     background: transparent;
+     border-radius:13px;
+     width: 130px;
+     color: #00FFFF;
+     font-size: 24px;
+     padding-bottom: 5px;
+     padding-top: 5px;
+   }
  #alarmlist {
    background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
    text-align: center;
    position: absolute;
    width: 100%;
-   height: 100%;
+   /*height: 100%;*/
  }
- #header{
-   /* border: 1px #00FFFF; */
-   height: 8%;
- }
+   .header-title{
+     width: 95%;
+     margin: auto;
+     display: flex;
+     flex-direction: row;
+     justify-content: space-between;
+     font-size: 36px;
+     background-color: transparent;
+     /*border-bottom: 1px solid hsla(0,0%,100%,0.5);*/
+     border-bottom: 1px solid #1B376F;
+     padding: 10px;
+     color: white;
+   }
+   .btn{
+     border: 0px;
+     background-color: transparent;
+     font-size: 26px;
+     color: white
+   }
+   #header_input {
+     /*border: 1px solid red;*/
+     /*width: 90%;*/
+     /*display: none;*/
+     margin: auto;
+     text-align: center;
+   }
+   #search-input{
+     /*display: none;*/
+     width: 90%;
+     height: 30px;
+     font-size: 26px;
+     /*margin: auto;*/
+   }
  #content{
-   /* border: 1px #00FFFF; */
    width: 95%;
    margin: auto;
-   height: 100%;
-   background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
- }
- #footer{
-   background-color: #04122F;
-   color: white;
-   height: auto;
-   border: 1px #00FFFF;
-   bottom: 0px;
-   position: absolute;
-   width: 100%;
    display: flex;
-   justify-content: space-around;
+   flex-direction: column;
+   background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
  }
  </style>

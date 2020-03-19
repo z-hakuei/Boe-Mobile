@@ -1,90 +1,103 @@
 <template>
   <div id="alarmtreated">
-    <mt-header title="告警详情">
+    <mt-header title="告警详情" style="font-size: 36px; background-color: transparent;border-bottom: 1px solid hsla(0,0%,100%,0.5); padding: 30px;">
       <router-link to="/" slot="left">
       <router-link :to="{ path:'warning' }">
-        <mt-button icon="back">返回</mt-button>
+        <mt-button icon="back" style="font-size: 26px; color: white;">返回</mt-button>
       </router-link>
       </router-link>
     </mt-header>
     <div id="content">
-      <table width="100%">
+      <table>
         <tr>
-          <td><a href="">告警详细</a></td>
+          <td id="gjxx-title">
+<!--            <router-link to="" @click.native="refresh">-->
+              告警详细
+<!--            </router-link>-->
+          </td>
         </tr>
         <tr>
           <td>电站名称：山东高密</td>
         </tr>
         <tr>
-          <td>告警时间：2019-08-08</td>
+          <td>告警时间：{{warn.warn_time}}
+<!--            {{warn_time}}-->
+          </td>
         </tr>
         <tr>
-          <td>告警信息：这是01告警信息的详细情况，可点击标题查看</td>
+          <td>告警信息：{{warn.name}}</td>
         </tr>
         <tr>
-          <td>这是01告警信息的详细情况，可点击标题查看</td>
+          <td>{{warn.detail}}</td>
         </tr>
         <tr>
-          <td>处理状态：<button style="border-color: #00FFFF; background-color: #606266; font-size: 12px;"><p style="color: #00FFFF;">已处理</p></button></td>
+          <td>处理状态：<button @click="btnclick">{{warn.dealResult}}</button></td>
         </tr>
       </table>
-    </div>
-    <div id="footer" class="boss">
-      <!-- <i><i class="iconfont icon-shouye"></i><div>首页</div></div>
-      <div><i class="iconfont icon-biandianzhan"></i><div>电站</div></div>
-      <div><i class="iconfont icon-ditu"></i><div>地图</div></div>
-      <div><i class="iconfont icon-gaojing"></i><div>告警</div></div> -->
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
-  name: 'AlarmTreated'
+  name: 'AlarmTreated',
+  data () {
+    return {
+      warn: [] //本条数据的list
+    }
+  },
+  created() {
+    if(this.$route.query.warn.length === 0){
+      this.id = 'warn list为空'
+    }
+    this.warn = this.$route.query.warn;
+    console.log(this.warn);
+  },
+  methods: {//获取数据
+    btnclick(){
+      this.$router.go(-1);
+    },
+    refresh(){
+      this.$router.go(0);
+    }
+  }
 }
 </script>
 
 <style>
-  p{
-    margin: 0;
-    color: white;
-  }
   a{
     text-decoration: none;
     color: #00FFFF;
+    font-size: 28px;
   }
-  .header_table{
-    margin: auto;
-    width: 95%;
-    height: 100%;
-    border-bottom: 1px solid;
+  button{
+    border-color: #00FFFF;
+    background: transparent;
+    border-radius:13px;
+    width: 130px;
+    font-size: 24px;
+    color: #00FFFF;
+    padding-bottom: 5px;
+    padding-top: 5px;
   }
-  .boss{
-    height: auto;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    }
+  #content #gjxx-title{
+    color: #00FFFF;
+    font-size: 28px;
+  }
   #content table{
     padding: 0px;
     border-collapse:separate;
     border-spacing:0px 10px;
     margin: auto;
     width: 95%;
-    font-size: 12px;
+    font-size: 26px;
   }
   #content table tr td{
     padding: 0px;
     text-align: left;
     color: white;
   }
-  #content table tr td textarea{
-    text-align: left;
-    font-size: 12px;
-    color: white;
-    width: 100%;
-  }
-
 #alarmtreated {
   margin: 0;
   background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
@@ -93,24 +106,8 @@ export default {
   width: 100%;
   height: 100%;
 }
-#header{
-  margin: 0px;
-   border: 1px #00FFFF;
-   height: 8%;
- }
  #content{
    border: 1px #00FFFF;
    height: 85%;
- }
- #footer{
-   color: white;
-   background-color: #04122F;
-   border: 1px #00FFFF;
-   bottom: 0px;
-   position: absolute;
-   height: auto;
-   width: 100%;
-   display: flex;
-   justify-content: space-around;
  }
 </style>
