@@ -3,10 +3,10 @@
     <header>
       <div class="header-title">
         <router-link :to="{path: 'home'}">
-          <button icon="back" class="btn">>返回</button>
+          <button icon="back" class="btn1">>返回</button>
         </router-link>
         <p>告警列表</p>
-        <button class="btn" @click="showSearch = !showSearch"><i class="iconfont icon-sousuo"></i></button>
+        <button class="btn2" @click="showSearch = !showSearch"><i class="iconfont icon-sousuo"></i></button>
       </div>
       <div v-if="showSearch" id="header_input">
         <input type="text" placeholder="请输入搜索内容" v-model="search" id="search-input">
@@ -245,15 +245,20 @@
  <style scoped lang="scss">
    p{
      margin: 0;
-     color: white;
+     color: #FFFFFF;
    }
    a{
      text-decoration: none;
-     color: #00FFFF;
+     color: #36E5FF;
+     font-size: 14px;
+   }
+   .icon-sousuo{
+     font-size: 14px;
    }
    #table-show{
-     font-size: 26px;
-     padding: 20px;
+     font-size: 13px;
+     padding-top: 5px;
+     padding-bottom: 5px;
      width: 100%;
      /*height: 100%;*/
      margin: auto;
@@ -262,25 +267,27 @@
      /*border: 1px solid red;*/
    }
    #table-show tr td{
-     padding: 5px;
+     padding-bottom: 0.5pt;
      text-align: left;
-     color: white;
+     color: #FFFFFF;
    }
-   .headline{
+   #table-show .headline{
      text-align: left;
-     font-size: 28px;
+     font-size: 14px;
+     padding-bottom: 10px;
+     /*border: 1px solid red;*/
    }
    .show-namewarn-time{
      display: flex;
      justify-content: space-between;
    }
    #btn-stat{
-     border-color: #00FFFF;
+     border-color: #36E5FF;
      background: transparent;
-     border-radius:13px;
-     width: 130px;
-     color: #00FFFF;
-     font-size: 24px;
+     border-radius:10px;
+     width: 80px;
+     color: #36E5FF;
+     font-size: 12px;
      padding-bottom: 5px;
      padding-top: 5px;
    }
@@ -289,7 +296,7 @@
    text-align: center;
    position: absolute;
    width: 100%;
-   /*height: 100%;*/
+   font-family: "Microsoft YaHei";
  }
    .header-title{
      width: 95%;
@@ -297,38 +304,47 @@
      display: flex;
      flex-direction: row;
      justify-content: space-between;
-     font-size: 36px;
+     font-size: 17.5px;
      background-color: transparent;
-     /*border-bottom: 1px solid hsla(0,0%,100%,0.5);*/
      border-bottom: 1px solid #1B376F;
-     padding: 10px;
-     color: white;
+     padding-top: 10px;
+     padding-bottom: 10px;
+     color: #FFFFFF;
    }
-   .btn{
+   .btn1{
      border: 0px;
+     padding: 0px;
+     text-align: left;
      background-color: transparent;
-     font-size: 26px;
-     color: white
+     font-size: 14px;
+     color: #FFFFFF;
+   }
+   .btn2{
+     border: 0px;
+     padding: 0px;
+     text-align: right;
+     background-color: transparent;
+     font-size: 14px;
+     color: #FFFFFF;
    }
    #header_input {
-     /*border: 1px solid red;*/
-     /*width: 90%;*/
-     /*display: none;*/
      margin: auto;
      text-align: center;
    }
    #search-input{
      /*display: none;*/
-     width: 90%;
-     height: 30px;
-     font-size: 26px;
+     width: 95%;
+     height: 25px;
+     font-size: 14pt;
+     color: #939BAE;
      /*margin: auto;*/
    }
  #content{
+   font-size: 13pt;
    width: 95%;
    margin: auto;
    display: flex;
    flex-direction: column;
-   background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
+   background-color: transparent;
  }
  </style>
