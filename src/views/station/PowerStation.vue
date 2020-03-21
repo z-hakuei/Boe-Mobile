@@ -1,9 +1,9 @@
 <template>
   <div id="Powerstation">
-    <mt-header title="电站列表">
+    <mt-header title="电站列表" style="font-size:24px;">
       <router-link to="/" slot="left">
       <router-link :to="{ path:'home' }">
-        <mt-button icon="back">返回</mt-button>
+        <mt-button icon="back" style="font-size:19px;">返回</mt-button>
       </router-link>
       </router-link>
     </mt-header>
