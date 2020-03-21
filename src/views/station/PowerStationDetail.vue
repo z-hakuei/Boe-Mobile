@@ -1,10 +1,10 @@
 <template>
   <div id="PowerStationDetail">
     
-    <mt-header :title="stationname">
+    <mt-header :title="stationname" style="font-size:24px;">
       <router-link to="/" slot="left">
       <router-link :to="{ path: 'powerstation' }">
-        <mt-button icon="back">返回</mt-button>
+        <mt-button icon="back" style="font-size:19px;">返回</mt-button>
       </router-link>
       </router-link>
     </mt-header>
@@ -14,17 +14,19 @@
         <div class="num">
           <div class="installCapacityStatistics">
             <div class="installStatistics">
-              <div class="number"><span style="margin-right:53%;">{{CumulativePowerGeneration}}</span></div>
+              <div class="number"><span style="margin-right:44%;">{{CumulativePowerGeneration}}</span></div>
               <div class="explainTitleText"><span style="margin-right:50%;">累计发电量（万KWh）</span></div>
             </div>
             <div class="singleStatistics">
               <div class="yearInstallStatistics">
                 <div class="singleStatisticsNumber"><span style="margin-right:33%;">{{CurrentPowerGeneration}}</span></div>
                 <div class="explainTitleText"><span>当年发电量（万KWh）</span></div>
+                <div class="progressBox"><mt-progress class="yearGeneratePower" :value="20" :bar-height="2"></mt-progress></div>
               </div>
               <div class="totalProfit">
-                <div class="singleStatisticsNumber"><span>{{DayPowerGeneration}}</span></div>
+                <div class="singleStatisticsNumber" style="margin-left:-55%;"><span>{{DayPowerGeneration}}</span></div>
                 <div class="explainTitleText"><span>当日发电量（万KWh）</span></div>
+                <div class="progressBox"><mt-progress class="dayGeneratePower" :value="20" :bar-height="2"></mt-progress></div>
               </div>
             </div>
           </div>
@@ -32,8 +34,8 @@
 
           <div class="facilityStatistics">
             <div class="facilityTypeStatistics">
-              <div class="statisticsNumber"><span>{{PowerStationCapacity}}</span></div>
-              <div class="explainTitleText"><span>电站容量</span></div>
+              <div class="statisticsNumber"><span>{{PowerStationCapacity}}MW</span></div>
+              <div class="explainTitleText"><span style="margin-left:-20%;">电站容量</span></div>
             </div>
             <div class="facilityTypeStatistics">
               <div class="statisticsNumber"><span>{{Rebots}}台</span></div>
@@ -54,7 +56,7 @@
       <div class="facilityInstallStatisticsBox">
         <div @click="$refs.monthPowerPicker.open()" class="titleBox">
           <span>月发电量</span>
-          <span style="text-decoration: underline;">{{ monthPowerMonth }}</span>
+          <span class="decoration">{{ monthPowerMonth }}</span>
         </div>
         <mt-datetime-picker
           ref="monthPowerPicker"
@@ -66,7 +68,7 @@
       <div class="facilityInstallStatisticsBox">
         <div class="titleBox" @click="$refs.installRunRatioPicker.open()">
           <span>已/未安装方阵日运行趋势</span>
-          <span style="text-decoration: underline;">{{ installRunRatioMonth }}</span>
+          <span class="decoration">{{ installRunRatioMonth }}</span>
         </div>
         <mt-datetime-picker
           ref="installRunRatioPicker"
@@ -78,7 +80,7 @@
       <div class="facilityInstallStatisticsBox">
         <div class="titleBox" @click="$refs.installPowerRatioPicker.open()">
           <span>已/未安装方阵月发电量对比</span>
-          <span style="text-decoration: underline;">{{ installPowerRatioMonth }}</span>
+          <span class="decoration">{{ installPowerRatioMonth }}</span>
         </div>
         <mt-datetime-picker
           ref="installPowerRatioPicker"
@@ -86,17 +88,17 @@
           @confirm="installPowerRatioSelectMonth"
         />
         <div id="MonthInstallChart" class="fullChartBox"></div>
-        <div class="facilityStatistics">
+        <div class="facilityStatistics" style="margin-left:5%;margin-right:7%;">
           <div class="facilityTypeStatistics">
-            <div class="statisticsNumber"><span>月累计发电量</span></div>
+            <div class="monthstatisticsNumber"><span>月累计发电量</span></div>
             <div class="explainTitleText"><span>{{MonthGenerationData}}</span><span class="unitText">（万kwh）</span></div>
           </div>
           <div class="facilityTypeStatistics">
-            <div class="statisticsNumber"><span>月提升电量</span></div>
+            <div class="monthstatisticsNumber"><span>月提升电量</span></div>
             <div class="explainTitleText"><span>{{MonthLiftData}}</span><span class="unitText">（万kwh）</span></div>
           </div>
-          <div class="facilityTypeStatistics">
-            <div class="statisticsNumber"><span>月平均提升比</span></div>
+          <div class="facilityTypeStatistics" style="border-right:0px;">
+            <div class="monthstatisticsNumber"><span>月平均提升比</span></div>
             <div class="explainTitleText"><span>{{MonthAverageLift}}</span><span class="unitText">（%）</span></div>
           </div>
           </div>
@@ -137,11 +139,7 @@
       </div>
       <div class="facilityInstallStatisticsBox">
         <div class="titleBox" id="reboots">
-          <!-- <select class="selectFacility" id="reboots"> -->
-<!--            <option v-for="item in facilityList" :value="item.id">{{ item.value }}</option>-->
-            
-          <!-- </select> -->
-          <van-dropdown-menu class="selectFacility" style="height:25px;width:100px;">
+          <van-dropdown-menu class="dropmenu" style="height:25px;width:100px;">
             <van-dropdown-item v-model="value" :options="option" @change="indexSelect()" />
           </van-dropdown-menu>
           <span class="iconfont" style="font-size: 16px;" @click="get_roboot_by_name()">&#xe64c;</span>
@@ -155,12 +153,10 @@
             @refresh="refresh"
             @loadmore="loadmore" style="position: relative;">
               <li class="powerstationlist" v-for="(item,index) in rebotdata">
-                <span class="powerstation">
-                    <span>
-                      <span><img @click="handleroute(item.r_id)" style="width:80px;margin:10px;margin-left:-38px;margin-top:20px;" :src="getImgURL(item)"/></span>
-                    </span>
-                </span>
-                <span class="stationdetail" style="line-height:20px;">
+                
+                <div class="rebootdiv"><img @click="handleroute(item.r_id)" class="rebootimage" :src="getImgURL(item)"/></div>
+                    
+                <span class="stationdetail">
                   <div>清扫次数：{{item.count}}次</div>
                   <div>设备状态：{{item.status}}</div>
                   <div v-if="item.warn == 1">告警状态：<span style="color:red;">危险</span></div>
@@ -493,135 +489,192 @@
 
           const charts = echarts.init(document.getElementById('facilityInstallStatisticsChart'))
           const option = {
-            color: ['green','red'],//表格全局颜色
-            legend:{
-              right: 0,
-              textStyle:{
-                fontSize: 18,//字体大小
-                color:['#566cac','#566cac']//字体颜色
+             backgroundColor: '#06245e',
+              tooltip: {
+                  trigger: 'axis',
+                  axisPointer: {
+                      lineStyle: {
+                          color: '#0E162E'
+                      }
+                  }
               },
-              data:['发电量','功率']//表格图例
-            },
-            tooltip: {
-              trigger: 'axis'//点击图标中的点显示的信息
-            },
-            // dataZoom: [
-            //     {
-            //         show: true,
-            //         realtime: true,
-            //         start: 65,
-            //         end: 85
-            //     },
-            //     {
-            //         type: 'inside',
-            //         realtime: true,
-            //         start: 65,
-            //         end: 85
-            //     }
-            // ],
-            xAxis: [
-                  {
-                      type: 'category',//数据类型
-                      axisLabel:{
-                          interval: 0,//数据间隔，当数据过多时设置为0 全部显示
-                          rotate: 70,
-
-                      },
-                      data: data.x,
-                      axisLine: {
-                          lineStyle: {
-                              color: 'deepskyblue'//x轴数据颜色
-                          }
-                      },
-                      splitLine: {
-                          show: false//是否在y轴显示横线与x轴数据对齐
-                      },
+              legend: {
+                  icon: 'roundRect',
+                  itemWidth: 20,
+                  itemHeight: 5,
+                  itemGap: 15,
+                  data: ['发电量', '功率'],
+                  right: '3%',
+                  textStyle: {
+                      fontSize: '17px',
+                      color: '#FFFFFF'
                   }
-              ],
-              yAxis: [
-                  {
-                      type: 'value',
-                      name: 'KWh',
-                      min: 0,
-                      max: 15000,
-                      interval: 1000,
-                      axisLine: {
-                          lineStyle: {
-                              color: 'deepskyblue'
-                          }
-                      },
-                      splitLine: {
-                          lineStyle: {
-                              color: 'deepskyblue'
-                          }
+              },
+              grid: {
+                  left: '4%',
+                  right: '4%',
+                  bottom: '3%',
+                  containLabel: true
+              },
+              xAxis: [{
+                  type: 'category',
+                  boundaryGap: false,
+                  axisLine: {
+                      lineStyle: {
+                          color: '#043578'
                       }
                   },
-                  {
-                      type: 'value',//数据类型
-                      name: 'KW',
-                      min: 0,//数据最小值
-                      max: 10,//数据最大值
-                      interval: 1,//数据间隔
-                      axisLine: {
-                          lineStyle: {
-                              color: 'deepskyblue'//y轴右边文字描述颜色
-                          }
-                      },
-                      splitLine: {
-                          show: false//y轴右边横线是否与数据对齐
+                  axisLabel: {
+                      
+                      textStyle: {
+                          fontSize: '16px',
+                          fontFamily:'Microsoft YaHei',
+                          color:'#fff'
+                      }
+                  },
+                  axisTick: {
+                      show:false
+                  },
+                  data: data.x
+              }],
+              yAxis: [{
+                  type: 'value',
+                  name: '(KWh)',
+                  min: 0,//数据最小值
+                  max: 10,//数据最大值
+                  interval: 1,//数据间隔
+                  nameTextStyle:{
+                    color:"#fff", 
+                    fontSize:'16px',
+                    fontFamily:'Microsoft YaHei',
+                    align:'right'
+                  },
+                  axisTick: {
+                      show:false
+                  },
+                  axisLine: {
+                      show:false
+                  },
+                  axisLabel: {
+                      margin: 10,
+                      textStyle: {
+                          fontSize: '16px',
+                          fontFamily:'Microsoft YaHei',
+                          color:'#fff'
+                      }
+                  },
+                  splitLine: {
+                      lineStyle: {
+                          color: '#043578'
                       }
                   }
-              ],
-              series: [  
-                  {
-                      name:'发电量',
-                      type:'line',
-                      smooth: true,//平滑曲线
-                      itemStyle : {
-                          normal : {
-                              // color:'#fff', //改变折线点的颜色
-                              lineStyle:{
-                                  color:'#16d634' //改变折线颜色
-                              }
-                          }
-                      },
-                      areaStyle: {
-                        normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                                offset: 0,
-                                color: 'green'
-                            }, {
-                                offset: 1,
-                                color: '#ffe'
-                            }])
-                        }
-                      },
-                      data:data.y
+              },
+              {
+                  type: 'value',
+                  name: '(KW)',
+                  min: 0,
+                  max: 20000,
+                  interval: 2000,
+                  nameTextStyle:{
+                    color:"#fff", 
+                    fontSize:'16px',
+                    fontFamily:'Microsoft YaHei',
+                    padding:[0,0,0,15],
+                    align:'left'
                   },
-                  {
-                      name:'功率',
-                      type:'line',
-                      smooth: true,//平滑曲线
-                      yAxisIndex: 1,//当存在2个y轴时，右边数据轴必须设置此项
-                      areaStyle: {
+                  axisTick: {
+                      show: false
+                  },
+                  axisLine: {
+                    show:false
+                  },
+                  axisLabel: {
+                      margin: 10,
+                      textStyle: {
+                          fontSize: '16px',
+                          color:'#fff',
+                          fontFamily:'Microsoft YaHei'
+                      }
+                  },
+                  splitLine: {
+                      lineStyle: {
+                          color: '#043578'
+                      }
+                  }
+              }],
+              series: [{
+                  name: '发电量',
+                  type: 'line',
+                  smooth: true,
+                  symbol: 'circle',
+                  symbolSize: 5,
+                  showSymbol: false,
+                  lineStyle: {
+                      normal: {
+                          width: 1,
+                          color:'#40BD89'
+                      }
+                  },
+                  areaStyle: {
                       normal: {
                           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                               offset: 0,
-                              color: 'red'
+                              color: 'rgba(64,189,137, 0.8)'
                           }, {
                               offset: 1,
-                              color: '#ffe'
-                          }])
+                              color: 'rgba(64,189,137, 0)'
+                          }], false),
+                          shadowColor: 'rgba(0, 0, 0, 0.8)',
+                          shadowBlur: 10
                       }
-                    },
-                      data:data.py
-                  }
-              ],
-            grid: {//表格样式
-              left: '10%',
-              right: '10%',
-              containLabel: true
-            }     
+                  },
+                  itemStyle: {
+                      normal: {
+                          color: 'rgb(64,189,137)',
+                          borderColor: 'rgba(64,189,137,0.2)',
+                          borderWidth: 12
+
+                      }
+                  },
+                  data: data.py
+              }, {
+                  name: '功率',
+                  type: 'line',
+                  smooth: true,
+                  symbol: 'circle',
+                  symbolSize: 5,
+                  yAxisIndex:1,
+                  showSymbol: false,
+                  lineStyle: {
+                      normal: {
+                          width: 1,
+                          color:'#FC863F'
+                      }
+                  },
+                  areaStyle: {
+                      normal: {
+                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                              offset: 0,
+                              color: 'rgba(252,134,63, 0.8)'
+                          }, {
+                              offset: 1,
+                              color: 'rgba(252,134,63, 0)'
+                          }], false),
+                          shadowColor: 'rgba(0, 0, 0, 0.2)',
+                          shadowBlur: 10
+                      }
+                  },
+                  itemStyle: {
+                      normal: {
+                          color: 'rgb(252,134,63)',
+                          borderColor: 'rgba(252,134,63,0.2)',
+                          borderWidth: 12
+
+                      }
+                  },
+                  data: data.y
+              }]
+            
           }
           charts.setOption(option)
         }).catch(err => {
@@ -660,50 +713,93 @@
             const charts = echarts.init(document.getElementById('MonthlyPowerGenerationChart'))
             // console.log(xdata);
             const option = {
-              color: 'rgba(60, 180, 134, 0.6)',
-              xAxis: {
-                type: 'category',
-                boundaryGap: true,//false y轴第一个数据以0为中心
-                axisLine: {
-                  lineStyle: {
-                    color: '#fff'
+              backgroundColor: '#06245e',
+              tooltip: {
+                  trigger: 'axis',
+                  axisPointer: {
+                      lineStyle: {
+                          color: '#0E162E'
+                      }
                   }
-                },
-                splitLine: {
-                  show: false,
-                  lineStyle: {
-                    color: '#fff'
-                  }
-                },
-                data: data.x
-              },
-              yAxis: {
-                type: 'value',
-                name: '发电量(KWh)',
-                min: 0,
-                max: 21000,
-                interval: 3000,
-                barWidth : 10,//柱状图的宽度
-                axisLine: {
-                  lineStyle: {
-                    color: '#fff'
-                  }
-                },
-                splitLine: {
-                  lineStyle: {
-                    color: 'deepskyblue'
-                  }
-                }
               },
               grid: {
-                left: '10%',
-                right: '10%',
-                containLabel: true
+                  left: '4%',
+                  right: '7%',
+                  bottom: '3%',
+                  containLabel: true
               },
+              xAxis: [{
+                  type: 'category',
+                  boundaryGap: true,
+                  min: 0,
+                  max: 29,
+                  interval: 1,
+                  color: '#fff',
+                  data: data.x,
+                  axisLabel: {
+                    textStyle: {
+                        fontSize: '16px',
+                        fontFamily:'Microsoft YaHei',
+                        color:'#fff'
+                    }
+                  },
+                  axisLine: {
+                      lineStyle: {
+                          color: '#043578',
+                      }
+                  },
+                  axisTick: {
+                      show: false
+                  },
+              }],
+              yAxis: [{
+                  type: 'value',
+                  name: '(kwh)',
+                  min: 0,
+                  max: 22000,
+                  interval: 2200,
+                  nameTextStyle:{
+                    color:"#fff", 
+                    fontSize:'16px',
+                    fontFamily:'Microsoft YaHei',
+                    padding:[0,50,0,0]
+                  },
+                  axisLabel: {
+                      margin: 10,
+                      textStyle: {
+                          fontSize: '16px',
+                          color:'#fff',
+                          fontFamily:'Microsoft YaHei'
+                      }
+                  },
+                  axisLine: {
+                      show:false
+                  },
+                  axisTick: {
+                      show: false
+                  },
+                  splitLine: {
+                      lineStyle: {
+                          color: '#043578'
+                      }
+                  }
+              }],
               series: [{
-                data: data.y,
-                type: 'bar',
-                areaStyle: {}
+                  type: 'bar',
+                  data: data.y,
+                  barWidth: '10px',
+                  itemStyle: {
+                      normal: {
+                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                              offset: 0,
+                              color: '#40BD89' // 0% 处的颜色
+                          }, {
+                              offset: 1,
+                              color: '#06245e' // 100% 处的颜色
+                          }], false),
+                          barBorderRadius: [30, 30, 0, 0],
+                      }
+                  }
               }]
             }
             charts.setOption(option)
@@ -745,113 +841,157 @@
 
             const charts = echarts.init(document.getElementById('DayInstallChart'))
             const option = {
-              color: ['blue','red'],//折线点的颜色
+              backgroundColor: '#06245e',
               tooltip: {
-                  trigger: 'axis'
+                  trigger: 'axis',
+                  axisPointer: {
+                      lineStyle: {
+                          color: '#57617B'
+                      }
+                  }
               },
               legend: {
-                right: 0,
-                textStyle:{//图例文字的样式
-                    color:'#566cac',
-                    fontSize:16
-                },
-                data:['已安装','未安装']
-              },
-              xAxis: {
-                type: 'category',
-                axisLabel:{
-                    interval: 0,//数据间隔，当数据过多时设置为0 全部显示
-                    // rotate: 70,
-                },
-                boundaryGap: false,//false y轴第一个数据以0为中心
-                axisLine: {
-                  lineStyle: {
-                    color: 'deepskyblue'
+                  icon: 'roundRect',
+                  itemWidth: 20,
+                  itemHeight: 5,
+                  itemGap: 5,
+                  data: ['已安装', '未安装'],
+                  right: '2%',
+                  textStyle: {
+                      fontSize: '17px',
+                      color: '#FFFFFF'
                   }
-                },
-                splitLine: {
-                  show: false,
-                  lineStyle: {
-                    color: 'deepskyblue'
-                  }
-                },
-                data: data.x
-              },
-              yAxis: {
-                type: 'value',
-                name: 'KWh',
-                min: 0,
-                max: 35000,
-                interval: 2000,
-                barWidth : 10,//柱状图的宽度
-                axisLine: {
-                  lineStyle: {
-                    color: 'deepskyblue'
-                  }
-                },
-                splitLine: {
-                  lineStyle: {
-                    color: 'deepskyblue'
-                  }
-                }
               },
               grid: {
-                left: '10%',
-                right: '10%',
-                containLabel: true
+                  left: '4%',
+                  right: '7%',
+                  bottom: '3%',
+                  containLabel: true
               },
-              series: [
-                {
-                  name:'已安装',
-                  data: data.y1,
-                  type: 'line',
-                  smooth: true,//平滑曲线
-                  itemStyle : {
-                    normal : {
-                        // color:'#fff', //改变折线点的颜色
-                        lineStyle:{
-                            color:'blue' //改变折线颜色
-                        }
-                    }
+              xAxis: [{
+                  type: 'category',
+                  boundaryGap: false,
+                  axisLine: {
+                      lineStyle: {
+                          color: '#043578'
+                      }
                   },
-                  areaStyle: {
-                    normal: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: 'blue'
-                        }, {
-                            offset: 1,
-                            color: '#ffe'
-                        }])
-                    }
+                  axisLabel: {
+                      
+                      textStyle: {
+                          fontSize: '16px',
+                          fontFamily:'Microsoft YaHei',
+                          color:'#fff'
+                      }
+                  },
+                  axisTick: {
+                      show:false
+                  },
+                  data: data.x
+              }],
+              yAxis: [{
+                  type: 'value',
+                  name: '(KWh)',
+                  min: 0,//数据最小值
+                  max: 24000,//数据最大值
+                  interval: 1000,//数据间隔
+                  nameTextStyle:{
+                    color:"#fff", 
+                    fontSize:'16px',
+                    fontFamily:'Microsoft YaHei',
+                    padding:[0,50,0,0]
+                  },
+                  axisTick: {
+                      show:false
+                  },
+                  axisLine: {
+                      show:false
+                  },
+                  axisLabel: {
+                      margin: 10,
+                      textStyle: {
+                          fontSize: '16px',
+                          fontFamily:'Microsoft YaHei',
+                          color:'#fff'
+                      }
+                  },
+                  splitLine: {
+                      lineStyle: {
+                          color: '#043578'
+                      }
                   }
-                },
-                {
-                  name:'未安装',
-                  data: data.y2,
+              }],
+              series: [{
+                  name: '已安装',
                   type: 'line',
-                  smooth: true,//平滑曲线
-                  itemStyle : {
-                    normal : {
-                        // color:'#fff', //改变折线点的颜色
-                        lineStyle:{
-                            color:'red' //改变折线颜色
-                        }
-                    }
+                  smooth: true,
+                  symbol: 'circle',
+                  symbolSize: 5,
+                  showSymbol: false,
+                  lineStyle: {
+                      normal: {
+                          width: 1,
+                          color:'#34ABFF'
+                      }
                   },
                   areaStyle: {
-                    normal: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: 'red'
-                        }, {
-                            offset: 1,
-                            color: '#ffe'
-                        }])
-                    }
+                      normal: {
+                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                              offset: 0,
+                              color: 'rgba(52,171,255, 0.8)'
+                          }, {
+                              offset: 1,
+                              color: 'rgba(52,171,255, 0)'
+                          }], false),
+                          shadowColor: 'rgba(0, 0, 0, 0.8)',
+                          shadowBlur: 10
+                      }
                   },
-                }
-              ]
+                  itemStyle: {
+                      normal: {
+                          color: 'rgba(52,171,255)',
+                          borderColor: 'rgba(52,171,255,0.2)',
+                          borderWidth: 12
+
+                      }
+                  },
+                  data: data.y1
+              }, {
+                  name: '未安装',
+                  type: 'line',
+                  smooth: true,
+                  symbol: 'circle',
+                  symbolSize: 5,
+                  showSymbol: false,
+                  lineStyle: {
+                      normal: {
+                          width: 1,
+                          color:'#FB3E3E'
+                      }
+                  },
+                  areaStyle: {
+                      normal: {
+                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                              offset: 0,
+                              color: 'rgba(251,62,62, 0.8)'
+                          }, {
+                              offset: 1,
+                              color: 'rgba(251,62,62, 0)'
+                          }], false),
+                          shadowColor: 'rgba(0, 0, 0, 0.8)',
+                          shadowBlur: 10
+                      }
+                  },
+                  itemStyle: {
+                      normal: {
+
+                          color: 'rgba(251,62,62)',
+                          borderColor: 'rgba(251,62,62,0.2)',
+                          borderWidth: 12
+                      }
+                  },
+                  data: data.y2
+              }, ]
             }
             charts.setOption(option)
           }else{
@@ -892,157 +1032,227 @@
             this.MonthAverageLift = data.up_avg.toFixed(2);
             const charts = echarts.init(document.getElementById('MonthInstallChart'))
             const option = {
-              color: ['red','green','yellow'],//图例图标颜色，有几个图标就写几个颜色
+              backgroundColor: '#06245e',
               tooltip: {
-                trigger: 'axis'//点击图标中的点显示的信息
+                  trigger: 'axis',
+                  axisPointer: {
+                      lineStyle: {
+                          color: '#0E162E'
+                      }
+                  }
               },
               legend: {
-                right: 0,
-                textStyle:{//图例文字的样式
-                    color:'#fff',//图例文字颜色
-                    fontSize:16//图例文字大小
-                },
-                data:['已安装','未安装','提升比']
-              },
-              xAxis: {
-                type: 'category',
-                axisLabel:{
-                    interval: 0,//x轴的数据间隔，当数据过多时设置为0 全部显示
-                    rotate: 45,//x轴数据旋转度数，用于x轴数据过多时使用
-                },
-                boundaryGap: false,//false x轴第一个数据以0为中心，true不会贴近y轴
-                axisLine: {
-                  // show: true,
-                  lineStyle: {
-                    color: 'deepskyblue'//x轴数据颜色
+                  icon: 'roundRect',
+                  itemWidth: 20,
+                  itemHeight: 5,
+                  itemGap: 15,
+                  data: ['已安装', '未安装','提升比'],
+                  right: '2%',
+                  textStyle: {
+                      fontSize: '17px',
+                      color: '#FFFFFF'
                   }
-                },
-                splitLine: {
-                  show: false,//true显示竖直的数据分割线，false显示横向的数据分割线
-                  lineStyle: {
-                    color: 'deepskyblue'
-                  }
-                },
-                data: data.x//x轴数据
               },
-              yAxis: [
-                {
+              grid: {
+                  left: '3%',
+                  right: '4%',
+                  bottom: '3%',
+                  containLabel: true
+              },
+              xAxis: [{
+                  type: 'category',
+                  boundaryGap: false,
+                  axisLine: {
+                      lineStyle: {
+                          color: '#043578'
+                      }
+                  },
+                  axisLabel: {
+                      
+                      textStyle: {
+                          fontSize: '16px',
+                          fontFamily:'Microsoft YaHei',
+                          color:'#fff'
+                      }
+                  },
+                  axisTick: {
+                      show:false
+                  },
+                  data: data.x
+              }],
+              yAxis: [{
                   type: 'value',
                   name: '(KWh)',
-                  min: 0,
-                  max: 35000,
-                  interval: 5000,
-                  barWidth : 10,//柱状图的宽度
-                  axisLine: {
-                    lineStyle: {
-                      color: 'deepskyblue'//y轴文字数据颜色
-                    }
-                  },
-                  splitLine: {
-                    lineStyle: {
-                      color: 'deepskyblue'//y轴横线的颜色
-                    }
-                  }
-                },
-                {
-                  type: 'value',//数据类型
-                  name: '(%)',
                   min: 0,//数据最小值
-                  max: 0.5,//数据最大值
-                  interval: 0.05,//数据间隔
+                  max: 24000,//数据最大值
+                  interval: 800,//数据间隔
+                  nameTextStyle:{
+                    color:"#fff", 
+                    fontSize:'16px',
+                    fontFamily:'Microsoft YaHei',
+                    padding:[0,50,0,0]
+                  },
+                  axisTick: {
+                      show:false
+                  },
                   axisLine: {
-                    lineStyle: {
-                        color: 'deepskyblue'//y轴右边文字描述颜色
-                    }
+                      show:false
+                  },
+                  axisLabel: {
+                      margin: 10,
+                      textStyle: {
+                          fontSize: '16px',
+                          fontFamily:'Microsoft YaHei',
+                          color:'#fff'
+                      }
                   },
                   splitLine: {
-                    show: false//y轴右边横线是否与数据对齐
+                      lineStyle: {
+                          color: '#043578'
+                      }
                   }
-                }
-              ],
-              grid: {//图标整体布局样式
-                left: '10%',
-                right: '10%',
-                containLabel: true
               },
-              series: [
-                {
-                  name:'已安装',
-                  data: data.y1,
+              {
+                  type: 'value',
+                  name: '(%)',
+                  min: 0,
+                  max: 0.3,
+                  interval: 0.01,
+                  nameTextStyle:{
+                    color:"#fff", 
+                    fontSize:'16px',
+                    fontFamily:'Microsoft YaHei',
+                    padding:[0,0,0,15],
+                    align:'left'
+                  },
+                  axisTick: {
+                      show: false
+                  },
+                  axisLine: {
+                    show:false
+                  },
+                  axisLabel: {
+                      margin: 10,
+                      textStyle: {
+                          fontSize: '16px',
+                          color:'#fff',
+                          fontFamily:'Microsoft YaHei'
+                      }
+                  },
+                  splitLine: {
+                      lineStyle: {
+                          color: '#043578'
+                      }
+                  }
+              }],
+              series: [{
+                  name: '已安装',
                   type: 'line',
-                  smooth: true,//平滑曲线
-                  itemStyle : {
-                    normal : {
-                        // color:'#fff', //改变折线点的颜色
-                        lineStyle:{
-                            color:'red' //改变折线颜色
-                        }
-                    }
+                  smooth: true,
+                  symbol: 'circle',
+                  symbolSize: 5,
+                  showSymbol: false,
+                  lineStyle: {
+                      normal: {
+                          width: 1,
+                          color:'#34ABFF'
+                      }
                   },
                   areaStyle: {
-                    normal: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: 'red'
-                        }, {
-                            offset: 1,
-                            color: '#ffe'
-                        }])
-                    }
+                      normal: {
+                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                              offset: 0,
+                              color: 'rgba(52,171,255, 0.8)'
+                          }, {
+                              offset: 1,
+                              color: 'rgba(52,171,255, 0)'
+                          }], false),
+                          shadowColor: 'rgba(0, 0, 0, 0.8)',
+                          shadowBlur: 10
+                      }
                   },
-                },
-                {
-                  name:'未安装',
-                  data: data.y2,
+                  itemStyle: {
+                      normal: {
+                          color: 'rgba(52,171,255)',
+                          borderColor: 'rgba(52,171,255,0.2)',
+                          borderWidth: 12
+
+                      }
+                  },
+                  data: data.y1
+              }, {
+                  name: '未安装',
                   type: 'line',
-                  smooth: true,//平滑曲线
-                  itemStyle : {
-                    normal : {
-                        // color:'#fff', //改变折线点的颜色
-                        lineStyle:{
-                            color:'#16d634' //改变折线颜色
-                        }
-                    }
+                  smooth: true,
+                  symbol: 'circle',
+                  symbolSize: 5,
+                  showSymbol: false,
+                  lineStyle: {
+                      normal: {
+                          width: 1.5,
+                          color:'#FB3E3E'
+                      }
+                  },
+                  areaStyle: {
+                      normal: {
+                          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                              offset: 0,
+                              color: 'rgba(251,62,62, 0.8)'
+                          }, {
+                              offset: 1,
+                              color: 'rgba(251,62,62, 0)'
+                          }], false),
+                          shadowColor: 'rgba(0, 0, 0, 0.8)',
+                          shadowBlur: 10
+                      }
+                  },
+                  itemStyle: {
+                      normal: {
+
+                          color: 'rgba(251,62,62)',
+                          borderColor: 'rgba(251,62,62,0.2)',
+                          borderWidth: 12
+                      }
+                  },
+                  data: data.y2
+              },
+              {
+                  name: '提升比',
+                  type: 'line',
+                  smooth: true,
+                  symbol: 'circle',
+                  symbolSize: 5,
+                  yAxisIndex:1,
+                  showSymbol: false,
+                  lineStyle: {
+                      normal: {
+                          width: 1.5,
+                          color:'#FFF25F'
+                      }
                   },
                   areaStyle: {
                     normal: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                             offset: 0,
-                            color: 'green'
+                            color: 'rgba(255,242,95, 0.8)'
                         }, {
                             offset: 1,
-                            color: '#ffe'
-                        }])
+                            color: 'rgba(255,242,95, 0)'
+                        }], false),
+                        shadowColor: 'rgba(0, 0, 0, 0.8)',
+                        shadowBlur: 10
                     }
-                  },
                 },
-                {
-                  name:'提升比',
-                  type:'line',
-                  smooth: true,//平滑曲线
-                  itemStyle : {
-                    normal : {
-                        // color:'#fff', //改变折线点的颜色
-                        lineStyle:{
-                            color:'yellow' //改变折线颜色
-                        }
-                    }
-                  },
-                  areaStyle: {
+                itemStyle: {
                     normal: {
-                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                            offset: 0,
-                            color: 'yellow'
-                        }, {
-                            offset: 1,
-                            color: '#ffe'
-                        }])
+                        color: 'rgba(255,242,95)',
+                        borderColor: 'rgba(255,242,95,0.2)',
+                        borderWidth: 12
+
                     }
-                  },
-                  yAxisIndex: 1,//当存在2个y轴时，右边数据轴必须设置此项
-                  data:data.y3
-                }
-              ]
+                },
+                  data: data.y3
+              }]
             }
             charts.setOption(option)
           }else{
@@ -1160,23 +1370,81 @@
 </script>
 
 <style lang="scss">
+
+.decoration{
+  font-size:17px;
+  color:#FFFFFF;
+  border-bottom: 2px solid #36E5FF;
+}
+  .rebootdiv{
+    position: relative; 
+    top: 30px;
+    left: 8px; 
+    width: 100px; 
+    height: 70px; 
+    background: linear-gradient(to left, #36E5FF, #36E5FF) left top no-repeat, 
+                linear-gradient(to bottom, #36E5FF, #36E5FF) left top no-repeat, 
+                linear-gradient(to left, #36E5FF, #36E5FF) right top no-repeat,
+                linear-gradient(to bottom, #36E5FF, #36E5FF) right top no-repeat, 
+                linear-gradient(to left, #36E5FF, #36E5FF) left bottom no-repeat,
+                linear-gradient(to bottom, #36E5FF, #36E5FF) left bottom no-repeat,
+                linear-gradient(to left, #36E5FF, #36E5FF) right bottom no-repeat,
+                linear-gradient(to left, #36E5FF, #36E5FF) right bottom no-repeat;
+    background-size: 1px 7px, 7px 1px, 1px 7px, 7px 1px;  
+  }
+  .rebootimage{
+    width:80px;
+    margin:9px -4px 11px 10px;
+  }
   .van-ellipsis{
-    color:#10BAE0;
+    color:#36E5FF;
+  }
+  .dropmenu{
+    color: #36E5FF;
+    background: rgb(3, 38, 97);
+    border-top-left-radius: 20px;
+    border-top-right-radius:20px;
+    border-bottom-right-radius:20px;
+    border-bottom-left-radius: 20px;
+    border: solid 1px #36E5FF;
+    font-size: 19px;
+    position: static !important;
+    
+    .van-dropdown-menu__title{
+      color:#36E5FF !important;
+    }
   }
   .dayGeneratePower {
       .mt-progress-progress {
-        background: #f8672e;
+        background: #D2FF70;
+        width: 35% !important;
+      }
+      .mt-progress-content{
+        margin-left:-33%;
+        margin-right: 58%;
       }
   }
   .yearGeneratePower{
     .mt-progress-progress {
-        width: 57% !important;
-      }
+        width: 68% !important;
+        background: #06F4C3;
+    }
+    .mt-progress-content{
+      margin-left:-33%;
+      margin-right: 58%;
+    }
   }
   .datepicker {
     .datecss {
       background: #06245e;
     }
+  }
+  .monthstatisticsNumber{
+    color:#fff;
+    font-size:17px;
+    font-weight: bold;
+    font-family: MicrosoftYaHei;
+    letter-spacing:-3px;
   }
 </style>
 
@@ -1197,15 +1465,13 @@
     display: flex;
     flex-direction: row;
     padding:0% 1%;
-    border-top: 1px solid #778899;
-    border-bottom: 1px solid #778899;
+    border-top: 1px solid #043578;
     position: relative;
     .powerstation{
       display: flex;
       padding: 2% 10%;
       flex-direction: column;
       width:22%;
-      border-right: 1px solid 	#778899;
       .itemBox{
       >span{
         display: block;
@@ -1228,17 +1494,21 @@
       }
     }
     .stationdetail{
-      padding: 2% 2%;
+      padding: 2% 6%;
       color: #fff;
+      font-size: 17px;
+      line-height:29px;
     }
     .facilityNameBtn {
-      color:#00FFFF;
+      color:#36E5FF;
       position: absolute;
-      right: 10px;
+      right: 0px;
       bottom: 8px;
       background: #21365f;
       padding: 10px 20px;
-      border-radius: 20px;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      font-size: 19px;
     }
 	}
   #PowerStationDetail {
@@ -1273,7 +1543,7 @@
       }
       .explainTitleText {
         color: #fff;
-        font-size: 15px;
+        font-size: 14px;
         .unitText {
           font-size: 12px;
         }
@@ -1284,7 +1554,8 @@
       }
       .titleBox {
         padding: 10px;
-        color: #10BAE0;
+        font-size: 17pt;
+        color: #36E5FF;
         //box-shadow: 0 0 10px 4px #7188ff inset;
         display: flex;
         flex-direction: row;
@@ -1310,7 +1581,7 @@
           >.number {
             /*-webkit-text-stroke:1px #fff;*/
             color: #3ce3fd;
-            font-size: 50px;
+            font-size: 53px;
             font-weight: bold;
             // text-shadow:0px 0px 8px #fff, 0px 0px 42px #fff, 0px 0px 72px #fff,0px 0px 150px #fff;
           }
@@ -1322,7 +1593,7 @@
           .singleStatisticsNumber {
             -webkit-text-stroke:1px #fff;
             color: #fff;
-            font-size: 22px;
+            font-size: 40px;
             font-weight: bold;
             // text-shadow:0px 0px 8px #fff, 0px 0px 42px #fff, 0px 0px 72px #fff,0px 0px 150px #fff;
           }
@@ -1340,7 +1611,7 @@
           >.statisticsNumber {
             /*-webkit-text-stroke:1px #fff;*/
             color: #fff;
-            font-size: 18px;
+            font-size: 23px;
             /*font-weight: bold;*/
             // text-shadow:0px 0px 8px #fff, 0px 0px 42px #fff, 0px 0px 72px #fff,0px 0px 150px #fff;
           }
