@@ -1,20 +1,20 @@
 <template>
 	<div id="robotdetail">
-		<mt-header :title="Name">
+		<mt-header :title="Name" style="font-size:18px;">
       <router-link to="/" slot="left">
       <router-link :to="{path:'powerstationdetail',query:{pvid:this.$route.query.pvid}  }">
-        <mt-button icon="back">返回</mt-button>
+        <mt-button icon="back" style="font-size:14px;color: white;">返回</mt-button>
       </router-link>
       </router-link>
     </mt-header>
 	
 	<div id="content" style="font-size:15px;">
-		<div>{{Name}}</div>
-		<div v-if="Online == 1"><span style="color:#00FD77;">设备在线</span></div>
-		<div v-else="Online == 0"><span style="color:red;">设备离线</span></div>
+		<div style="font-size:14px;">{{Name}}</div>
+		<div v-if="Online == 1"><span style="color:#00FD77;font-size:13px;">设备在线</span></div>
+		<div v-else="Online == 0"><span style="color:red;font-size:13px;">设备离线</span></div>
     </div>
 	
-	<div id="comb" style="margin-left:15px;">
+	<div id="comb" style="margin-left:30px;">
 		<ul>
 			<li>
 				<div style='position:relative;width:100px;margin:0 auto;'>
@@ -218,6 +218,9 @@
 	width: 100%;
 	position: absolute;
 }
+.mint-header {
+      background: #1a2e54;
+    }
 #header{
   border: 1px #00FFFF;
   height: 10%;
@@ -235,14 +238,7 @@
   bottom: 0px;
   color: white;
 }
-#combcenter{
-	/* box-shadow:0 0 10px #23BFF9 inset; */
-	/* box-shadow:
-	-2px 0 3px -1px #31D1EE inset,
-	0 0px 0px 0px transparent inset,
-	0 0px 0px 0px transparent inset,
-	2px 0 3px -1px #31D1EE inset; */
-}
+
 .boss{
 	height: auto;
 	width: 100%;
@@ -276,7 +272,7 @@
 }
 .sss{
 	color: white;
-	font-size:10px ;
+	font-size:14px ;
 	text-align: center;
 	padding: 0;
 }
@@ -330,7 +326,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	font-size: 10px;
+	font-size: 11px;
 	color: white;
 }
 ul {
