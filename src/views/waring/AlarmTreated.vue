@@ -101,7 +101,7 @@ export default {
     text-align: left;
     color: #FFFFFF;
       /*padding-top: 5px;*/
-      padding-bottom: 0.5pt;
+      padding-bottom: 3px;
   }
 #alarmtreated {
   margin: 0;

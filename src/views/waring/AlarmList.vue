@@ -267,7 +267,7 @@
      /*border: 1px solid red;*/
    }
    #table-show tr td{
-     padding-bottom: 0.5pt;
+     padding-bottom: 3px;
      text-align: left;
      color: #FFFFFF;
    }
@@ -335,16 +335,17 @@
      /*display: none;*/
      width: 95%;
      height: 25px;
-     font-size: 14pt;
+     font-size: 14px;
      color: #939BAE;
      /*margin: auto;*/
    }
  #content{
-   font-size: 13pt;
+   font-size: 13px;
    width: 95%;
    margin: auto;
    display: flex;
    flex-direction: column;
    background-color: transparent;
+   background-image: radial-gradient(rgb(3, 46, 125),rgb(10, 25, 56));
  }
  </style>

@@ -151,7 +151,7 @@ export default {
     margin-left: 10px;
   }
   #btn_manage{
-    font-size: 13x;
+    font-size: 13px;
   }
   #content #gjxx-title{
     color: #36E5FF;
@@ -162,7 +162,7 @@ export default {
   #content #clcz-title{
     color: #36E5FF;
     font-size: 14px;
-    padding-top: 10px;
+    padding-top: 5px;
     padding-bottom: 10px;
   }
   /*带三角的输入框样式*/
@@ -204,7 +204,7 @@ export default {
     font-size: 13px;
   }
   #content table tr td{
-    padding: 0px;
+    /*padding: 0px;*/
     text-align: left;
     color: #FFFFFF;
   }
