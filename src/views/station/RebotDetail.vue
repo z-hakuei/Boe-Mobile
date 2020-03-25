@@ -1,21 +1,21 @@
 <template>
 	<div id="robotdetail">
-		<mt-header :title="Name" style="font-size:18px;">
+		<mt-header :title="Name" style="font-size:4.8vw;">
       <router-link to="/" slot="left">
       <router-link :to="{path:'powerstationdetail',query:{pvid:this.$route.query.pvid}  }">
-        <mt-button icon="back" style="font-size:14px;color: white;">返回</mt-button>
+        <mt-button icon="back" style="font-size:3.7vw;color: white;">返回</mt-button>
       </router-link>
       </router-link>
     </mt-header>
 	
-	<div id="content" style="font-size:15px;">
+	<div id="content" style="font-size:3.7vw;">
 		<div style="font-size:14px;">{{Name}}</div>
-		<div v-if="Online == 1"><span style="color:#00FD77;font-size:13px;">设备在线</span></div>
-		<div v-else="Online == 0"><span style="color:red;font-size:13px;">设备离线</span></div>
+		<div v-if="Online == 1"><span style="color:#00FD77;font-size:3.4vw;">设备在线</span></div>
+		<div v-else="Online == 0"><span style="color:red;font-size:3.4vw;">设备离线</span></div>
     </div>
 	
 	<div id="comb" style="margin-left:30px;">
-		<ul>
+		<ul>     
 			<li>
 				<div style='position:relative;width:100px;margin:0 auto;'>
 					    <div class='one'></div>
@@ -84,7 +84,7 @@
 	
 	
 	
-	<div id="content2" class="boss" style="padding-top: 10%;">
+	<div id="content2" class="box" style="padding-top: 10%;">
 		<div class="square" @click="RebotManage(0)"><div class="boderX"><i class="iconfont icon-zanting"></i><div class="sss">暂停</div></div></div>
 		<div class="square" @click="RebotManage(1)"><div class="boderX"><i class="iconfont icon-qidong"></i><div class="sss">启动</div></div></div>
 		<div class="square" @click="RebotManage(2)"><div class="boderX"><i class="iconfont icon-fanhui"></i><div class="sss">返转</div></div></div>
@@ -221,10 +221,6 @@
 .mint-header {
       background: #1a2e54;
     }
-#header{
-  border: 1px #00FFFF;
-  height: 10%;
-}
 #content{
 	color: white;
 	text-align: center;
@@ -232,14 +228,8 @@
 #content2{
 	color: white;
 }
-#footer{
-  background-color: #04122F;
-  position: absolute;
-  bottom: 0px;
-  color: white;
-}
 
-.boss{
+.box{
 	height: auto;
 	width: 100%;
 	display: flex;
@@ -272,7 +262,7 @@
 }
 .sss{
 	color: white;
-	font-size:14px ;
+	font-size:3.7vw ;
 	text-align: center;
 	padding: 0;
 }
@@ -326,7 +316,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	font-size: 11px;
+	font-size: 3.4vw;
 	color: white;
 }
 ul {
