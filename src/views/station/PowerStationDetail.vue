@@ -1,10 +1,10 @@
 <template>
   <div id="PowerStationDetail">
     
-    <mt-header :title="stationname" style="font-size:2.6vh;">
+    <mt-header :title="stationname" style="font-size:4.8vw;">
       <router-link to="/" slot="left">
       <router-link :to="{ path: 'powerstation' }">
-        <mt-button icon="back" style="font-size:2vh;">返回</mt-button>
+        <mt-button icon="back" style="font-size:3.7vw;">返回</mt-button>
       </router-link>
       </router-link>
     </mt-header>
@@ -33,9 +33,9 @@
         
 
           <div class="facilityStatistics">
-            <div class="facilityTypeStatistics" style="margin-left:2%;">
+            <div class="facilityTypeStatistics">
               <div class="statisticsNumber"><span>{{PowerStationCapacity}}MW</span></div>
-              <div class="explainTitleText"><span style="margin-left:-20%;">电站容量</span></div>
+              <div class="explainTitleText"><span style="margin-left:-23%;">电站容量</span></div>
             </div>
             <div class="facilityTypeStatistics">
               <div class="statisticsNumber"><span>{{Rebots}}台</span></div>
@@ -506,7 +506,7 @@
                   data: ['发电量', '功率'],
                   right: '3%',
                   textStyle: {
-                      fontSize: '1.9vh',
+                      fontSize: '3.4vw',
                       color: '#FFFFFF'
                   }
               },
@@ -527,7 +527,7 @@
                   axisLabel: {
                       
                       textStyle: {
-                          fontSize: '1.7vh',
+                          fontSize: '3.2vw',
                           fontFamily:'Microsoft YaHei',
                           color:'#fff'
                       }
@@ -545,7 +545,7 @@
                   interval: 1,//数据间隔
                   nameTextStyle:{
                     color:"#fff", 
-                    fontSize:'1.7vh',
+                    fontSize:'3.2vw',
                     fontFamily:'Microsoft YaHei',
                     align:'right'
                   },
@@ -558,7 +558,7 @@
                   axisLabel: {
                       margin: 10,
                       textStyle: {
-                          fontSize: '1.7vh',
+                          fontSize: '3.2vw',
                           fontFamily:'Microsoft YaHei',
                           color:'#fff'
                       }
@@ -577,7 +577,7 @@
                   interval: 2000,
                   nameTextStyle:{
                     color:"#fff", 
-                    fontSize:'1.7vh',
+                    fontSize:'3.2vw',
                     fontFamily:'Microsoft YaHei',
                     padding:[0,0,0,15],
                     align:'left'
@@ -591,7 +591,7 @@
                   axisLabel: {
                       margin: 10,
                       textStyle: {
-                          fontSize: '1.7vh',
+                          fontSize: '3.2vw',
                           color:'#fff',
                           fontFamily:'Microsoft YaHei'
                       }
@@ -738,7 +738,7 @@
                   data: data.x,
                   axisLabel: {
                     textStyle: {
-                        fontSize: '1.7vh',
+                        fontSize: '3.2vw',
                         fontFamily:'Microsoft YaHei',
                         color:'#fff'
                     }
@@ -760,14 +760,14 @@
                   interval: 2200,
                   nameTextStyle:{
                     color:"#fff", 
-                    fontSize:'1.7vh',
+                    fontSize:'3.2vw',
                     fontFamily:'Microsoft YaHei',
                     padding:[0,50,0,0]
                   },
                   axisLabel: {
                       margin: 10,
                       textStyle: {
-                          fontSize: '1.7vh',
+                          fontSize: '3.2vw',
                           color:'#fff',
                           fontFamily:'Microsoft YaHei'
                       }
@@ -858,7 +858,7 @@
                   data: ['已安装', '未安装'],
                   right: '2%',
                   textStyle: {
-                      fontSize: '1.9vh',
+                      fontSize: '3.4vw',
                       color: '#FFFFFF'
                   }
               },
@@ -879,7 +879,7 @@
                   axisLabel: {
                       
                       textStyle: {
-                          fontSize: '1.7vh',
+                          fontSize: '3.2vw',
                           fontFamily:'Microsoft YaHei',
                           color:'#fff'
                       }
@@ -897,7 +897,7 @@
                   interval: 1000,//数据间隔
                   nameTextStyle:{
                     color:"#fff", 
-                    fontSize:'1.7vh',
+                    fontSize:'3.2vw',
                     fontFamily:'Microsoft YaHei',
                     padding:[0,50,0,0]
                   },
@@ -910,7 +910,7 @@
                   axisLabel: {
                       margin: 10,
                       textStyle: {
-                          fontSize: '1.7vh',
+                          fontSize: '3.2vw',
                           fontFamily:'Microsoft YaHei',
                           color:'#fff'
                       }
@@ -1049,7 +1049,7 @@
                   data: ['已安装', '未安装','提升比'],
                   right: '2%',
                   textStyle: {
-                      fontSize: '1.9vh',
+                      fontSize: '3.4vw',
                       color: '#FFFFFF'
                   }
               },
@@ -1070,7 +1070,7 @@
                   axisLabel: {
                       
                       textStyle: {
-                          fontSize: '1.7vh',
+                          fontSize: '3.2vw',
                           fontFamily:'Microsoft YaHei',
                           color:'#fff'
                       }
@@ -1088,7 +1088,7 @@
                   interval: 800,//数据间隔
                   nameTextStyle:{
                     color:"#fff", 
-                    fontSize:'1.7vh',
+                    fontSize:'3.2vw',
                     fontFamily:'Microsoft YaHei',
                     padding:[0,50,0,0]
                   },
@@ -1101,7 +1101,7 @@
                   axisLabel: {
                       margin: 10,
                       textStyle: {
-                          fontSize: '1.7vh',
+                          fontSize: '3.2vw',
                           fontFamily:'Microsoft YaHei',
                           color:'#fff'
                       }
@@ -1120,7 +1120,7 @@
                   interval: 0.01,
                   nameTextStyle:{
                     color:"#fff", 
-                    fontSize:'1.7vh',
+                    fontSize:'3.2vw',
                     fontFamily:'Microsoft YaHei',
                     padding:[0,0,0,15],
                     align:'left'
@@ -1134,7 +1134,7 @@
                   axisLabel: {
                       margin: 10,
                       textStyle: {
-                          fontSize: '1.7vh',
+                          fontSize: '3.2vw',
                           color:'#fff',
                           fontFamily:'Microsoft YaHei'
                       }
@@ -1372,7 +1372,7 @@
 <style lang="scss">
 
 .decoration{
-  font-size:1.9vh;
+  font-size:3.4vw;
   color:#FFFFFF;
   border-bottom: 2px solid #36E5FF;
 }
@@ -1398,7 +1398,7 @@
   }
   .van-ellipsis{
     color:#36E5FF;
-    font-size: 1.9vh;;
+    font-size: 3.4vw;;
   }
   .dropmenu{
     color: #36E5FF;
@@ -1442,7 +1442,7 @@
   }
   .monthstatisticsNumber{
     color:#fff;
-    font-size:1.9vh;
+    font-size:3.4vw;
     font-weight: bold;
     font-family: MicrosoftYaHei;
     letter-spacing: 0vh;
@@ -1497,8 +1497,8 @@
     .stationdetail{
       padding: 2% 14%;
       color: #fff;
-      font-size: 1.9vh;
-      line-height:4vh;
+      font-size: 3.4vw;
+      line-height: 7vw;
     }
     .facilityNameBtn {
       color:#36E5FF;
@@ -1509,7 +1509,7 @@
       padding: 10px 20px;
       border-top-left-radius: 20px;
       border-bottom-left-radius: 20px;
-      font-size: 2vh;
+      font-size: 3.7vw;
     }
 	}
   #PowerStationDetail {
@@ -1544,13 +1544,13 @@
       }
       .explainTitleText {
         color: #fff;
-        font-size: 2vh;
+        font-size: 3.7vw;
       }
       .mytitletext{
          color: #fff;
-        font-size: 2.6vh;
+        font-size: 4.8vw;
         .unitText {
-          font-size: 1.7vh;
+          font-size: 1.7vw;
         }
       }
       .progressBox {
@@ -1559,7 +1559,7 @@
       }
       .titleBox {
         padding: 10px;
-        font-size: 2.5vh;
+        font-size: 4.5vw;
         color: #36E5FF;
         //box-shadow: 0 0 10px 4px #7188ff inset;
         display: flex;
@@ -1586,7 +1586,7 @@
           >.number {
             /*-webkit-text-stroke:1px #fff;*/
             color: #3ce3fd;
-            font-size: 6vh;
+            font-size: 10.6vw;
             font-weight: bold;
             // text-shadow:0px 0px 8px #fff, 0px 0px 42px #fff, 0px 0px 72px #fff,0px 0px 150px #fff;
           }
@@ -1598,7 +1598,7 @@
           .singleStatisticsNumber {
             -webkit-text-stroke:1px #fff;
             color: #fff;
-            font-size: 4.4vh;
+            font-size: 8vw;
             font-weight: bold;
             // text-shadow:0px 0px 8px #fff, 0px 0px 42px #fff, 0px 0px 72px #fff,0px 0px 150px #fff;
           }
@@ -1616,7 +1616,7 @@
           >.statisticsNumber {
             /*-webkit-text-stroke:1px #fff;*/
             color: #fff;
-            font-size: 3.7vh;
+            font-size: 6.6vw;
             /*font-weight: bold;*/
             // text-shadow:0px 0px 8px #fff, 0px 0px 42px #fff, 0px 0px 72px #fff,0px 0px 150px #fff;
           }
