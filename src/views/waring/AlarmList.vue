@@ -3,13 +3,13 @@
     <header>
       <div class="header-title">
         <router-link :to="{path: 'home'}">
-          <button icon="back" class="btn1">>è¿”å›</button>
+          <button icon="back" class="btn1">>·µ»Ø</button>
         </router-link>
-        <p>å‘Šè­¦åˆ—è¡¨</p>
+        <p>¸æ¾¯ÁĞ±í</p>
         <button class="btn2" @click="showSearch = !showSearch"><i class="iconfont icon-sousuo"></i></button>
       </div>
       <div v-if="showSearch" id="header_input">
-        <input type="text" placeholder="è¯·è¾“å…¥æœç´¢å†…å®¹" v-model="search" id="search-input">
+        <input type="text" placeholder="ÇëÊäÈëËÑË÷ÄÚÈİ" v-model="search" id="search-input">
       </div>
     </header>
     <div id="content">
@@ -24,27 +24,27 @@
             <table v-for="warn in warnList"  id="table-show">
               <tr>
                 <td class="headline" colspan="2">
-                  <router-link v-if="warn.dealResult == 'å·²å¤„ç†'" :to="{ path: '/AlarmTreated',query: {warn:warn}}">
+                  <router-link v-if="warn.dealResult == 'ÒÑ´¦Àí'" :to="{ path: '/AlarmTreated',query: {warn:warn}}">
 
-                  è¿™æ˜¯{{warn.id}}å‘Šè­¦ä¿¡æ¯
+                  ÕâÊÇ{{warn.id}}¸æ¾¯ĞÅÏ¢
                   </router-link>
-                  <router-link v-else="warn.dealResult == 'æœªå¤„ç†'" :to="{ path: '/AlarmUntreated',query: {warn:warn}}">
-                  è¿™æ˜¯{{warn.id}}å‘Šè­¦ä¿¡æ¯
+                  <router-link v-else="warn.dealResult == 'Î´´¦Àí'" :to="{ path: '/AlarmUntreated',query: {warn:warn}}">
+                  ÕâÊÇ{{warn.id}}¸æ¾¯ĞÅÏ¢
                   </router-link>
                 </td>
               </tr>
               <tr>
                 <td class="show-namewarn-time">
-                  <div>ç”µç«™åç§°ï¼šå±±ä¸œé«˜å¯†</div>
-                  <div>å‘Šè­¦æ—¶é—´ï¼š{{warn.warn_time}}</div>
+                  <div>µçÕ¾Ãû³Æ£ºÉ½¶«¸ßÃÜ</div>
+                  <div>¸æ¾¯Ê±¼ä£º{{warn.warn_time}}</div>
                 </td>
               </tr>
               <tr>
-                <td colspan="2">å‘Šè­¦ä¿¡æ¯ï¼š{{warn.name}}</td>
+                <td colspan="2">¸æ¾¯ĞÅÏ¢£º{{warn.name}}</td>
               </tr>
               <tr>
                 <td  colspan="2">
-                  å¤„ç†çŠ¶æ€ï¼š
+                  ´¦Àí×´Ì¬£º
                   <button id="btn-stat">
                       {{warn.dealResult}}
                   </button>
@@ -58,9 +58,9 @@
 </template>
 
 <script>
-    import qs from 'qs';//å¼•å…¥å‘é€postè¯·æ±‚æ•°æ®è½¬æ¢å·¥å…·
+    import qs from 'qs';//ÒıÈë·¢ËÍpostÇëÇóÊı¾İ×ª»»¹¤¾ß
   import {request} from "../../network/request";
-  import Cryptojs from 'crypto-js';//å…¨å±€å¼•ç”¨ä¸å¥½ä½¿ï¼Œå› æ­¤å±€éƒ¨å¼•ç”¨
+  import Cryptojs from 'crypto-js';//È«¾ÖÒıÓÃ²»ºÃÊ¹£¬Òò´Ë¾Ö²¿ÒıÓÃ
   import  storage from '@/model/storage.js'
   export default {
     name: 'AlarmList',
@@ -72,12 +72,12 @@
     data() {
       return {
         nList: [],
-        // warnList: [],   //æ¥å£è¿”å›çš„list
+        // warnList: [],   //½Ó¿Ú·µ»ØµÄlist
         Token : storage.get('token'),
         pageIndex: 0,
         pageSize: 5,
 
-        search: '', //åˆå§‹åŒ–æ•°æ®ä¸ºç©º
+        search: '', //³õÊ¼»¯Êı¾İÎª¿Õ
         tlist: [],
 
         totalCount: 0,
@@ -85,7 +85,7 @@
       }
     },
     beforeCreate() {},
-    created() {//åˆ›å»ºå®Œæˆä»¥åè¯·æ±‚æ•°æ®
+    created() {//´´½¨Íê³ÉÒÔºóÇëÇóÊı¾İ
       this.getData();
     },
     beforeMount() {},
@@ -95,15 +95,15 @@
     },
     beforeDestroy() {},
     destroyed() {
-      window.removeEventListener('scroll', this.scrollFn); // é”€æ¯ç›‘å¬
+      window.removeEventListener('scroll', this.scrollFn); // Ïú»Ù¼àÌı
     },
     computed : {
-      //æœç´¢åŠŸèƒ½å‡½æ•°
-      //æœç´¢åŠŸèƒ½	// è¦æ±‚1ï¼šèœå•åˆ—è¡¨æ˜¾ç¤ºæœç´¢
-      warnList: function() {	//æ•°æ®æºå®šä¹‰ä¸€ä¸ªå‡½æ•°
-        var search = this.search;	//å®šä¹‰searchä¿å­˜inputè¾“å…¥çš„æ•°æ®
-        if (search) {				//åˆ¤æ–­searché‡Œé¢çš„æ•°æ®
-          return this.nList.filter(function(product) {//è¿™é‡Œè¿”å›çš„nlistæ˜¯é€šè¿‡getè·å–çš„æ•°æ®
+      //ËÑË÷¹¦ÄÜº¯Êı
+      //ËÑË÷¹¦ÄÜ	// ÒªÇó1£º²Ëµ¥ÁĞ±íÏÔÊ¾ËÑË÷
+      warnList: function() {	//Êı¾İÔ´¶¨ÒåÒ»¸öº¯Êı
+        var search = this.search;	//¶¨Òåsearch±£´æinputÊäÈëµÄÊı¾İ
+        if (search) {				//ÅĞ¶ÏsearchÀïÃæµÄÊı¾İ
+          return this.nList.filter(function(product) {//ÕâÀï·µ»ØµÄnlistÊÇÍ¨¹ıget»ñÈ¡µÄÊı¾İ
             // console.log('************' + product);
             return Object.keys(product).some(function(key){
               return String(product[key]).toLowerCase().indexOf(search) > -1
@@ -111,11 +111,11 @@
           })
         }
         // console.log(this.alist)
-        return this.nList;	//è¿”å›alistæ•°æ®
+        return this.nList;	//·µ»ØalistÊı¾İ
       }
     },
     methods: {
-      // lol(){//æœç´¢æ˜¾ç¤ºéšè—
+      // lol(){//ËÑË÷ÏÔÊ¾Òş²Ø
       //   if(document.getElementById('search-input').style.display === 'none' ){
 
       //     document.getElementById('search-input').style.display ='flex';
@@ -127,12 +127,12 @@
         mainIndex() {
         },
         loadmore(pageIndex) {
-            //ä¸Šæ»‘åŠ è½½æ›´å¤šï¼ŒpageIndexä¸ºä¸‹ä¸€é¡µé¡µç ,
+            //ÉÏ»¬¼ÓÔØ¸ü¶à£¬pageIndexÎªÏÂÒ»Ò³Ò³Âë,
             this.handleLoading();
             this.pageIndex = pageIndex;
             this.getData();
         },
-        refresh() {//åˆ·æ–°
+        refresh() {//Ë¢ĞÂ
         },
         handleroute(id) {
             this.$router.push({path: '/AlarmTreated', query: {id: id}})
@@ -145,12 +145,12 @@
             })
         },
         handleLoading() {
-            let l = this.$message.loading('åŠ è½½ä¸­...')
+            let l = this.$message.loading('¼ÓÔØÖĞ...')
             setTimeout(function () {
                 l.close()
             }, 500)
         },
-        //æ–‡æ¡£é«˜åº¦
+        //ÎÄµµ¸ß¶È
         getScrollTop() {
             var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
             if (document.body) {
@@ -163,7 +163,7 @@
             return scrollTop;
         },
 
-        getWindowHeight() {//å¯è§†çª—å£é«˜åº¦
+        getWindowHeight() {//¿ÉÊÓ´°¿Ú¸ß¶È
             var windowHeight = 0;
             if (document.compatMode == "CSS1Compat") {
                 windowHeight = document.documentElement.clientHeight;
@@ -173,7 +173,7 @@
             return windowHeight;
         },
 
-        getScrollHeight() {//æ»šåŠ¨æ¡é«˜åº¦
+        getScrollHeight() {//¹ö¶¯Ìõ¸ß¶È
             var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
             if (document.body) {
                 bodyScrollHeight = document.body.scrollHeight;
@@ -184,17 +184,17 @@
             scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
             return scrollHeight;
         },
-        //ç›‘å¬å‡½æ•°
+        //¼àÌıº¯Êı
         scrollFn() {
             if (this.getScrollTop() + this.getWindowHeight() === this.getScrollHeight()) {
-                // ã€€ã€€ã€€ã€€ã€€ã€€this.handleShowMsg('æ²¡æœ‰æ›´å¤šæ•°æ®','info');
+                // ¡¡¡¡¡¡¡¡¡¡¡¡this.handleShowMsg('Ã»ÓĞ¸ü¶àÊı¾İ','info');
             }
         },
 
-        getImgURL(item) {//æ‹¼æ¥å›¾åƒsrc
+        getImgURL(item) {//Æ´½ÓÍ¼Ïñsrc
             return 'http://brmsh5.boeet.com.cn:82' + item.img;
         },
-      getData(){      //è·å–æ•°æ®
+      getData(){      //»ñÈ¡Êı¾İ
         let Message = this.pageSize + this.search + this.pageIndex;
         let key = 'H@ppy1@3';
         let hash = Cryptojs.HmacSHA256(Message, key).toString();
@@ -230,7 +230,7 @@
                   })
           ));
           this.totalCount = data.length + 1;
-          this.nList = this.nList.concat(newList);//å°†æ¯æ¬¡è·å–çš„æ•°æ®æ‹¼æ¥
+          this.nList = this.nList.concat(newList);//½«Ã¿´Î»ñÈ¡µÄÊı¾İÆ´½Ó
           console.log(this.nList);
           // this.nList = newList;
 
@@ -250,13 +250,13 @@
    a{
      text-decoration: none;
      color: #36E5FF;
-     font-size: 14px;
+     font-size: 3.7vw;
    }
    .icon-sousuo{
-     font-size: 14px;
+     font-size: 3.7vw;
    }
    #table-show{
-     font-size: 13px;
+     font-size: 3.4vw;
      padding-top: 5px;
      padding-bottom: 5px;
      width: 100%;
@@ -273,7 +273,7 @@
    }
    #table-show .headline{
      text-align: left;
-     font-size: 14px;
+     font-size: 3.7vw;
      padding-bottom: 10px;
      /*border: 1px solid red;*/
    }
@@ -287,7 +287,7 @@
      border-radius:10px;
      width: 80px;
      color: #36E5FF;
-     font-size: 12px;
+     font-size: 3.2vw;
      padding-bottom: 5px;
      padding-top: 5px;
    }
@@ -304,7 +304,7 @@
      display: flex;
      flex-direction: row;
      justify-content: space-between;
-     font-size: 17.5px;
+     font-size: 4.8vw;
      background-color: transparent;
      border-bottom: 1px solid #1B376F;
      padding-top: 10px;
@@ -316,7 +316,7 @@
      padding: 0px;
      text-align: left;
      background-color: transparent;
-     font-size: 14px;
+     font-size: 3.7vw;
      color: #FFFFFF;
    }
    .btn2{
@@ -324,7 +324,7 @@
      padding: 0px;
      text-align: right;
      background-color: transparent;
-     font-size: 14px;
+     font-size: 3.7vw;
      color: #FFFFFF;
    }
    #header_input {
@@ -335,12 +335,12 @@
      /*display: none;*/
      width: 95%;
      height: 25px;
-     font-size: 14px;
+     font-size: 3.7vw;
      color: #939BAE;
      /*margin: auto;*/
    }
  #content{
-   font-size: 13px;
+   font-size: 3.4vw;
    width: 95%;
    margin: auto;
    display: flex;

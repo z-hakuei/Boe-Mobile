@@ -291,24 +291,24 @@
   }
   .num .content .capacity {
     color: rgb(54, 230, 254);
-    font-size: 3em;
+    font-size: 3.5vw;
     font-family: "HoloLens MDL2 Assets";
     transform:scale(3.5,4);
   }
   .num .content .number {
     color: rgb(6, 244, 195);
-    font-size: 2em;
+    font-size: 2.6vw;
 
     transform:scale(2.4,3);
   }
   .num .content .generation {
     color: rgb(210, 255, 112);
-    font-size: 2em;
+    font-size: 2.6vw;
     transform:scale(2.4,3);
   }
 
   .num .content p{
-    font-size: 3em;
+    font-size: 1.5vw;
     margin-top: 9%;
     color: #fff;
   }
@@ -341,10 +341,10 @@
   }
   .sub p.model1{
     transform:scale(2.1,3);
-    font-size: 1.8em;
+    font-size: 3.3vw;
   }
   .sub p.model2{
-    font-size:5em;
+    font-size:3.4vw;
     margin-top: 12%;
   }
 
@@ -354,7 +354,7 @@
   }
   #statistics{
     margin-left: 4%;
-    font-size: 20px;
+    font-size: 4.5vw;
     color: rgb(55,228,255);
   }
 

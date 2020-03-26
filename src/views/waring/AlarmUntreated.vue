@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div id="alarmuntreated">
     <header>
       <div class="header-title">
@@ -134,34 +134,34 @@ export default {
   a{
     text-decoration: none;
     color: #36E5FF;
-    font-size: 14px;
+    font-size: 3.7vw;
   }
   button{
     border-color: #36E5FF;
     background: transparent;
     border-radius:10px;
     width: 80px;
-    font-size: 12px;
+    font-size: 3.2vw;
     color: #36E5FF;
     padding-bottom: 5px;
     padding-top: 5px;
   }
   #btn_ignore{
-    font-size: 13px;
+    font-size: 3.4vw;
     margin-left: 10px;
   }
   #btn_manage{
-    font-size: 13px;
+    font-size: 3.4vw;
   }
   #content #gjxx-title{
     color: #36E5FF;
-    font-size: 14px;
+    font-size: 3.7vw;
     margin-top: 10px;
     padding-bottom: 15px;
   }
   #content #clcz-title{
     color: #36E5FF;
-    font-size: 14px;
+    font-size: 3.7vw;
     padding-top: 5px;
     padding-bottom: 10px;
   }
@@ -201,7 +201,7 @@ export default {
     border-spacing:0px 10px;
     padding-top: 10px;
     padding-bottom: 10px;
-    font-size: 13px;
+    font-size: 3.4vw;
   }
   #content table tr td{
     /*padding: 0px;*/
@@ -234,7 +234,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    font-size: 17.5px;
+    font-size: 4.8vw;
     background-color: transparent;
     border-bottom: 1px solid #1B376F;
     padding-top: 10px;
@@ -245,7 +245,7 @@ export default {
     border: 0px;
     text-align: left;
     background-color: transparent;
-    font-size: 14px;
+    font-size: 3.7vw;
     color: #FFFFFF;
   }
 </style>

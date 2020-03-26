@@ -3,9 +3,9 @@
       <header>
           <div class="header-title">
               <router-link :to="{path: 'warning'}">
-                  <button icon="back" class="btn">>è¿”å›</button>
+                  <button icon="back" class="btn">>·µ»Ø</button>
               </router-link>
-              <p>å‘Šè­¦è¯¦æƒ…</p>
+              <p>¸æ¾¯ÏêÇé</p>
               <button class="btn"></button>
           </div>
       </header>
@@ -14,26 +14,26 @@
         <tr>
           <td id="gjxx-title">
 <!--            <router-link to="" @click.native="refresh">-->
-              å‘Šè­¦è¯¦ç»†
+              ¸æ¾¯ÏêÏ¸
 <!--            </router-link>-->
           </td>
         </tr>
         <tr>
-          <td>ç”µç«™åç§°ï¼šå±±ä¸œé«˜å¯†</td>
+          <td>µçÕ¾Ãû³Æ£ºÉ½¶«¸ßÃÜ</td>
         </tr>
         <tr>
-          <td>å‘Šè­¦æ—¶é—´ï¼š{{warn.warn_time}}
+          <td>¸æ¾¯Ê±¼ä£º{{warn.warn_time}}
 <!--            {{warn_time}}-->
           </td>
         </tr>
         <tr>
-          <td>å‘Šè­¦ä¿¡æ¯ï¼š{{warn.name}}</td>
+          <td>¸æ¾¯ĞÅÏ¢£º{{warn.name}}</td>
         </tr>
         <tr>
           <td>{{warn.detail}}</td>
         </tr>
         <tr>
-          <td>å¤„ç†çŠ¶æ€ï¼š<button @click="btnclick">{{warn.dealResult}}</button></td>
+          <td>´¦Àí×´Ì¬£º<button @click="btnclick">{{warn.dealResult}}</button></td>
         </tr>
       </table>
     </div>
@@ -46,17 +46,17 @@ export default {
   name: 'AlarmTreated',
   data () {
     return {
-      warn: [] //æœ¬æ¡æ•°æ®çš„list
+      warn: [] //±¾ÌõÊı¾İµÄlist
     }
   },
   created() {
     if(this.$route.query.warn.length === 0){
-      this.id = 'warn listä¸ºç©º'
+      this.id = 'warn listÎª¿Õ'
     }
     this.warn = this.$route.query.warn;
     console.log(this.warn);
   },
-  methods: {//è·å–æ•°æ®
+  methods: {//»ñÈ¡Êı¾İ
     btnclick(){
       this.$router.go(-1);
     },
@@ -71,21 +71,21 @@ export default {
   a{
     text-decoration: none;
     color: #36E5FF;
-    font-size: 14px;
+    font-size: 3.7vw;
   }
   button{
     border-color: #36E5FF;
     background: transparent;
     border-radius:10px;
     width: 80px;
-    font-size: 12px;
+    font-size: 3.4vw;
     color: #36E5FF;
     padding-bottom: 5px;
     padding-top: 5px;
   }
   #content #gjxx-title{
     color: #36E5FF;
-    font-size: 14px;
+    font-size: 3.7vw;
       margin-top: 10px;
       padding-bottom: 15px;
   }
@@ -95,7 +95,7 @@ export default {
     border-spacing:0px 10px;
     margin: auto;
     width: 95%;
-    font-size: 13px;
+    font-size: 3.4vw;
   }
   #content table tr td{
     text-align: left;
@@ -123,7 +123,7 @@ export default {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      font-size: 17.5px;
+      font-size: 4.8vw;
       background-color: transparent;
       border-bottom: 1px solid #1B376F;
       padding-top: 10px;
@@ -135,7 +135,7 @@ export default {
       padding: 0px;
       text-align: left;
       background-color: transparent;
-      font-size: 14px;
+      font-size: 3.7vw;
       color: #FFFFFF;
   }
 </style>
