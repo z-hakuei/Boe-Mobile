@@ -1,9 +1,9 @@
 <template>
   <div id="Powerstation">
-    <mt-header title="电站列表" style="font-size:24px;">
+    <mt-header title="电站列表" style="font-size:2.5vh;">
       <router-link to="/" slot="left">
       <router-link :to="{ path:'home' }">
-        <mt-button icon="back" style="font-size:19px;">返回</mt-button>
+        <mt-button icon="back" style="font-size:2vh;">返回</mt-button>
       </router-link>
       </router-link>
     </mt-header>
@@ -282,10 +282,12 @@
             border: 1px solid skyblue;
 					}
 					.detailtitle{
+            font-size: 2vh;
 						text-align: center;
 						color: #10BAE0;
 					}
 					.addresstitle{
+            font-size: 2vh;
 						text-align: center;
             padding: 6px 0;
 						color: #10BAE0;
@@ -297,6 +299,7 @@
           flex-direction: column;
           justify-content: space-around;
 					color: #e6ecf0;
+          font-size: 1.9vh;;
 				}
 			}
     }
