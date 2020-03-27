@@ -4,7 +4,7 @@
     <mt-header :title="stationname" style="font-size:4.8vw;">
       <router-link to="/" slot="left">
       <router-link :to="{ path: 'powerstation' }">
-        <mt-button icon="back" style="font-size:3.7vw;">返回</mt-button>
+        <mt-button icon="back" style="font-size:3.7vw;color:#fff;">返回</mt-button>
       </router-link>
       </router-link>
     </mt-header>
