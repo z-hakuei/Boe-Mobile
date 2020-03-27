@@ -3,13 +3,13 @@
     <header>
       <div class="header-title">
         <router-link :to="{path: 'home'}">
-          <button icon="back" class="btn1">>·µ»Ø</button>
+          <button icon="back" class="btn1">>è¿”å›</button>
         </router-link>
-        <p>¸æ¾¯ÁĞ±í</p>
+        <p>å‘Šè­¦åˆ—è¡¨</p>
         <button class="btn2" @click="showSearch = !showSearch"><i class="iconfont icon-sousuo"></i></button>
       </div>
       <div v-if="showSearch" id="header_input">
-        <input type="text" placeholder="ÇëÊäÈëËÑË÷ÄÚÈİ" v-model="search" id="search-input">
+        <input type="text" placeholder="è¯·è¾“å…¥æœç´¢å†…å®¹" v-model="search" id="search-input">
       </div>
     </header>
     <div id="content">
@@ -24,27 +24,27 @@
             <table v-for="warn in warnList"  id="table-show">
               <tr>
                 <td class="headline" colspan="2">
-                  <router-link v-if="warn.dealResult == 'ÒÑ´¦Àí'" :to="{ path: '/AlarmTreated',query: {warn:warn}}">
+                  <router-link v-if="warn.dealResult == 'å·²å¤„ç†'" :to="{ path: '/AlarmTreated',query: {warn:warn}}">
 
-                  ÕâÊÇ{{warn.id}}¸æ¾¯ĞÅÏ¢
+                  è¿™æ˜¯{{warn.id}}å‘Šè­¦ä¿¡æ¯
                   </router-link>
-                  <router-link v-else="warn.dealResult == 'Î´´¦Àí'" :to="{ path: '/AlarmUntreated',query: {warn:warn}}">
-                  ÕâÊÇ{{warn.id}}¸æ¾¯ĞÅÏ¢
+                  <router-link v-else="warn.dealResult == 'æœªå¤„ç†'" :to="{ path: '/AlarmUntreated',query: {warn:warn}}">
+                  è¿™æ˜¯{{warn.id}}å‘Šè­¦ä¿¡æ¯
                   </router-link>
                 </td>
               </tr>
               <tr>
                 <td class="show-namewarn-time">
-                  <div>µçÕ¾Ãû³Æ£ºÉ½¶«¸ßÃÜ</div>
-                  <div>¸æ¾¯Ê±¼ä£º{{warn.warn_time}}</div>
+                  <div>ç”µç«™åç§°ï¼šå±±ä¸œé«˜å¯†</div>
+                  <div>å‘Šè­¦æ—¶é—´ï¼š{{warn.warn_time}}</div>
                 </td>
               </tr>
               <tr>
-                <td colspan="2">¸æ¾¯ĞÅÏ¢£º{{warn.name}}</td>
+                <td colspan="2">å‘Šè­¦ä¿¡æ¯ï¼š{{warn.name}}</td>
               </tr>
               <tr>
                 <td  colspan="2">
-                  ´¦Àí×´Ì¬£º
+                  å¤„ç†çŠ¶æ€ï¼š
                   <button id="btn-stat">
                       {{warn.dealResult}}
                   </button>
@@ -58,9 +58,9 @@
 </template>
 
 <script>
-    import qs from 'qs';//ÒıÈë·¢ËÍpostÇëÇóÊı¾İ×ª»»¹¤¾ß
+    import qs from 'qs';//å¼•å…¥å‘é€postè¯·æ±‚æ•°æ®è½¬æ¢å·¥å…·
   import {request} from "../../network/request";
-  import Cryptojs from 'crypto-js';//È«¾ÖÒıÓÃ²»ºÃÊ¹£¬Òò´Ë¾Ö²¿ÒıÓÃ
+  import Cryptojs from 'crypto-js';//å…¨å±€å¼•ç”¨ä¸å¥½ä½¿ï¼Œå› æ­¤å±€éƒ¨å¼•ç”¨
   import  storage from '@/model/storage.js'
   export default {
     name: 'AlarmList',
@@ -72,12 +72,12 @@
     data() {
       return {
         nList: [],
-        // warnList: [],   //½Ó¿Ú·µ»ØµÄlist
+        // warnList: [],   //æ¥å£è¿”å›çš„list
         Token : storage.get('token'),
         pageIndex: 0,
         pageSize: 5,
 
-        search: '', //³õÊ¼»¯Êı¾İÎª¿Õ
+        search: '', //åˆå§‹åŒ–æ•°æ®ä¸ºç©º
         tlist: [],
 
         totalCount: 0,
@@ -85,7 +85,7 @@
       }
     },
     beforeCreate() {},
-    created() {//´´½¨Íê³ÉÒÔºóÇëÇóÊı¾İ
+    created() {//åˆ›å»ºå®Œæˆä»¥åè¯·æ±‚æ•°æ®
       this.getData();
     },
     beforeMount() {},
@@ -95,15 +95,15 @@
     },
     beforeDestroy() {},
     destroyed() {
-      window.removeEventListener('scroll', this.scrollFn); // Ïú»Ù¼àÌı
+      window.removeEventListener('scroll', this.scrollFn); // é”€æ¯ç›‘å¬
     },
     computed : {
-      //ËÑË÷¹¦ÄÜº¯Êı
-      //ËÑË÷¹¦ÄÜ	// ÒªÇó1£º²Ëµ¥ÁĞ±íÏÔÊ¾ËÑË÷
-      warnList: function() {	//Êı¾İÔ´¶¨ÒåÒ»¸öº¯Êı
-        var search = this.search;	//¶¨Òåsearch±£´æinputÊäÈëµÄÊı¾İ
-        if (search) {				//ÅĞ¶ÏsearchÀïÃæµÄÊı¾İ
-          return this.nList.filter(function(product) {//ÕâÀï·µ»ØµÄnlistÊÇÍ¨¹ıget»ñÈ¡µÄÊı¾İ
+      //æœç´¢åŠŸèƒ½å‡½æ•°
+      //æœç´¢åŠŸèƒ½	// è¦æ±‚1ï¼šèœå•åˆ—è¡¨æ˜¾ç¤ºæœç´¢
+      warnList: function() {	//æ•°æ®æºå®šä¹‰ä¸€ä¸ªå‡½æ•°
+        var search = this.search;	//å®šä¹‰searchä¿å­˜inputè¾“å…¥çš„æ•°æ®
+        if (search) {				//åˆ¤æ–­searché‡Œé¢çš„æ•°æ®
+          return this.nList.filter(function(product) {//è¿™é‡Œè¿”å›çš„nlistæ˜¯é€šè¿‡getè·å–çš„æ•°æ®
             // console.log('************' + product);
             return Object.keys(product).some(function(key){
               return String(product[key]).toLowerCase().indexOf(search) > -1
@@ -111,11 +111,11 @@
           })
         }
         // console.log(this.alist)
-        return this.nList;	//·µ»ØalistÊı¾İ
+        return this.nList;	//è¿”å›alistæ•°æ®
       }
     },
     methods: {
-      // lol(){//ËÑË÷ÏÔÊ¾Òş²Ø
+      // lol(){//æœç´¢æ˜¾ç¤ºéšè—
       //   if(document.getElementById('search-input').style.display === 'none' ){
 
       //     document.getElementById('search-input').style.display ='flex';
@@ -127,12 +127,12 @@
         mainIndex() {
         },
         loadmore(pageIndex) {
-            //ÉÏ»¬¼ÓÔØ¸ü¶à£¬pageIndexÎªÏÂÒ»Ò³Ò³Âë,
+            //ä¸Šæ»‘åŠ è½½æ›´å¤šï¼ŒpageIndexä¸ºä¸‹ä¸€é¡µé¡µç ,
             this.handleLoading();
             this.pageIndex = pageIndex;
             this.getData();
         },
-        refresh() {//Ë¢ĞÂ
+        refresh() {//åˆ·æ–°
         },
         handleroute(id) {
             this.$router.push({path: '/AlarmTreated', query: {id: id}})
@@ -145,12 +145,12 @@
             })
         },
         handleLoading() {
-            let l = this.$message.loading('¼ÓÔØÖĞ...')
+            let l = this.$message.loading('åŠ è½½ä¸­...')
             setTimeout(function () {
                 l.close()
             }, 500)
         },
-        //ÎÄµµ¸ß¶È
+        //æ–‡æ¡£é«˜åº¦
         getScrollTop() {
             var scrollTop = 0, bodyScrollTop = 0, documentScrollTop = 0;
             if (document.body) {
@@ -163,7 +163,7 @@
             return scrollTop;
         },
 
-        getWindowHeight() {//¿ÉÊÓ´°¿Ú¸ß¶È
+        getWindowHeight() {//å¯è§†çª—å£é«˜åº¦
             var windowHeight = 0;
             if (document.compatMode == "CSS1Compat") {
                 windowHeight = document.documentElement.clientHeight;
@@ -173,7 +173,7 @@
             return windowHeight;
         },
 
-        getScrollHeight() {//¹ö¶¯Ìõ¸ß¶È
+        getScrollHeight() {//æ»šåŠ¨æ¡é«˜åº¦
             var scrollHeight = 0, bodyScrollHeight = 0, documentScrollHeight = 0;
             if (document.body) {
                 bodyScrollHeight = document.body.scrollHeight;
@@ -184,17 +184,17 @@
             scrollHeight = (bodyScrollHeight - documentScrollHeight > 0) ? bodyScrollHeight : documentScrollHeight;
             return scrollHeight;
         },
-        //¼àÌıº¯Êı
+        //ç›‘å¬å‡½æ•°
         scrollFn() {
             if (this.getScrollTop() + this.getWindowHeight() === this.getScrollHeight()) {
-                // ¡¡¡¡¡¡¡¡¡¡¡¡this.handleShowMsg('Ã»ÓĞ¸ü¶àÊı¾İ','info');
+                // ã€€ã€€ã€€ã€€ã€€ã€€this.handleShowMsg('æ²¡æœ‰æ›´å¤šæ•°æ®','info');
             }
         },
 
-        getImgURL(item) {//Æ´½ÓÍ¼Ïñsrc
+        getImgURL(item) {//æ‹¼æ¥å›¾åƒsrc
             return 'http://brmsh5.boeet.com.cn:82' + item.img;
         },
-      getData(){      //»ñÈ¡Êı¾İ
+      getData(){      //è·å–æ•°æ®
         let Message = this.pageSize + this.search + this.pageIndex;
         let key = 'H@ppy1@3';
         let hash = Cryptojs.HmacSHA256(Message, key).toString();
@@ -230,7 +230,7 @@
                   })
           ));
           this.totalCount = data.length + 1;
-          this.nList = this.nList.concat(newList);//½«Ã¿´Î»ñÈ¡µÄÊı¾İÆ´½Ó
+          this.nList = this.nList.concat(newList);//å°†æ¯æ¬¡è·å–çš„æ•°æ®æ‹¼æ¥
           console.log(this.nList);
           // this.nList = newList;
 

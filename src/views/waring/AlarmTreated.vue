@@ -3,9 +3,9 @@
       <header>
           <div class="header-title">
               <router-link :to="{path: 'warning'}">
-                  <button icon="back" class="btn">>·µ»Ø</button>
+                  <button icon="back" class="btn">>è¿”å›</button>
               </router-link>
-              <p>¸æ¾¯ÏêÇé</p>
+              <p>å‘Šè­¦è¯¦æƒ…</p>
               <button class="btn"></button>
           </div>
       </header>
@@ -14,26 +14,26 @@
         <tr>
           <td id="gjxx-title">
 <!--            <router-link to="" @click.native="refresh">-->
-              ¸æ¾¯ÏêÏ¸
+              å‘Šè­¦è¯¦ç»†
 <!--            </router-link>-->
           </td>
         </tr>
         <tr>
-          <td>µçÕ¾Ãû³Æ£ºÉ½¶«¸ßÃÜ</td>
+          <td>ç”µç«™åç§°ï¼šå±±ä¸œé«˜å¯†</td>
         </tr>
         <tr>
-          <td>¸æ¾¯Ê±¼ä£º{{warn.warn_time}}
+          <td>å‘Šè­¦æ—¶é—´ï¼š{{warn.warn_time}}
 <!--            {{warn_time}}-->
           </td>
         </tr>
         <tr>
-          <td>¸æ¾¯ĞÅÏ¢£º{{warn.name}}</td>
+          <td>å‘Šè­¦ä¿¡æ¯ï¼š{{warn.name}}</td>
         </tr>
         <tr>
           <td>{{warn.detail}}</td>
         </tr>
         <tr>
-          <td>´¦Àí×´Ì¬£º<button @click="btnclick">{{warn.dealResult}}</button></td>
+          <td>å¤„ç†çŠ¶æ€ï¼š<button @click="btnclick">{{warn.dealResult}}</button></td>
         </tr>
       </table>
     </div>
@@ -46,17 +46,17 @@ export default {
   name: 'AlarmTreated',
   data () {
     return {
-      warn: [] //±¾ÌõÊı¾İµÄlist
+      warn: [] //æœ¬æ¡æ•°æ®çš„list
     }
   },
   created() {
     if(this.$route.query.warn.length === 0){
-      this.id = 'warn listÎª¿Õ'
+      this.id = 'warn listä¸ºç©º'
     }
     this.warn = this.$route.query.warn;
     console.log(this.warn);
   },
-  methods: {//»ñÈ¡Êı¾İ
+  methods: {//è·å–æ•°æ®
     btnclick(){
       this.$router.go(-1);
     },

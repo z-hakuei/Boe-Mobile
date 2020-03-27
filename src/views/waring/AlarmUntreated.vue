@@ -1,4 +1,4 @@
-﻿<template>
+<template>
   <div id="alarmuntreated">
     <header>
       <div class="header-title">
