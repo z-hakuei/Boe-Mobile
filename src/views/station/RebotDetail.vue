@@ -14,7 +14,7 @@
 		<div v-else="Online == 0"><span style="color:red;font-size:3.4vw;">设备离线</span></div>
     </div>
 	
-	<div id="comb" style="margin-left:30px;">
+	<div id="comb">
 		<ul>     
 			<li>
 				<div style='position:relative;width:100px;margin:0 auto;'>
@@ -84,7 +84,7 @@
 	
 	
 	
-	<div id="content2" class="box" style="padding-top: 10%;">
+	<div id="content2" class="box">
 		<div class="square" @click="RebotManage(0)"><div class="boderX"><i class="iconfont icon-zanting"></i><div class="sss">暂停</div></div></div>
 		<div class="square" @click="RebotManage(1)"><div class="boderX"><i class="iconfont icon-qidong"></i><div class="sss">启动</div></div></div>
 		<div class="square" @click="RebotManage(2)"><div class="boderX"><i class="iconfont icon-fanhui"></i><div class="sss">返转</div></div></div>
@@ -221,12 +221,18 @@
 .mint-header {
       background: #1a2e54;
     }
+#comb{
+	width:100%;
+	text-align: center;
+}
 #content{
 	color: white;
 	text-align: center;
 }
 #content2{
 	color: white;
+	position: fixed;
+	bottom: 24.8vw;
 }
 
 .box{
@@ -267,17 +273,16 @@
 	padding: 0;
 }
 .one {
-	width: 86.6px;
-	height: 50px;
+	width: 27.7vw;
+	height: calc(27.7vw/1.73);
 	margin: 0 auto;
 	border-left: 1px solid #31D1EE;
 	border-right: 1px solid #31D1EE;
 	}
 .two {
 	position: absolute;
-	width: 86.6px;
-	height: 50px;
-	left: 5px;
+	width: 27.7vw;
+	height: calc(27.7vw/1.73);
 	top: 0;
 	/* transform: translate(-50%,-50%); */
 	transform: rotate(60deg);
@@ -286,9 +291,8 @@
 	}
 .three {
 	position: absolute;
-	width: 86.6px;
-	height: 50px;
-	left: 5px;
+	width: 27.7vw;
+	height: calc(27.7vw/1.73);
 	top: 0;
 	/* transform: translate(-50%,-50%); */
 	transform: rotate(300deg);
@@ -298,15 +302,14 @@
 .four{
 	position: absolute;
 	margin: 0 auto;
-	left: 5px;
 	top: 0px;
-	width: 86.6px;
-	height: 50px;
+	width: 27.7vw;
+	height: calc(27.7vw/1.73);
 	text-align: center;
 }
 .four i{
 	color: #36E4FE;
-	font-size: 30px;
+	font-size: 8vw;
 	position: relative;
 	left: 0;
 	top: 0;
@@ -323,19 +326,24 @@ ul {
 	  margin: 0;
 	  padding: 0;
 	  list-style: none;
-	  width: 360px;
-	  margin: 25px auto;
+	  /* width: 98vw; */
+	  /* margin: 16vw auto; */
+	  margin-top: 16vw;
+	  display: inline-block;
 	}
 li{
 	float: left;
-	margin: 0 5px;
-	height: 96px;
+	margin: 0 2vw;
+	height: 27.7vw;
 	}
 li:nth-child(7n + 1) {
-	margin-left: 60px;
+	margin-left: 20.5vw;
+	}
+li:nth-child(7n + 3) {
+	margin-left: 5.5vw;
 	}
 li:nth-child(7n + 6){ 
-	margin-left: 60px;
+	margin-left: 20.5vw;
 	}
 li i{
 		display: block;
